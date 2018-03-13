@@ -1,0 +1,90 @@
+
+0312 stl 2주차 첫 강의
+
+ 2018. 1. STL 월 23, 화 56   3월 12일   (2주 1일차)
+ 책이나 구글을 통해서 C++, STL을 공부하자
+1. 지연변수인 STACK에 10000마리는 문없이 생성가능 (STACK 기본 1MB, 변경 가능)
+
+해결방법
+1. 개를 전역에 생성하면 된다. 
+		숙제 - (전역변수가 메모리(실행파일) 어떻게에 생성되는지 공부할 필요가 있다)
+2. 개를 자유메모리공간(HEAP)에 생성하면 된다.
+		숙제 - 1번과 2번 해결책의 차이점을 알아보자
+
+내일 개를 1000000 마리 만들고 정렬하자 (10000마리는 잘 되던데...)
+연속된 메모리를 사용 할 수 없어서
+스텍(지역 메모리) 한계가 있다
+힙 (전역 메모리) 
+프로그래밍 돌아간다는 의미 
+하드 디스크에 있는 실행 파일을 메모리 빈곳에 올려서 돔
+
+정렬 해야하는 프로그램
+어딘가에 있는 자료를 읽어 와서 정리함
+
+자료가 파일에 있는 경우 읽어와서 처리해보자
+
+
+#include iostream
+#include string
+#include random
+#include Windows.h
+#include save.h
+
+using namespace std;
+
+class Dog
+{
+private
+	int age;
+	string name{};
+public
+	void setAge(int n) { age = n; }
+	int getAge() const { return age; }
+	string getName() const { return name; }
+	friend ostream & operator (ostream &, const Dog);
+};
+
+
+ostream & operator (ostream & os, const Dog dog)
+{
+	os  이름    dog.getName()  ,   나이    dog.getAge()  endl;
+	return os;
+}
+Dog[100000];
+int main()
+{
+	Dog  p = new Dog[100000];
+
+	default_random_engine drl;								사용할 기본 엔진 선인
+	uniform_int_distributionintuid;						어떻게 분포할지 선언
+
+	for (int i = 0; i100000 ; i++)
+	{
+		p[i].setAge(uid(drl));									랜덤한 int형 자료를 사용하게됨
+	}
+
+	퀵소트 (데이터, 자료형, 자료형 크기, 비교함수 포인터)
+	void  로 자료형을 받을시 모든 자료형의 주소를 가져올 수 있다.
+
+	나이로 값을 비교
+
+	람다 람후
+	[](인자)- 반환 자료형 {내용}
+
+	qsort(p, 10000, sizeof(Dog), [](const void  d1, const void  d2) - int {
+		return static_castconst Dog (d1)-getAge()
+			- static_castconst Dog (d2)-getAge();
+	});
+
+	for (int i = 0; i  100; i++)
+		cout  p[i];
+
+	delete []p;
+	save();
+
+	system(pause);
+
+}
+
+
+
