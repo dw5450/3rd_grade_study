@@ -1,0 +1,62 @@
+#include <iostream>
+#include <Windows.h>
+#include <string>
+using namespace std;
+
+/////////////////////////STL 1주 1일차///////////////////
+// 템플릿만 해보자
+// << 연산자를 사용해보자
+//string을 사용해 보자
+/////////////////////////////////////////////////////////
+
+
+//템플릿을 사용한 간단한 더하기 함수
+//템플릿을 사용하면 자료형 구분 없이 사용 가능
+//컴파일러가 실행 할때 동적으로 쳐줌
+template <class T>
+T sum(T, T);
+
+class Dog
+{
+private:
+	int age;
+	string name;
+
+public:
+	Dog(int age, string name) : age(age), name(name) {}
+	friend ostream & operator<< (ostream &, const Dog &);									//출력을 위한 <<연산자
+};
+
+ostream & operator<< (ostream & os, const Dog & dog)
+{
+	os << "이름 : " << dog.name << endl;
+	os << "나이 : " << dog.age << endl;
+
+	return os;
+}
+
+int main()
+{
+	Dog d = { 1, "순쉬리" };
+	cout << d;
+
+	int n1, n2;
+	n1 = 1;
+	n2 = 22;
+	cout << sum(n1, n2) << endl;
+
+	double d1, d2;
+	d1 = 1.2;
+	d2 = 2.2;
+
+	cout << sum(d1, d2) << endl;
+
+	system("pause");
+}
+
+
+template <class T>
+T sum(T n1, T n2)
+{
+	return n1 + n2;
+}

@@ -1,0 +1,90 @@
+
+////////////////////////////////////////////////////////////////////
+////////////////////0312 stl 2주차 첫 강의/////////////////////////
+//퀵소트
+//
+//람다함수
+//
+//보이드 사용법
+//
+//랜덤 알고리즘 //맛보기			// 값이 항상 고정 된다?
+//
+//
+/////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <string>
+#include <random>
+#include <Windows.h>
+
+using namespace std;
+
+class Dog
+{
+private:
+	int age;
+	string name{};
+public:
+	void setAge(int n) { age = n; }
+	int getAge() const { return age; }
+	string getName() const { return name; }
+	friend ostream & operator<< (ostream &, const Dog);
+};
+
+
+ostream & operator<< (ostream & os, const Dog dog)
+{
+	os << "이름 : " << dog.getName() << ", " << "나이 : " << dog.getAge() << endl;
+	return os;
+}
+int main()
+{
+	Dog dogs[1000];
+
+	default_random_engine drl;								//사용할 기본 엔진 선인
+	uniform_int_distribution<int>uid;						//어떻게 분포할지 선언
+
+	for (auto & d : dogs)
+	{
+		d.setAge(uid(drl));							//랜덤한 int형 자료를 사용하게됨
+	}
+
+	//퀵소트 (데이터, 자료형, 자료형 크기, 비교함수 포인터)
+		//데이터는 연속적인 주소를 가진 데이터로 배열, 백터등?
+		//비교함수 포인터의 인자는 cosnt void *, const void * 이여야 한다
+	
+	//void * 로 자료형을 받을시 모든 자료형의 주소를 가져올 수 있다.
+
+	//람다 함수
+		//[](인자)-> 반환 자료형 {내용}
+		//함수 포인터를 준다고 생각하면 댐
+
+	//나이로 값을 비교
+
+
+
+	qsort(dogs, 1000, sizeof(Dog), [](const void * d1, const void * d2) -> int {
+		return static_cast<const Dog *>(d1)->getAge()
+			- static_cast<const Dog *>(d2)->getAge();
+	});
+
+	////문자열로 값을 비교
+
+	//qsort(dogs, 1000, sizeof(Dog), [](const void * d1, const void * d2) -> int {
+	//	return static_cast<const Dog *>(d1)->getName()
+	//		> static_cast<const Dog *>(d2)->getName();
+	//});
+
+	//for 의 또 다른 사용법
+	//for (auto & 반환값 : 연속적인 데이터?)
+	//참조형을 써야함 auto d를 사용할시 복사를 실행하기 때문
+
+	for (auto & d : dogs)					
+	{
+		cout << d;
+	}
+
+	system("pause");
+
+}
+
+
