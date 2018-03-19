@@ -1,0 +1,59 @@
+/////////////////////////////////////////////////////////////////////////
+//2018 년 3월 19일 STL
+// 책 2장 - Utility functions
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "save.h"
+#include <algorithm>
+using namespace std;
+
+class Dog {
+	int n;
+public:
+	Dog(int n): n(n) {}
+	int getN() const { return n; };
+	operator int()const { return n; }
+};
+//min, max, minmax
+
+int main()
+{
+	Dog a(10), b{ 20 };
+
+	cout << min(a, b, [](const Dog & a, const Dog & b) {
+		return a.getN() < b.getN();
+	}) << endl;
+	//프로그래머가 얼마든지 의미를 바꿀 수 있다
+
+	save();
+}
+
+///////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////
+//2018 년 3월 19일 STL
+// 책 2장 - Utility functions
+//minmax class dog 만들어서 해보기
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "save.h"
+#include <algorithm>
+using namespace std;
+
+//min, max, minmax
+
+int main()
+{
+	pair<int, int> d = minmax({1, 3, 5, 7, 9});
+	cout << d.first << endl;
+	cout << d.second ;
+
+	save();
+}
+
+
+
+
