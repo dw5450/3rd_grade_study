@@ -1,0 +1,75 @@
+#include <iostream>
+#include <windows.h>
+#include <random>
+#include <string>
+#include <fstream>
+#include <cstdlib>
+
+using namespace std;
+
+
+class Dog
+{
+private:
+	int age;
+	string name{};
+public:
+	void setAge(int n) { age = n; }
+	int getAge() const { return age; }
+	string getName() const { return name; }
+	friend ostream & operator<< (ostream &, const Dog);
+};
+
+
+ostream & operator<< (ostream & os, const Dog dog)
+{
+	os << "이름 : " << dog.getName() << ", " << "나이 : " << dog.getAge();
+	return os;
+}
+
+
+int main()
+{
+	//Dog를 저장해보자!
+
+	int dogs_num = 1000;
+	Dog * dogs = new Dog[dogs_num];
+
+
+	uniform_int_distribution<int> uid; //일정한 인트 랜덤
+	default_random_engine dre;
+
+	for (int i = 0; i < dogs_num; i++)
+		dogs[i].setAge(uid(dre));
+
+
+	qsort(dogs, dogs_num, sizeof(Dog), [](const void * d1, const void * d2)-> int {
+		return static_cast<const Dog*>(d1)->getAge()
+			- static_cast<const Dog*>(d2)->getAge();
+	});
+	
+	ofstream out("Dogs를 저장해 보자!", ios::binary);
+
+	out.write((const char *)dogs, sizeof(Dog) * dogs_num);
+
+
+	//도그를 읽어보자!
+
+	//Dog * dogs = new Dog[1000];
+
+
+	//ifstream in("Dogs를 저장해 보자!", ios::binary);
+	//in.read((char *)dogs, sizeof(Dog) * 10);
+
+	//////여기서 에러가 난다?
+	////for (int i = 0; i < 20; ++i)
+	////	cout << dogs[i] << endl;
+
+	//delete[]dogs;
+
+	system("pause");
+	return 0;
+}
+
+
+

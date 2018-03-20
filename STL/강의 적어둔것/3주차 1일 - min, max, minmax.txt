@@ -30,3 +30,58 @@ int main()
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////
+////////////////////0312 stl 2주차 첫 강의/////////////////////////
+//dog 10000개를 저장 하고 그를 읽어서 소트 하기
+//---------
+/////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include "save.h"
+
+using namespace std;
+
+class Dog {
+	int n;
+public:
+	Dog(int	n) :n(n) {}
+	int getN()const { return n;  }
+	operator int()const{ return n; }
+};
+
+//min, max, minmax
+//int main()
+//{
+//
+//	//min의 사용법
+//	cout << "std::min(2011, 2014) : "<<std::min(2011, 2014) << endl;
+//	cout << "std::min({ 3, 1, 2011, 2014, -5 }) : " << std::min({ 3, 1, 2011, 2014, -5 }) << endl;
+//	cout << " std::min(-10, -5, [](const int & n1, const int & n2) {return std::abs(n1) < std::abs(n2); }) : "
+//		<< std::min(-10, -5, [](const int & n1, const int & n2)
+//	{return std::abs(n1) < std::abs(n2); }) << endl << endl;
+//
+//	//max의 사용법
+//	cout << "std::max(2011, 2014) : " << std::max(2011, 2014) << endl;
+//	cout << "std::max({ 3, 1, 2011, 2014, -5 }) : " << std::max({ 3, 1, 2011, 2014, -5 }) << endl;
+//	cout << "std::max({ 3, 1, 2011, -2014, -5 }, [](const int & n1, const int & n2){return std::abs(n1) < std::abs(n2); }) : " 
+//		<< std::max({ 3, 1, 2011, -2014, -5 }, [](const int & n1, const int & n2)
+//	{return std::abs(n1) < std::abs(n2); }) << endl << endl;
+//
+//
+//	//minmax의 사용법
+//	auto pairInt = std::minmax(2011, 2014);
+//	auto pairSeq = std::minmax({ 3, 1, 2011, 2014, -5 });
+//	auto pairAbs = std::minmax({ 3, 1, 2011, 2014, -5 }, [](int a, int b)
+//	{return std::abs(a) < std::abs(b); });
+//
+//	cout << "std::minmax(2011, 2014) : " << pairInt.first << ", " << pairInt.second << endl;
+//	cout << "std::minmax({ 3, 1, 2011, 2014, -5 } : );"<<pairSeq.first << "," << pairSeq.second << endl;
+//	cout << "std::minmax({ 3, 1, 2011, 2014, -5 }, [](int a, int b) : " << pairAbs.first << "," << pairAbs.second << endl;
+//	
+//	save();
+//
+//	system("pause");
+//}
