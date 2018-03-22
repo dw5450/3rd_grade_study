@@ -1,0 +1,103 @@
+#include thread
+auto begin = chronohigh_resolution_clocknow();
+
+chronohigh_resolution_clocknow();
+
+this_threadsleep_for(300ms);	1411이상에서만 돌아감
+
+auto elapsedTime = chronohigh_resolution_clocknow() - begin;
+cout  chronodurationdouble(elapsedTime).count()  초  endl;
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+//2018 년 3월 20일 STL
+// 책 2장 - Utility functions
+//
+//벡터에서 Model 클레스 관찰
+//숙제 오늘 만든 클래스 관찰 코드를 여러번 실행해보며 이해하는 척 하자
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <vector>
+#include "save.h"
+using namespace std;
+
+int gid = 0;
+//min, max, minmax
+
+class Model
+{
+	int id;
+	char * data = nullptr;				//동적 할당한 메모리의 시작번지
+	size_t size = 0;					//메모리의 크기
+
+
+
+public:
+	Model() : id(++gid) {
+		cout << id << " - default ctor" << endl;		//생성자 관찰
+		}
+
+	Model(int n) : size(n), id(++gid) {
+		data = new char[n];
+		cout << id <<"ctor - "  << size << "바이트, 주소 : " << static_cast<void *>(data) << endl;		//생성자 관찰
+	}
+
+	Model(const Model & other)  : id(++gid) {
+		size = other.size;
+	
+		data = new char[size];
+
+		memcpy(data, other.data, size);	//deep copy
+		cout << id <<"copy , size_t : " << this->size << endl;		//생성자 관찰
+	}
+
+	size_t getSize_t() const {return size;}
+	char * getData() const { return data; }
+
+	~Model()
+	{
+		cout << id << "dtor - " << size << "바이트, 주소 :" << static_cast<void *>(data) << endl;		//생성자 관찰
+		if(data != nullptr)
+			delete [] data;
+	}
+
+
+	Model & operator=(const Model & other)
+	{
+		if (this == &other)
+			return *this;
+
+		size = other.size;
+		if (data != nullptr)
+			delete[] data;
+
+		data = new char[size];
+
+		memcpy(data, other.data, size);	//deep copy
+		cout << "operator, size_t : " << this->size << endl;		//생성자 관찰
+
+		return *this;
+	}
+};
+
+int main()
+{
+	vector<Model> v;// 스택에 생기는 메모리
+
+	Model a{ 111 };
+	
+	v.push_back( a );
+
+
+
+
+	save();
+
+	cout << "메인문 종료 " << endl;
+	//백터가 더 나중에 소멸된다?
+	
+};
+

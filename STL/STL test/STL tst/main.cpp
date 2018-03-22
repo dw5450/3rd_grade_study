@@ -1,48 +1,16 @@
-
-
-////////////////////////////////////////////////////////////////////
-////////////////////0312 stl 3주차 첫 강의/////////////////////////
-//class 복습
-//---------
-/////////////////////////////////////////////////////////////////////
 #include <iostream>
-#include "save.h"
+#include <thread>
 
-using namespace std;
-
-class Model {
-	char * data = nullptr;			//동적할당한 메모리의 시작번지
-	size_t size;					//메모리의 크기
-
-public:
-	Model() : size(0){
-		cout << "default ctor " << endl;
-	}
-
-	Model(int size) : size(size) {
-		data = new char[size];
-		cout << "ctor size : " << size << " data : " << static_cast<void *>(data) << endl;
-	}
-
-	~Model()
-	{
-		cout << "dtor " << endl;
-		if (data != nullptr)
-			delete[] data;
-	}
-
-};
-//min, max, minmax
 int main()
 {
+	// 시작 시간
+	auto beginTime = std::chrono::high_resolution_clock::now();
 
-	Model a;
-	{
-		Model b{ 1000 };
-	}
+	std::cout << " 돌아간다 함수 함수" << std::endl;
 
-	cout << "main 문 종료! " << endl;
+	auto elapsedTime = std::chrono::high_resolution_clock::now() - beginTime;
+
+	std::cout << "함수가 돌아간 시간: " << std::chrono::duration<double>(elapsedTime).count() << std::endl;
 
 
-	
 }
