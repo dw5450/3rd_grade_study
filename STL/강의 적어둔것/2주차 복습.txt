@@ -26,7 +26,7 @@ using namespace std;
 
 uniform_int_distribution <> uid(0, 100);
 default_random_engine dre;
-
+a
 class Dog
 {
 	int age;
