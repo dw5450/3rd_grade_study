@@ -1,0 +1,57 @@
+
+/////////////////////////////////////////////////////////////////////////
+//2018년 4월 3일 화요일 STL               5주차 2
+// 책 2장 - Utility functions
+//
+//sequence container
+//		array, vector, deque, forward_list, list
+//
+//associative  conaioner
+//	set, multiset, map, multimap
+//
+//unordered_associative  conaioner(Hash 자료구조)						//서치 시간이 상수?
+//	unordered_set, unordered_multiset, unordered_map, unordered_multimap
+//
+// int -> Model로 바꿔 실행시켜라. (안되는건 되게 해보자!)
+//////////////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+using namespace std;
+
+//컨테이너의 요소 접근
+
+
+//컨테이너야 너 첫번째 원소는 뭐니 마지막은 머니
+
+//알고리즘이 물어보고 반복해버렷
+
+//반복자를 사용해서 
+
+//자료와 처리하는 알고리즘를 완벽히 구분해버렷
+
+//소스.cpp의 내용을 단어 단위로 읽어 벡터에 저장하자
+
+int main()
+{
+	vector<string> v;
+
+	ifstream in("소스.cpp");
+	string s;
+
+	while ( in >> s)
+		v.push_back(s);
+	
+	auto beg = v.begin();
+	auto end = v.end();
+
+	for (auto i = beg; i < end; ++i) {
+		string s = *i;
+		for (auto i = s.rend(); i < s.rbegin(); ++i)
+			cout << *i << endl;
+		cout << *i << endl;
+	}
+	
+	cout << "__________메인문 종료 ____________" << endl;
+};
+
+//888888888888888888888888888888888888888888888888888888
