@@ -9,6 +9,7 @@
 #include <string>
 #include <random>
 #include <Windows.h>
+#include <Algorithm>	 b
 #include <fstream>
 #include "save.h"
 
