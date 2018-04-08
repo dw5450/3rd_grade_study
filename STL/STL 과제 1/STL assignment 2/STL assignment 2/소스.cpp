@@ -67,8 +67,10 @@ public:
 		ifstream player_in(m_sLoad_Data_Name, ios::binary);
 		m_pvPlayers.reserve(INITPAYERNUM);
 		if (player_in) {
-			//vector<CGamePlayer> temp_players(INITPAYERNUM);
-			//player_in.read(reinterpret_cast<char *> (temp_players.data()), sizeof(shared_ptr<CGamePlayer>) * m_iPlayer_Num);				//느낌이 리드가 제대로 안될 느낌
+			//전체 불러온 데이터로 초기화
+			vector<CGamePlayer> temp_players(INITPAYERNUM);
+			for (int i = 0; i< INITPAYERNUM; i++)
+				m_pvPlayers.push_back(shared_ptr<CGamePlayer>(&temp_players[i]));
 																																			//파일 하나에 어떻게 하면 다 담을수 있을까?
 		}
 		else
