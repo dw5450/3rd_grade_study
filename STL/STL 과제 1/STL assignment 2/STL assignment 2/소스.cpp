@@ -16,14 +16,14 @@ class CGamePlayer
 {
 public:
 	CGamePlayer(int iId, int iSchool_Score, int iEscape_Score) :
-		m_iId(iId), m_iSchool_Score(iSchool_Score), m_iEscape_Score(iEscape_Score){}
+		iId(iId), m_iSchool_Score(iSchool_Score), m_iEscape_Score(iEscape_Score){}
 	void SetInfo(int iId, int iSchool_Score, int iEscape_Score) {
-		m_iId = iId;	//자신의 아이디	
+		iId = iId;	//자신의 아이디	
 		m_iSchool_Score = iSchool_Score;//쿠키 훈련소 점수
 		m_iEscape_Score = iEscape_Score;	//쿠키 훈련소 점수
 	}
 
-	int GetId()const { return m_iId; }
+	int GetId()const { return iId; }
 	int GetSchoolScore()const { return m_iSchool_Score; }
 	int GetEscapeScore()const { return m_iEscape_Score; }
 	int GetSchoolRank()const { return m_iSchool_Rank; }
@@ -35,14 +35,14 @@ public:
 	void SetEscapeRank(int iEscape_Rank) { m_iEscape_Rank = iEscape_Rank; }
 	void SetPlayed(bool bPlayed) { m_bPlayed = bPlayed; }
 	void ShowInfo()const {
-		cout << "ID : " << m_iId << endl;
+		cout << "ID : " << iId << endl;
 		cout << "쿠키 훈련소 랭크	: " << m_iSchool_Rank << "       쿠키 훈련소 점수	: " << m_iSchool_Score << endl;
 		cout << "떼탈출 랭크		: " << m_iEscape_Rank << "       떼탈출 점수	: " << m_iEscape_Score  <<endl;
 		cout << "----------------------------------------------------------------------------------------" << endl;
 	}
 
 private:
-	int m_iId;					//자신의 아이디	
+	int iId;					//자신의 아이디	
 	int m_iSchool_Score = 0;		//쿠키 훈련소 점수
 	int m_iEscape_Score = 0;		//쿠키 훈련소 점수
 	int m_iSchool_Rank = 0;		//쿠키 훈련소 점수
@@ -65,15 +65,15 @@ public:
 		m_uidSchool_Distribuition = uniform_int_distribution<int>(0, SCHOLLMAXSCORE);
 		m_uidEacape_Distribuition = uniform_int_distribution<int>(0, ESCAPEMAXSCORE);
 		ifstream player_in(m_sLoad_Data_Name, ios::binary);
-		m_pvPlayers.reserve(INITPAYERNUM);
-		if (player_in) {
-			//전체 불러온 데이터로 초기화
-			vector<CGamePlayer> temp_players(INITPAYERNUM);
-			for (int i = 0; i< INITPAYERNUM; i++)
-				m_pvPlayers.push_back(shared_ptr<CGamePlayer>(&temp_players[i]));
-																																			//파일 하나에 어떻게 하면 다 담을수 있을까?
-		}
-		else
+		//m_pvPlayers.reserve(INITPAYERNUM);
+		//if (player_in) {
+		//	//전체 불러온 데이터로 초기화
+		//	vector<CGamePlayer> temp_players(INITPAYERNUM);
+		//	for (int i = 0; i< INITPAYERNUM; i++)
+		//		m_pvPlayers.push_back(shared_ptr<CGamePlayer>(&temp_players[i]));
+		//																																	//파일 하나에 어떻게 하면 다 담을수 있을까?
+		//}
+		//else
 		{	//전체 플레이어 점수,랭크 초기화
 			for (m_iPlayer_Num = 0; m_iPlayer_Num < INITPAYERNUM; ++m_iPlayer_Num) {
 				m_pvPlayers.push_back(shared_ptr<CGamePlayer>(new CGamePlayer(m_iPlayer_Num, m_uidSchool_Distribuition(m_dre), m_uidEacape_Distribuition(m_dre))));
@@ -82,7 +82,7 @@ public:
 		m_pvSorted_School_Players = m_pvPlayers;
 		m_pvSorted_Escape_Players = m_pvPlayers;
 		SortSchoolRank();
-		SortEscapeRank();
+	//	SortEscapeRank();
 		
 		//플레이어 설정
 		m_pPlayer = m_pvPlayers[0];

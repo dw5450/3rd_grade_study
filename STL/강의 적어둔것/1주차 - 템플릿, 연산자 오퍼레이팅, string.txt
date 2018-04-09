@@ -1,0 +1,32 @@
+템플릿
+
+template <class T>
+T sum(T n1, T n2) { return n1 + n2; }
+
+
+
+
+
+스트링 and 출력 연산 오퍼레이팅 and string
+
+
+//#include<string>
+
+class Dog
+{
+private:
+	int age;
+	string name;
+
+public:
+	Dog(int age, string name) : age(age), name(name) {}
+	friend ostream & operator<< (ostream &, const Dog &);									//출력을 위한 <<연산자
+};
+
+ostream & operator<< (ostream & os, const Dog & dog)
+{
+	os << "이름 : " << dog.name << endl;
+	os << "나이 : " << dog.age << endl;
+
+	return os;
+}
