@@ -1,0 +1,9 @@
+#include <chrono>
+auto begin = chronohigh_resolution_clocknow();
+
+chronohigh_resolution_clocknow();
+
+this_threadsleep_for(300ms);	1411이상에서만 돌아감
+
+auto elapsedTime = chronohigh_resolution_clocknow() - begin;
+cout  chronodurationdouble(elapsedTime).count()  초  endl;

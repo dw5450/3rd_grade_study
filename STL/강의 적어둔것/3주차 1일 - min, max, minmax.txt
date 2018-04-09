@@ -1,35 +1,9 @@
 /////////////////////////////////////////////////////////////////////////
 //2018 년 3월 19일 STL
 // 책 2장 - Utility functions
+
+//min, max, minm
 //////////////////////////////////////////////////////////////////////////////
-
-#include <iostream>
-#include <algorithm>
-using namespace std;
-
-class Dog {
-	int n;
-public:
-	Dog(int n): n(n) {}
-	int getN() const { return n; };
-	operator int()const { return n; }
-};
-//min, max, minmax
-
-int main()
-{
-	Dog a(10), b{ 20 };
-
-	cout << min(a, b, [](const Dog & a, const Dog & b) {
-		return a.getN() < b.getN();
-	}) << endl;
-	//프로그래머가 얼마든지 의미를 바꿀 수 있다
-
-	save();
-}
-
-
-
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////0312 stl 2주차 첫 강의/////////////////////////

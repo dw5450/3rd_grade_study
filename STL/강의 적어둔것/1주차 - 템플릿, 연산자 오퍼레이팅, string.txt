@@ -4,9 +4,6 @@ template <class T>
 T sum(T n1, T n2) { return n1 + n2; }
 
 
-
-
-
 스트링 and 출력 연산 오퍼레이팅 and string
 
 
