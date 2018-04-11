@@ -1,0 +1,838 @@
+--------------------------------------------
+강의시간: Tue Apr 10 14:04:58 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+using namespace std;
+
+class Player {
+	string id;
+	int rank1;
+	int rank2;
+	
+	int s1;
+	int s2;
+public:
+	Player(string s, int n1, int n2) :id(s), s1(n1), s2(n2) {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << " , 점수 2: " << s2 << endl;
+	}
+	int getS1() const { return s1; }
+
+	int getS2() const { return s2; }
+
+};
+
+int main() {
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	for (const Player & d : v) {
+		d.show();
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS2();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:05:32 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+using namespace std;
+
+class Player {
+	string id;
+	int rank1;
+	int rank2;
+	
+	int s1;
+	int s2;
+public:
+	Player(string s, int n1, int n2) :id(s), s1(n1), s2(n2) {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << " , 점수 2: " << s2 << endl;
+	}
+	int getS1() const { return s1; }
+
+	int getS2() const { return s2; }
+
+};
+
+int main() {
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	for (const Player & d : v) {
+		d.show();
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS2();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면
+	for (const Player & d : v) {
+		d.show();
+	}
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:07:48 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+using namespace std;
+
+class Player {
+	string id;
+	int rank1;
+	int rank2;
+	
+	int s1;
+	int s2;
+public:
+	Player(string s, int n1, int n2) :id(s), s1(n1), s2(n2) {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << " , 점수 2: " << s2 << endl;
+	}
+	int getS1() const { return s1; }
+
+	int getS2() const { return s2; }
+
+};
+
+int main() {
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	for (const Player & d : v) {
+		d.show();
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS1();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면 가독성이 좋다! 정렬기준을 바로 알수있다!
+	//함수를 사용한다면 갔다왔다 반복 - 느리다!
+	for (const Player & d : v) {
+		d.show();
+	}
+
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:33:36 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+using namespace std;
+
+class Player {
+	string id;
+	int rank1;
+	int rank2;
+	int s1;
+	int s2;
+
+public:
+	Player(string s, int n1, int n2) :id(s), s1(n1), s2(n2) {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << "( "  <<  rank1 << " ) , 점수 2: " << s2 << "( "<<rank2<<" )"<< endl;
+	}
+	int getS1() const { return s1; }
+	int getS2() const { return s2; }
+
+	void setRank1(int r) { rank1 = r; }
+	void setRank2(int r) { rank2 = r; }
+
+};
+
+int main() {
+	// 파일이 없다면 만들기 (파일처리하기)
+	// 게임 실행시키기 등 
+	// 순서도로 만들자! 메인문 100줄이상 넘지말즈아ㅏ!
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS1();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면 가독성이 좋다! 정렬기준을 바로 알수있다!
+	//함수를 사용한다면 갔다왔다 반복 - 느리다!
+	//람다는 함수호출없이 사용가능하다.
+	int rank = 1;
+	//등수를 기록하자
+	for (Player& d : v) {
+		d.setRank1(rank++);
+	}
+
+	//게임 2 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS2() > b.getS2();}
+	);	
+	rank = 1;
+	//게임 2등수를 기록하자
+	for (Player& d : v) {
+		d.setRank2(rank++);
+	}
+	//메인이 100줄이상이면 개쓰레기다!
+
+	for (const Player & d : v) {
+		d.show();
+	}
+
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:44:42 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+using namespace std;
+
+class Player {
+	char id[10];
+	int rank1;
+	int rank2;
+	int s1;
+	int s2;
+
+public:
+	Player(string s, int n1, int n2) : s1(n1), s2(n2) {
+		strcpy(id, s.c_str());
+	}	//string은 힙에박혀있다. 입출력때 어려워용
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << "( "  <<  rank1 << " ) , 점수 2: " << s2 << "( "<<rank2<<" )"<< endl;
+	}
+	int getS1() const { return s1; }
+	int getS2() const { return s2; }
+
+	void setRank1(int r) { rank1 = r; }
+	void setRank2(int r) { rank2 = r; }
+
+};
+
+int main() {
+	// 파일이 없다면 만들기 (파일처리하기)
+	// 게임 실행시키기 등 
+	// 순서도로 만들자! 메인문 100줄이상 넘지말즈아ㅏ!
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS1();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면 가독성이 좋다! 정렬기준을 바로 알수있다!
+	//함수를 사용한다면 갔다왔다 반복 - 느리다!
+	//람다는 함수호출없이 사용가능하다.
+	int rank = 1;
+	//등수를 기록하자
+	for (Player& d : v) {
+		d.setRank1(rank++);
+	}
+
+	//게임 2 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS2() > b.getS2();}
+	);	
+	rank = 1;
+	//게임 2등수를 기록하자
+	for (Player& d : v) {
+		d.setRank2(rank++);
+	}
+	//메인이 100줄이상이면 개쓰레기다!
+
+	for (const Player & d : v) {
+		d.show();
+	}
+
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:47:44 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+#include <fstream>
+using namespace std;
+
+class Player {
+	char id[10];
+	int rank1;
+	int rank2;
+	int s1;
+	int s2;
+
+public:
+	Player(string s, int n1, int n2) : s1(n1), s2(n2) {
+		strcpy(id, s.c_str());
+	}	//string은 힙에박혀있다. 입출력때 어려워용
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << "( "  <<  rank1 << " ) , 점수 2: " << s2 << "( "<<rank2<<" )"<< endl;
+	}
+	int getS1() const { return s1; }
+	int getS2() const { return s2; }
+
+	void setRank1(int r) { rank1 = r; }
+	void setRank2(int r) { rank2 = r; }
+
+};
+
+int main() {
+	// 파일이 없다면 만들기 (파일처리하기)
+	// 게임 실행시키기 등 
+	// 순서도로 만들자! 메인문 100줄이상 넘지말즈아ㅏ!
+
+	vector <Player> v;
+	v.reserve(1000);
+	//v에 player 1000개 삽임하라
+	//s1 오름차순으로 정렬하라
+	//전체를 출력하라
+
+	random_device rd;	// dre.seed 대신 저걸로 초기화해주자.
+	default_random_engine dre(rd());
+//	dre.seed(time(NULL));	time.h 헤더가져오자
+	uniform_int_distribution<> uid1(0, 30000000);
+	uniform_int_distribution<> uid2(0, 400000000);
+	
+	for (int i = 0; i < 1000;++i) {
+		v.emplace_back(string("선수") + to_string(i + 1), uid1(dre), uid2(dre));
+	}
+	// 1000명 생성 완!
+	// 각 게임에 대한 등수를 기록해야 한다!
+	//게임별로 내림차순으로 정렬하여야 한다
+
+	//sort는 릴리지모드에선 빠르다!
+	//algorithm function sort();	메모리가 연속된(contiguous) 자료구조 [],array,vector, deque,string에서 사용가능 (시간적 continue 공간 contigue
+	
+	//게임점수로 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS1() > b.getS1();}
+	);	//방법은 호출가능타입방법!(함수도 맞긴한데, 더큰범위다)
+	//람다로 쓰면 가독성이 좋다! 정렬기준을 바로 알수있다!
+	//함수를 사용한다면 갔다왔다 반복 - 느리다!
+	//람다는 함수호출없이 사용가능하다.
+	int rank = 1;
+	//등수를 기록하자
+	for (Player& d : v) {
+		d.setRank1(rank++);
+	}
+
+	//게임 2 정렬
+	sort(begin(v), end(v), [](const Player& a, const Player& b) {
+		return a.getS2() > b.getS2();}
+	);	
+	rank = 1;
+	//게임 2등수를 기록하자
+	for (Player& d : v) {
+		d.setRank2(rank++);
+	}
+	//메인이 100줄이상이면 개쓰레기다!
+
+	for (const Player & d : v) {
+		d.show();
+	}
+
+	ofstream out("과제1.dat", ios::binary); //binary와 txt차이는?
+	out.write((const char*)v.data(), sizeof(Player) * 1000);
+	save();
+}
+
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:55:32 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//입력받기
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+#include <fstream>
+using namespace std;
+
+class Player {
+	char id[10];
+	int rank1;
+	int rank2;
+	int s1;
+	int s2;
+
+public:
+	Player(string s, int n1, int n2) : s1(n1), s2(n2) {
+		strcpy(id, s.c_str());
+	}	//string은 힙에박혀있다. 입출력때 어려워용
+	Player() {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << "( "  <<  rank1 << " ) , 점수 2: " << s2 << "( "<<rank2<<" )"<< endl;
+	}
+	int getS1() const { return s1; }
+	int getS2() const { return s2; }
+
+	void setRank1(int r) { rank1 = r; }
+	void setRank2(int r) { rank2 = r; }
+
+};
+
+int main() {
+	vector<Player> v(1000);	//reserve랑 다름, 이것은 1000개의 디폴트벡터를 만든다.
+	ifstream in("과제1.dat", ios::binary);
+	in.read((char*)v.data(), sizeof(Player) * 1000);//벡터에 할당된 공간에 정보넣어버리기~
+	cout << v.size() << endl;
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 14:56:31 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//입력받기
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+#include <memory>
+#include <vector>
+#include <array>
+#include <string>
+#include <random>
+#include <algorithm>
+#include <fstream>
+using namespace std;
+
+class Player {
+	char id[10];
+	int rank1;
+	int rank2;
+	int s1;
+	int s2;
+
+public:
+	Player(string s, int n1, int n2) : s1(n1), s2(n2) {
+		strcpy(id, s.c_str());
+	}	//string은 힙에박혀있다. 입출력때 어려워용
+	Player() {}
+	void show() const {
+		cout << id << " , 점수 1: " << s1 << "( "  <<  rank1 << " ) , 점수 2: " << s2 << "( "<<rank2<<" )"<< endl;
+	}
+	int getS1() const { return s1; }
+	int getS2() const { return s2; }
+
+	void setRank1(int r) { rank1 = r; }
+	void setRank2(int r) { rank2 = r; }
+
+};
+
+int main() {
+	vector<Player> v(1000);	//reserve랑 다름, 이것은 1000개의 디폴트벡터를 만든다.
+	ifstream in("과제1.dat", ios::binary);
+	in.read((char*)v.data(), sizeof(Player) * 1000);//벡터에 할당된 공간에 정보넣어버리기~
+	cout << v.size() << endl;
+	
+	for (const Player&d : v) {
+		d.show();
+	
+	}
+	
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 15:10:48 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//호출가능타입(Callable Type) - 97p
+// - 합수, 멤버함수, 함수포인터, 람다, 함수객체, bind가 생성한 객체,funtion 으로 만든 객체
+// - 템플릿 때문에 호출가능타입이라는 것이 생김 
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+
+
+template<class T>
+void f(T t) {
+	t();
+}
+using namespace std;
+
+void X() {
+	cout << "나는 함수 x다요!" << endl;
+}
+int main() {
+	f(X);
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 15:11:48 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//호출가능타입(Callable Type) - 97p
+// - 합수, 멤버함수, 함수포인터, 람다, 함수객체, bind가 생성한 객체,funtion 으로 만든 객체
+// - 템플릿 때문에 호출가능타입이라는 것이 생김 
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+
+
+template<class T>
+void f(T t) {
+	t();
+}
+using namespace std;
+
+void X() {
+	cout << "나는 함수 x다요!" << endl;
+}
+int main() {
+	f(X);
+	f([]() {cout << "나는 람다가 되겠어!" << endl;});
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 15:13:43 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//호출가능타입(Callable Type) - 97p
+// - 합수, 멤버함수, 함수포인터, 람다, 함수객체, bind가 생성한 객체,funtion 으로 만든 객체
+// - 템플릿 때문에 호출가능타입이라는 것이 생김 
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+
+
+template<class T>
+void f(T t) {
+	t();
+}
+using namespace std;
+
+void X() {
+	cout << "나는 함수 x다요!" << endl;
+}
+class Test {
+public:
+	void operator()() {
+		cout << "나는 클래스의 맴버 함 수  다   !!!" << endl;
+	}	//함수호출연산자
+};
+
+int main() {
+	f(X);
+	f([]() {cout << "나는 람다가 되겠어!" << endl;});
+	
+	Test t;
+	f(t);
+	save();
+}
+
+--------------------------------------------
+강의시간: Tue Apr 10 15:18:53 2018
+
+--------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+//---------------------------------------------------------------
+// 2018. 1 . STL					4월 10일		(6주 2)
+
+//
+//4장 순차 컨테이너(sequence container)
+//
+//클래스 쪼개보자
+//array,vector,deque,list,forward_list
+
+//호출가능타입(Callable Type) - 97p
+// - 합수, 멤버함수, 함수포인터, 람다, 함수객체, bind가 생성한 객체,funtion 으로 만든 객체
+// - 템플릿 때문에 호출가능타입이라는 것이 생김 
+//---------------------------------------------------------------
+#include <iostream>
+#include "save.h"
+
+
+template<class T>
+void f(T t) {
+	t();
+}
+using namespace std;
+
+void X() {
+	cout << "나는 함수 x다요!" << endl;
+}
+class Test {
+	int member = 0;
+public:
+	void operator()() {	//함수객체
+		member++;
+		cout << "나는 클래스의 맴버 함 수  다   !!!" << endl;
+	}	//함수호출연산자
+};
+
+int main() {
+	Test t;	// t.operator()(); 오버로딩된 오퍼레이터 호출!
+	f(t);
+	save();
+}
+
