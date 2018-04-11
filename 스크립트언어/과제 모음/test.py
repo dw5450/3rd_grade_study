@@ -1,33 +1,31 @@
-from functools import *
-	#functools 모듈에서 *가져옮
-             #reduce 함수 사용하기 위해
+def Anagram(str1, str2):
+    Flag = True
+    if len(str1) == len(str2):
+        list1 = list2 = []
+        list1 += str1
+        list2 += str2
+        list1.sort()
+        list2.sort()
+        cnt = 0
+        for i in range(len(str2)):
+            if list1[i] != list2[i]:
+                Flag = False
+                break
 
-def intersect(*ar):     #교집합
-    return reduce(__intersectSC, ar)
+    else :
+        Flag = False
 
-def __intersectSC(listX, listY):
-    setList = []
-    for x in listX:
-        if x in listY:
-            setList.append(x)
-    return setList
+    if Flag == True:
+        print("{0} & {1} are anagrams.".format(str1, str2))
+    else :
+        print("{0} & {1} are Not anagrams.".format(str1, str2))
 
+n = eval(input())
+for i in range(n):
+    sl = input().split()
 
- def difference(*ar):    #차집합
-    setList = []
-    intersectSet = intersect(*ar)
-    unionSet = union(*ar)
-    for x in unionSet:
-        if not x in intersectSet:
-            setList.append(x)
-    return setList
+    str1 = sl[0]
+    str2 = sl[1]
+    Anagram(str1, str2)
 
-def union(*ar):            #합집합
-    setList = []
-    for item in ar:
-        for x in item:
-            if not x in setList:
-                setList.append(x)
-    return setList
-
-
+  #  sl.clear()A

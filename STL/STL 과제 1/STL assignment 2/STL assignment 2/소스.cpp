@@ -16,7 +16,7 @@ class CGamePlayer
 {
 public:
 	CGamePlayer(int iId, int iSchool_Score, int iEscape_Score) :
-		iId(iId), m_iSchool_Score(iSchool_Score), m_iEscape_Score(iEscape_Score){}
+		iId(iId), m_iSchool_Score(iSchool_Score), m_iEscape_Score(iEscape_Score) {}
 	void SetInfo(int iId, int iSchool_Score, int iEscape_Score) {
 		iId = iId;	//자신의 아이디	
 		m_iSchool_Score = iSchool_Score;//쿠키 훈련소 점수
@@ -27,9 +27,9 @@ public:
 	int GetSchoolScore()const { return m_iSchool_Score; }
 	int GetEscapeScore()const { return m_iEscape_Score; }
 	int GetSchoolRank()const { return m_iSchool_Rank; }
-	int GetEscapeRank()const { return m_iEscape_Rank;  }
+	int GetEscapeRank()const { return m_iEscape_Rank; }
 	bool GetPlayed()const { return m_bPlayed; }
-	void SetSchoolScore(int iSchool_Score) {  m_iSchool_Score = iSchool_Score; }
+	void SetSchoolScore(int iSchool_Score) { m_iSchool_Score = iSchool_Score; }
 	void SetEscapeScore(int iEscape_Score) { m_iEscape_Score = iEscape_Score; }
 	void SetSchoolRank(int iSchoo_lRank) { m_iSchool_Rank = iSchoo_lRank; }
 	void SetEscapeRank(int iEscape_Rank) { m_iEscape_Rank = iEscape_Rank; }
@@ -37,7 +37,7 @@ public:
 	void ShowInfo()const {
 		cout << "ID : " << iId << endl;
 		cout << "쿠키 훈련소 랭크	: " << m_iSchool_Rank << "       쿠키 훈련소 점수	: " << m_iSchool_Score << endl;
-		cout << "떼탈출 랭크		: " << m_iEscape_Rank << "       떼탈출 점수	: " << m_iEscape_Score  <<endl;
+		cout << "떼탈출 랭크		: " << m_iEscape_Rank << "       떼탈출 점수	: " << m_iEscape_Score << endl;
 		cout << "----------------------------------------------------------------------------------------" << endl;
 	}
 
@@ -82,8 +82,8 @@ public:
 		m_pvSorted_School_Players = m_pvPlayers;
 		m_pvSorted_Escape_Players = m_pvPlayers;
 		SortSchoolRank();
-	//	SortEscapeRank();
-		
+		//	SortEscapeRank();
+
 		//플레이어 설정
 		m_pPlayer = m_pvPlayers[0];
 
@@ -110,7 +110,7 @@ public:
 		}
 	};																//나중에 통합			//떼탈출 점수로 소트
 
-	
+
 	void SetPlayer()
 	{
 		cout << "'나'로 설정할 id를 입력해 주세요 0 ~ " << INITPAYERNUM << endl;
@@ -124,7 +124,7 @@ public:
 		}
 		else
 			cout << " 플레이어를 설정 할 수 없습니다. " << endl;
-		
+
 	}
 	void PlayPlayers()
 	{
@@ -135,13 +135,13 @@ public:
 	void PlaySchool()
 	{
 		int iPlay_num = PLAYPlAYERSNUM;																				//한번에 플레이 되는 인원
-		uniform_int_distribution<int> uidRandom_Player_Index(0, m_iPlayer_Num -1);										//학교 탈출 랜덤 점수
-		
+		uniform_int_distribution<int> uidRandom_Player_Index(0, m_iPlayer_Num - 1);										//학교 탈출 랜덤 점수
+
 		int play_idex = 0;
 		int play_cnt = 0;																									//현제 플레이 된 수
 		int iPrev_Player_Rank = m_pPlayer->GetSchoolRank();
 		//'나부터 플레이																													//
-	
+
 		int temp_i = m_uidSchool_Distribuition(m_dre);
 		if (temp_i > m_pPlayer->GetSchoolScore())
 			m_pPlayer->SetSchoolScore(temp_i);
@@ -171,13 +171,13 @@ public:
 		//정보 출력!
 		int iRank = m_pPlayer->GetSchoolRank();
 		cout << "--------------------------------------------------쿠키 훈련소------------------------------------------------" << endl;
-		cout << "플레이어의 ID  : " << m_pPlayer->GetId() << "		점수 : " << m_pPlayer->GetSchoolScore() << "		순위 : " << iRank << "		상위 "<< double(m_iPlayer_Num / (iRank))<< "%" << "		등수 변동 : " << iRank - iPrev_Player_Rank << endl;
-		
+		cout << "플레이어의 ID  : " << m_pPlayer->GetId() << "		점수 : " << m_pPlayer->GetSchoolScore() << "		순위 : " << iRank << "		상위 " << double(m_iPlayer_Num / (iRank)) << "%" << "		등수 변동 : " << iRank - iPrev_Player_Rank << endl;
+
 		if (iRank > 0) {
 			shared_ptr<CGamePlayer> prevPlayer = m_pvSorted_School_Players[iRank - 1];
-			cout << "이전 등수 ID  : " << prevPlayer->GetId() << "		점수 : " << prevPlayer->GetSchoolScore() << "		순위 : " << prevPlayer->GetSchoolRank() <<endl;
+			cout << "이전 등수 ID  : " << prevPlayer->GetId() << "		점수 : " << prevPlayer->GetSchoolScore() << "		순위 : " << prevPlayer->GetSchoolRank() << endl;
 		}
-		else if (iRank < m_iPlayer_Num -1) cout << "네가 최고야.." << endl;
+		else if (iRank < m_iPlayer_Num - 1) cout << "네가 최고야.." << endl;
 		else cout << "PlayEscape 에서 오류가 발생하였습니다" << endl;
 
 		if (iRank < m_iPlayer_Num - 1) {
@@ -196,7 +196,7 @@ public:
 		int play_idex = 0;
 		int play_cnt = 0;																									//현제 플레이 된 수
 		int iPrev_Player_Rank = m_pPlayer->GetEscapeRank();								//이전 랭킹
-		//'나부터 플레이																													
+																						//'나부터 플레이																													
 		int temp_i = m_uidSchool_Distribuition(m_dre);
 		if (temp_i > m_pPlayer->GetSchoolScore())
 			m_pPlayer->SetSchoolScore(temp_i);
@@ -229,7 +229,7 @@ public:
 			shared_ptr<CGamePlayer> prevPlayer = m_pvSorted_Escape_Players[iRank - 1];
 			cout << "이전 등수 ID  : " << prevPlayer->GetId() << "		점수 : " << prevPlayer->GetEscapeScore() << "		순위 : " << prevPlayer->GetEscapeRank() << endl;
 		}
-		else if (iRank < m_iPlayer_Num  -1) cout << "네가 최고야.." << endl;
+		else if (iRank < m_iPlayer_Num - 1) cout << "네가 최고야.." << endl;
 		else cout << "PlayEscape 에서 오류가 발생하였습니다" << endl;
 
 		if (iRank < m_iPlayer_Num - 1) {
@@ -246,12 +246,13 @@ public:
 		char cKey_Input;
 		while (1)
 		{
-		
+
 			cout << "-------------------------------------------MENU----------------------------------------------------" << endl;
 			cout << "출력 :q -> id 순		w -> 훈련소 랭크순		e -> 때탈출 랭크순		r -> 플레이어 정보 출력" << endl;
 			cout << "실행 :a -> 게임 플레이!			s -> 게임 종료" << endl;
 			cout << "--------------------------------------------------------------------------------------------------" << endl;
 			cout << "입력 : "; cin >> cKey_Input;
+			system("cls");
 			if (cKey_Input == 'q' || cKey_Input == 'Q')
 			{
 				cout << "아이디 순으로 출력 (10000번 단위로)" << endl;
