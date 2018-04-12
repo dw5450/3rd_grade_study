@@ -1,0 +1,2 @@
+﻿  소스.cpp
+c:\users\wdw\desktop\3rd_grade_study\stl\practice\practice\save.h(19): error C4700: 초기화되지 않은 'time' 지역 변수를 사용했습니다.
