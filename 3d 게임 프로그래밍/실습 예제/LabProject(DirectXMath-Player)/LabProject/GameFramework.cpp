@@ -43,7 +43,7 @@ void CGameFramework::BuildFrameBuffer()
     ::SetBkMode(m_hDCFrameBuffer, TRANSPARENT);
 }
 
-void CGameFramework::ClearFrameBuffer(DWORD dwColor)
+void CGameFramework::ClearFrameBuffer(DWORD dwColor)					//화면 초기화
 {
     HBRUSH hBrush = ::CreateSolidBrush(dwColor);
     HBRUSH hOldBrush = (HBRUSH)::SelectObject(m_hDCFrameBuffer, hBrush);
@@ -140,12 +140,12 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
 
 	m_pScene = new CScene();
-	m_pScene->BuildObjects();
+	m_pScene->BuildObjects();						//상자들 생성
 
-	m_pScene->m_pPlayer = m_pPlayer;
+	m_pScene->m_pPlayer = m_pPlayer;				//플레이어 생성
 }
 
-void CGameFramework::ReleaseObjects()
+void CGameFramework::ReleaseObjects()				//소멸자
 {
 	if (m_pScene)
 	{
@@ -156,7 +156,7 @@ void CGameFramework::ReleaseObjects()
 	if (m_pPlayer) delete m_pPlayer;
 }
 
-void CGameFramework::OnDestroy()
+void CGameFramework::OnDestroy()						//윈도우를 꺼버림
 {
 	ReleaseObjects();
 
@@ -166,10 +166,11 @@ void CGameFramework::OnDestroy()
     if (m_hWnd) DestroyWindow(m_hWnd);
 }
 
-void CGameFramework::ProcessInput()
+void CGameFramework::ProcessInput()						//키입력
 {
 	static UCHAR pKeyBuffer[256];
 	DWORD dwDirection = 0;
+	//키보드 입력 , 방향 설정
 	if (GetKeyboardState(pKeyBuffer))
 	{
 		//키보드의 입력에 따른 변경
@@ -180,6 +181,8 @@ void CGameFramework::ProcessInput()
 		if (pKeyBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
 		if (pKeyBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
 	}
+
+	//마우스 입력으로 방향설정/
 	float cxDelta = 0.0f, cyDelta = 0.0f;
 	POINT ptCursorPos;
 	if (GetCapture() == m_hWnd)
@@ -192,6 +195,8 @@ void CGameFramework::ProcessInput()
 		cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
 		SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
 	}
+
+	//여기서 회전/이동 / 플레이어
 	if ((dwDirection != 0) || (cxDelta != 0.0f) || (cyDelta != 0.0f))
 	{
 		if (cxDelta || cyDelta)
@@ -201,7 +206,7 @@ void CGameFramework::ProcessInput()
 			else
 				m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 		}
-		if (dwDirection) m_pPlayer->Move(dwDirection, 0.15f);
+		if (dwDirection) m_pPlayer->Move(dwDirection, 0.03f);								//여기서 이동하네
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }
