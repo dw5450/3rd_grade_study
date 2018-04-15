@@ -118,6 +118,7 @@
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="funcSpeedCheck.h" />
     <ClInclude Include="save.h" />
     <ClInclude Include="Model.h" />
   </ItemGroup>
