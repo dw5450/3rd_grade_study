@@ -23,7 +23,6 @@ class Teacher(Person):
         Person.__init__(self, name, number)
         self.courses = courses
         self.salary = salary
-
     def __str__(self):
         str = Person.__str__(self) + "강의과목={0}\n월급={1}".format(self.courses, self.salary)
         return str

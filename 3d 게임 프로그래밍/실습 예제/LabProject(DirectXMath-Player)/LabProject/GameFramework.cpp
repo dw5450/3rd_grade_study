@@ -172,6 +172,7 @@ void CGameFramework::ProcessInput()
 	DWORD dwDirection = 0;
 	if (GetKeyboardState(pKeyBuffer))
 	{
+		//키보드의 입력에 따른 변경
 		if (pKeyBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
 		if (pKeyBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
 		if (pKeyBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
@@ -184,6 +185,8 @@ void CGameFramework::ProcessInput()
 	if (GetCapture() == m_hWnd)
 	{
 		SetCursor(NULL);
+
+		//마우스의 움직임에 따른 변경
 		GetCursorPos(&ptCursorPos);
 		cxDelta = (float)(ptCursorPos.x - m_ptOldCursorPos.x) / 3.0f;
 		cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
