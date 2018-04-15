@@ -17,7 +17,7 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 {
 }
 
-void CScene::BuildObjects()
+void CScene::BuildObjects()										//생성자
 {
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 	pObjectCubeMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -116,13 +116,13 @@ void CScene::BuildObjects()
 	m_ppObjects[9]->SetMovingSpeed(15.0f);
 }
 
-void CScene::ReleaseObjects()
+void CScene::ReleaseObjects()																		//소멸자
 {
 	for (int i = 0; i < m_nObjects; i++) if (m_ppObjects[i]) delete m_ppObjects[i];
 	if (m_ppObjects) delete[] m_ppObjects;
 }
 
-void CScene::CheckObjectByObjectCollisions()
+void CScene::CheckObjectByObjectCollisions()										//충돌체크
 {
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->m_pObjectCollided = NULL;
 	for (int i = 0; i < m_nObjects; i++)
@@ -152,14 +152,14 @@ void CScene::CheckObjectByObjectCollisions()
 	}
 }
 
-void CScene::Animate(float fElapsedTime)
+void CScene::Animate(float fElapsedTime)									//시간 만큼 이동한것 화면에 표시
 {
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
 	CheckObjectByObjectCollisions();
 }
 
-void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
+void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)		//화면에 그려줌			
 {
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Render(hDCFrameBuffer, pCamera);
 }

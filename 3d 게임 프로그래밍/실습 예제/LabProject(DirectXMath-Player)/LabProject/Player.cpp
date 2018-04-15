@@ -6,16 +6,16 @@
 CPlayer::CPlayer()
 {
 	m_pCamera = new CCamera();
-	m_pCamera->GenerateProjectionMatrix(1.01f, 5000.0f, 60.0f);
-	m_pCamera->SetViewport(0, 0, CLIENT_WIDTH, CLIENT_HEIGHT);
+	m_pCamera->GenerateProjectionMatrix(1.01f, 1000.0f, 60.0f);					//????  절두체 생성 , 근평 원평 각도
+	m_pCamera->SetViewport(0, 0, CLIENT_WIDTH, CLIENT_HEIGHT);					//뷰포트 -> 클라이의 폭, 높이
 
 	m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_xmf3Right = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	m_xmf3Up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	m_xmf3Look = XMFLOAT3(0.0f, 0.0f, 1.0f);
 
-	m_xmf3CameraOffset = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_xmf3CameraOffset = XMFLOAT3(0.0f, 0.0f, 0.0f);						//카메라를 없애다?				//카메라의 디폴트 설정>?
+	m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);							//속도?							//오브젝트의 이동속도?
 }
 
 CPlayer::~CPlayer()
@@ -23,21 +23,21 @@ CPlayer::~CPlayer()
 	if (m_pCamera) delete m_pCamera;
 }
 
-void CPlayer::SetPosition(float x, float y, float z)
+void CPlayer::SetPosition(float x, float y, float z)						//위치설정
 {
 	m_xmf3Position = XMFLOAT3(x, y, z);
 
 	CGameObject::SetPosition(x, y, z);
 }
 
-void CPlayer::SetCameraOffset(XMFLOAT3& xmf3CameraOffset)
+void CPlayer::SetCameraOffset(XMFLOAT3& xmf3CameraOffset)						//???? 목표값가 현제 값의 편차?
 {
 	m_xmf3CameraOffset = xmf3CameraOffset;
 	m_pCamera->SetLookAt(Vector3::Add(m_xmf3Position, m_xmf3CameraOffset), m_xmf3Position, m_xmf3Up);
 	m_pCamera->GenerateViewMatrix();
 }
 
-void CPlayer::Move(DWORD dwDirection, float fDistance)
+void CPlayer::Move(DWORD dwDirection, float fDistance)						//이동
 {
 	if (dwDirection)
 	{
@@ -53,7 +53,7 @@ void CPlayer::Move(DWORD dwDirection, float fDistance)
 	}
 }
 
-void CPlayer::Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
+void CPlayer::Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity)			//이동, 업테이트 속도?
 {
 	if (bUpdateVelocity)
 	{
@@ -66,12 +66,12 @@ void CPlayer::Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 	}
 }
 
-void CPlayer::Move(float x, float y, float z)
+void CPlayer::Move(float x, float y, float z)									//단순 xyz 이동	
 {
 	Move(XMFLOAT3(x, y, z), false);
 }
 
-void CPlayer::Rotate(float fPitch, float fYaw, float fRoll)
+void CPlayer::Rotate(float fPitch, float fYaw, float fRoll)					//회전
 {
 	m_pCamera->Rotate(fPitch, fYaw, fRoll);
 	if (fPitch != 0.0f)
@@ -98,12 +98,13 @@ void CPlayer::Rotate(float fPitch, float fYaw, float fRoll)
 	m_xmf3Up = Vector3::Normalize(Vector3::CrossProduct(m_xmf3Look, m_xmf3Right));
 }
 
-void CPlayer::Update(float fTimeElapsed)
+void CPlayer::Update(float fTimeElapsed)						//업뎃
 {
-	Move(m_xmf3Velocity, false);
+	Move(m_xmf3Velocity, false);				//이동							카매라 이동? 이동 속도?
 
-	m_pCamera->Update(this, m_xmf3Position, fTimeElapsed);
-	m_pCamera->GenerateViewMatrix();
+
+	m_pCamera->Update(this, m_xmf3Position, fTimeElapsed);				//카메라 업뎃
+	m_pCamera->GenerateViewMatrix();									//카메라 변환 메트릭스
 
 	XMFLOAT3 xmf3Deceleration = Vector3::Normalize(Vector3::ScalarProduct(m_xmf3Velocity, -1.0f));
 	float fLength = Vector3::Length(m_xmf3Velocity);
@@ -119,7 +120,7 @@ void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_xmf4x4World._31 = m_xmf3Look.x; m_xmf4x4World._32 = m_xmf3Look.y; m_xmf4x4World._33 = m_xmf3Look.z;
 	m_xmf4x4World._41 = m_xmf3Position.x; m_xmf4x4World._42 = m_xmf3Position.y; m_xmf4x4World._43 = m_xmf3Position.z;
 
-	m_xmf4x4World = Matrix4x4::Multiply(XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f), m_xmf4x4World);
+	m_xmf4x4World = Matrix4x4::Multiply(XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f), m_xmf4x4World);				//y축으로 솟아 있는 매쉬라 z축으로 도릴려고
 
 	CGameObject::Render(hDCFrameBuffer, pCamera);
 }

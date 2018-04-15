@@ -27,12 +27,12 @@ void CPolygon::SetVertex(int nIndex, CVertex& vertex)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CMesh::CMesh(int nPolygons)
+CMesh::CMesh(int nPolygons)										//매쉬 생성자
 {
 	if (nPolygons > 0)
 	{
 		m_nPolygons = nPolygons;
-		m_ppPolygons = new CPolygon*[nPolygons];
+		m_ppPolygons = new CPolygon*[nPolygons];				//덥포라니;
 		m_nReferences = 0;
 	}
 }
@@ -46,31 +46,31 @@ CMesh::~CMesh()
 	}
 }
 
-void CMesh::SetPolygon(int nIndex, CPolygon *pPolygon)
+void CMesh::SetPolygon(int nIndex, CPolygon *pPolygon)								//면 설정
 {
 	if ((0 <= nIndex) && (nIndex < m_nPolygons)) m_ppPolygons[nIndex] = pPolygon;
 }
 
 void CMesh::Render(HDC hDCFrameBuffer, XMFLOAT4X4& xmf4x4World, CCamera *pCamera)
 {
-	XMFLOAT4X4 xmf4x4Transform = Matrix4x4::Multiply(xmf4x4World, pCamera->m_xmf4x4ViewProject);
-	for (int j = 0; j < m_nPolygons; j++)
+	XMFLOAT4X4 xmf4x4Transform = Matrix4x4::Multiply(xmf4x4World, pCamera->m_xmf4x4ViewProject);						//월드 x 투영
+	for (int j = 0; j < m_nPolygons; j++)														//폴리곤의 수만큼 그려줌
 	{
-		int nVertices = m_ppPolygons[j]->m_nVertices;
-		CVertex *pVertices = m_ppPolygons[j]->m_pVertices;
-		XMFLOAT3 xmf3Previous(-1.0f, 0.0f, 0.0f);
+		int nVertices = m_ppPolygons[j]->m_nVertices;											//점의 갯수 로드		
+		CVertex *pVertices = m_ppPolygons[j]->m_pVertices;										//점로드
+		XMFLOAT3 xmf3Previous(-1.0f, 0.0f, 0.0f);												//첫점 디폴트 설정?				//화면 변환까지 했기때문에 -값이 나오면 그려지지 않는다.
 		for (int i = 0; i <= nVertices; i++)
 		{
-			CVertex vertex = pVertices[i % nVertices];
+			CVertex vertex = pVertices[i % nVertices];											//마지막 점은 다시 0번째를 그려야하기때문
 			//World/View/Projection Transformation(Perspective Divide)
 			XMFLOAT3 xmf3Current = Vector3::TransformCoord(vertex.m_xmf3Position, xmf4x4Transform);
-			if ((xmf3Current.z >= 0.0f) && (xmf3Current.z <= 1.0f))
+			if ((xmf3Current.z >= 0.0f) && (xmf3Current.z <= 1.0f))								//화면변환
 			{
 				//Screen Transformation
 				xmf3Current.x = +xmf3Current.x * (pCamera->m_Viewport.m_nWidth * 0.5f) + pCamera->m_Viewport.m_xStart + (pCamera->m_Viewport.m_nWidth * 0.5f);
 				xmf3Current.y = -xmf3Current.y * (pCamera->m_Viewport.m_nHeight * 0.5f) + pCamera->m_Viewport.m_yStart + (pCamera->m_Viewport.m_nHeight * 0.5f);
 
-				if (xmf3Previous.x >= 0.0f)
+				if (xmf3Previous.x >= 0.0f)//화면 변환까지 했기때문에 -값이 나오면 그려지지 않는다.
 				{
 					::MoveToEx(hDCFrameBuffer, (long)xmf3Previous.x, (long)xmf3Previous.y, NULL);
 					::LineTo(hDCFrameBuffer, (long)xmf3Current.x, (long)xmf3Current.y);
@@ -83,7 +83,7 @@ void CMesh::Render(HDC hDCFrameBuffer, XMFLOAT4X4& xmf4x4World, CCamera *pCamera
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CCubeMesh::CCubeMesh(float fWidth, float fHeight, float fDepth) : CMesh(6)
+CCubeMesh::CCubeMesh(float fWidth, float fHeight, float fDepth) : CMesh(6)						//큐브
 {
 	float fHalfWidth = fWidth * 0.5f;
 	float fHalfHeight = fHeight * 0.5f;
@@ -138,7 +138,7 @@ CCubeMesh::~CCubeMesh()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CAirplaneMesh::CAirplaneMesh(float fWidth, float fHeight, float fDepth) : CMesh(24)
+CAirplaneMesh::CAirplaneMesh(float fWidth, float fHeight, float fDepth) : CMesh(24)							//비행기
 {
 	float fx = fWidth*0.5f, fy = fHeight*0.5f, fz = fDepth*0.5f;
 
