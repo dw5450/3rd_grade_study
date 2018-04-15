@@ -1,11 +1,13 @@
+#include<iostream>
+#include<chrono>
+
+using namespace std;
+int main()
+{
 #include <chrono>
-auto begin = chronohigh_resolution_clocknow();
+	auto begin = chrono::high_resolution_clock::now();
 
-chronohigh_resolution_clocknow();
 
-this_threadsleep_for(300ms);	1411이상에서만 돌아감
-
-auto begin = chrono::high_resolution_clock::now();
-
-auto elapsedTime = chrono::high_resolution_clock::now() - begin;
-cout<<chrono::duration<double>(elapsedTime).count() << endl;
+	auto elapsedTime = chrono::high_resolution_clock::now() - begin;
+	cout << chrono::duration<double>(elapsedTime).count() << endl;
+}

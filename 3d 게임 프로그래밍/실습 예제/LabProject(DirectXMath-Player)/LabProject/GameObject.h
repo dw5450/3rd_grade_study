@@ -8,7 +8,7 @@
 class CGameObject
 {
 public:
-	CGameObject(CMesh *pMesh);
+	CGameObject(CMesh *pMesh);					//매쉬의 포인터를 가저옴
 	CGameObject();
 	virtual ~CGameObject();
 
@@ -16,20 +16,20 @@ public:
 	bool						m_bActive = true;
 	
 	CMesh						*m_pMesh = NULL;
-    XMFLOAT4X4					m_xmf4x4World;    
+    XMFLOAT4X4					m_xmf4x4World;								//월드 변환 행렬   
 
-	BoundingOrientedBox			m_xmOOBB;
+	BoundingOrientedBox			m_xmOOBB;									//히트 박스
 
 	CGameObject					*m_pObjectCollided = NULL;
 
 	DWORD						m_dwColor;
 
-	XMFLOAT3					m_xmf3MovingDirection;
-	float						m_fMovingSpeed;
-	float						m_fMovingRange;
+	XMFLOAT3					m_xmf3MovingDirection;						//이동 방향
+	float						m_fMovingSpeed;								//이동 속도
+	float						m_fMovingRange;								//이동 거리
 
-	XMFLOAT3					m_xmf3RotationAxis;
-	float						m_fRotationSpeed;
+	XMFLOAT3					m_xmf3RotationAxis;							//회전축
+	float						m_fRotationSpeed;							//회전하는 방향
 
 public:
 	void SetMesh(CMesh *pMesh) { m_pMesh = pMesh; if (pMesh) pMesh->AddRef(); }
