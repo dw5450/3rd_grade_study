@@ -2,6 +2,20 @@
 
 #include "GameObject.h"
 
+class CBullet : public CGameObject
+{
+public:
+	XMFLOAT3 m_xmf3Limit_Position;
+	bool m_bShooted = false;
+
+public:
+	CBullet();
+
+	virtual ~CBullet();
+
+};
+
+
 class CPlayer : public CGameObject
 {
 public:
@@ -22,6 +36,8 @@ public:
 	float           			m_fRoll = 0.0f;
 
 	CCamera						*m_pCamera = NULL;
+	
+	CBullet						*m_pBullets[BULLET_NUM];
 
 	void SetPosition(float x, float y, float z);
 	void Move(DWORD dwDirection, float fDistance);

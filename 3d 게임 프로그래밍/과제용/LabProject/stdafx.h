@@ -61,6 +61,9 @@ using namespace DirectX::PackedVector;
 
 #define EXPLOSION_DEBRISES		120
 
+
+#define BULLET_NUM				20
+
 namespace Vector3
 {
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)

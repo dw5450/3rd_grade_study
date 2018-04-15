@@ -16,6 +16,7 @@ CPlayer::CPlayer()
 
 	m_xmf3CameraOffset = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
 }
 
 CPlayer::~CPlayer()
@@ -124,4 +125,18 @@ void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_xmf4x4World = Matrix4x4::Multiply(XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f), m_xmf4x4World);
 
 	CGameObject::Render(hDCFrameBuffer, pCamera);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+CBullet::CBullet()
+{
+	SetPosition(0, 0, -100);
+	SetMovingDirection(XMFLOAT3(0, 0, 0));
+}
+
+CBullet::~CBullet()
+{
+
 }
