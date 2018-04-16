@@ -18,7 +18,7 @@ using namespace std;
 class Player
 {
 private:
-	int id = 0;					//아이디	
+	string id = "";					//아이디	
 	int school_score = 0;		//쿠키 훈련소 점수
 	int escape_score = 0;		//떼탈출 점수
 	int school_rank = 0;		//쿠키 훈련소 랭크
@@ -28,19 +28,14 @@ private:
 public:
 	//플레이어의 정보를 초기화 하는 함수
 	Player() {};
-	Player(int id, int school_score, int escape_score) :												//생성자
+	Player(string id, int school_score, int escape_score) :												//생성자
 		id(id), school_score(school_score), escape_score(escape_score) {}
-	void setInfo(int id, int school_score, int escape_score) {											//자신의 정보 수정, 생성자와 동일한 인자로.
-		this->id = id;	
-		this->school_score = school_score;
-		this->escape_score = escape_score;	
-	}	
 
 	//소멸자
 	~Player() {}
 
 	//플레이어의 정보를 가져오는 get , const 함수들
-	int getId()const { return id; }
+	string getId()const { return id; }
 	int getSchoolScore()const { return school_score; }
 	int getEscapeScore()const { return escape_score; }
 	int getSchoolRank()const { return school_rank; }
@@ -53,6 +48,13 @@ public:
 	void setSchoolRank(int school_rank) { this->school_rank = school_rank; }
 	void setEscapeRank(int escape_rank) { this->escape_rank = escape_rank; }
 	void setPlayed(bool played) { this->played = played; }
+	void setInfo(string id, int school_score, int escape_score) {											//자신의 정보 수정, 생성자와 동일한 인자로.
+		this->id = id;
+		this->school_score = school_score;
+		this->escape_score = escape_score;
+	}
+
+
 
 	//플레이어의 정보를 출력 하는 함수
 	void showInfo()const {
@@ -90,13 +92,13 @@ public:
 			//포인터로 바로 받을수 없이니 일단 값을 복사해두고 그것에 포인터를 가르키게함
 			vector<Player> v(INITPAYERNUM);
 			in.read((char*)v.data(), sizeof(Player) * INITPAYERNUM);
-	
-			for (int i = 0; i< v.size(); ++i)
+
+			for (int i = 0; static_cast<unsigned int>(i) < v.size(); ++i)
 				players_vec.push_back(make_shared<Player>(v[i]));
 
 			player_num = INITPAYERNUM;
 		}
-		else 
+		else
 		{
 
 			//랜덤을 쓰기 위한 값 설정			//추후에 분포에 대해 더 공부하고 수정해야함
@@ -110,7 +112,7 @@ public:
 			for (player_num; player_num < INITPAYERNUM; ++player_num) {
 				school_score = static_cast<int>(round(school_distribution(dre)));
 				escape_score = static_cast<int>(round(escape_distribution(dre)));
-				players_vec.emplace_back(new Player(player_num + 1, school_score, escape_score));
+				players_vec.emplace_back(new Player(string("선수 ") + to_string(player_num + 1), school_score, escape_score));
 			}
 		}
 		//쿠키 훈련소 정렬 벡터에 값 초기화, 정렬 후 랭크를 설정
@@ -123,7 +125,7 @@ public:
 
 		//플레이어 설정				//디폴트 값으로 첫 플레이어가 플레이어로 설정댐, 추후 설정 변경 가능하도록
 		player = players_vec[0];
-	
+		player->setInfo("나", player->getSchoolScore(), player->getEscapeScore());
 	}
 
 	//프로그램 작동을 위한 함수
