@@ -61,6 +61,13 @@ using namespace DirectX::PackedVector;
 
 #define EXPLOSION_DEBRISES		120
 
+#define PLAYER_SPEED				30.0f
+
+#define MAXBULLETNUM				20
+#define BULLETCOOLTIME				0.05f
+#define BULLETSPEED					60.0f
+#define BULLETLIMITTIME				3.0f
+
 namespace Vector3
 {
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)

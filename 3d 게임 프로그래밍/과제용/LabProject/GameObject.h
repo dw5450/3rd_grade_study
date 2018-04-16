@@ -70,16 +70,3 @@ public:
 public:
 	XMFLOAT4					m_pxmf4WallPlanes[6];
 };
-
-
-
-class CBullet : public CGameObject
-{
-public:
-	CBullet();
-	virtual ~CBullet();
-
-public:
-	XMFLOAT3 m_xmf3Limit_Postion;
-
-};

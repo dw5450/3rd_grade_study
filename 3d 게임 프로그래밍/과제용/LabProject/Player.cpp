@@ -1,6 +1,16 @@
 #include "stdafx.h"
 #include "Player.h"
 
+////////////////////////////////////////////////////////////////////////////////////
+CBullet::CBullet()
+{
+
+}
+
+CBullet::~CBullet()
+{
+
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 CPlayer::CPlayer()
@@ -112,6 +122,41 @@ void CPlayer::Update(float fTimeElapsed)
 	float fDeceleration = m_fFriction * fTimeElapsed;
 	if (fDeceleration > fLength) fDeceleration = fLength;
 	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Deceleration, fDeceleration);
+
+
+	//총알을 발사할 경우
+	if (m_bShotedBullet) {
+		m_bShotedBullet = false;
+		for (int i = 0; i < MAXBULLETNUM; i++) {
+			if (m_pBullets[i]->bShoted == false && m_fBulletCoolTime < 0) {
+					m_pBullets[i]->bShoted = true;
+					m_pBullets[i]->SetPosition(Vector3::Add(m_xmf3Position, m_xmf3Look));
+					m_pBullets[i]->SetMovingDirection(m_xmf3Look);
+					m_pBullets[i]->SetRotationAxis(m_xmf3Look);
+					m_fBulletCoolTime = m_fMaxBulletCoolTime;
+					break;
+			}
+		}
+	}
+	for (int i = 0; i < MAXBULLETNUM; i++)
+	{
+		if (m_pBullets[i]->bShoted) {
+			if (m_pBullets[i]->fElapseTime > BULLETLIMITTIME) {
+				m_pBullets[i]->bShoted = false;
+				m_pBullets[i]->fElapseTime = 0;
+			}
+			else {
+				m_pBullets[i]->fElapseTime += fTimeElapsed;
+			}
+
+		}
+	}
+
+
+
+	m_fBulletCoolTime -= fTimeElapsed;
+
+
 }
 
 void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
@@ -122,6 +167,12 @@ void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_xmf4x4World._41 = m_xmf3Position.x; m_xmf4x4World._42 = m_xmf3Position.y; m_xmf4x4World._43 = m_xmf3Position.z;
 
 	m_xmf4x4World = Matrix4x4::Multiply(XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f), m_xmf4x4World);
-
+	
 	CGameObject::Render(hDCFrameBuffer, pCamera);
+
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		if(m_pBullets[i] -> bShoted)
+			m_pBullets[i]->Render(hDCFrameBuffer, pCamera);
+
+	}
 }

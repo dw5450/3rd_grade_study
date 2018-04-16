@@ -2,6 +2,23 @@
 
 #include "GameObject.h"
 
+
+
+class CBullet : public CGameObject
+{
+public:
+	CBullet();
+	virtual ~CBullet();
+
+public:
+	bool	 bShoted	=	false;
+	float	fElapseTime = 0.0f;
+
+
+};
+
+
+
 class CPlayer : public CGameObject
 {
 public:
@@ -22,6 +39,12 @@ public:
 	float           			m_fRoll = 0.0f;
 
 	CCamera						*m_pCamera = NULL;
+
+	bool						m_bShotedBullet = false;
+	int							m_iBulletNum = 0;
+	float						m_fMaxBulletCoolTime = BULLETCOOLTIME;
+	float						m_fBulletCoolTime = -1.0f;
+	CBullet						*m_pBullets[MAXBULLETNUM];
 
 	void SetPosition(float x, float y, float z);
 	void Move(DWORD dwDirection, float fDistance);
