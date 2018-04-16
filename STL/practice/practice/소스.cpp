@@ -1,36 +1,44 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //2018.04.16		STL (월 23 , 화 56)					 7주 1
 //
+//4장 순차컨테이너(sequence container)
 //
+//array, vector, deque, list, forward_list
 //
-//
-//
+//deque 앞과 뒤에서 입력과 출력이 가능
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-<<<<<<< HEAD
-//다음 헤더는 실행시 지워야 할 것입니다.
-#include "Model.h"						//모델을 사용할 시 다음 헤더를 추가 후 사용 해 주세요
-=======
-
+#include <list>
+#include <algorithm>
 //다음 헤더는 실행시 지워야 할것입니다
 #include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
->>>>>>> 741cbd61a16f8ef4dece67a2b7d19fe2b3216363
 #include "save.h"
 #include "funcSpeedCheck.h"
 using namespace std;
 
+
+//컨테이너에서 특정한 원소를 찾아보자
+
 int main()
 {
+	list<int> v{ 1, 3, 5, 7, 8, 2, 4, 6, 8, 10 };
+
+	//v에서 첫 홀수의 위치를 찾아라
+
+	auto p = find(v.begin(), v.end(), [](int num) -> bool{
+		return num & 1;
+	});
+
+
+	if (p != v.end())
+		cout << " 찾음" << endl;
+	else
+		cout << "원하는 값이 없다." << endl;
+
 	
-<<<<<<< HEAD
-	`
 	//다음 명령어는 실행시 지워야 할 것 입니다.
-	save("");					//저장할 파일명을 입력 해 주세요
-=======
+	save("0416 vector에서나 나를 찾아보자(Model 버전).txt");					//저장할 파일명을 입력 해 주세요
 
-	//다음 명령어는 실행시 지워야 할 것 입니다.
 
-	save("");
->>>>>>> 741cbd61a16f8ef4dece67a2b7d19fe2b3216363
 }

@@ -1,0 +1,34 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//4장 순차컨테이너(sequence container)
+//
+//array, vector, deque, list, forward_list
+//
+//호출 가능 타입(callable Type) - 97쪽
+//
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <random>
+#include <iomanip>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+int main()
+{
+	default_random_engine dre; //dre의 객체를 만든것	
+	normal_distribution<> nd(0, 1);
+	//옛날에 뽑은 값으로 새로운 값을 뽑아냄 
+
+	for (int i = 0; i<100; ++i)
+		cout << setw(20) << nd(dre);					//호출 가능한 객체이구나? 랜덤값을 하나 반환 //함수 호출 연산자가 오퍼레이틴 되었음
+
+	//다음 명령어는 실행시 지워야 할 것 입니다.
+	save("0416 호출 가능한 객체, 정규 분포");					//저장할 파일명을 입력 해 주세요
+
+
+}

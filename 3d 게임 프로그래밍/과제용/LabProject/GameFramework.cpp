@@ -208,23 +208,26 @@ void CGameFramework::ProcessInput()
 
 void CGameFramework::FrameAdvance()
 {
-	if (!m_bActive) return;
+	if (!m_bActive) return;					//만약 엑티브 상태가 아닐시 프로그램을 실행하지 않습니다.
 
-	m_GameTimer.Tick(0.0f);
+	m_GameTimer.Tick(0.0f);					//게임의 시간
 
-	ProcessInput();
+	ProcessInput();							//키보드나 마우스의 입력을 받습니다.
 
+	//오브젝트들의 좌표를 이동시킵니다.
 	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
 
+	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));
 
+	//화면에 오브젝트들을 그립니다.
 	m_pScene->Render(m_hDCFrameBuffer, m_pPlayer->m_pCamera);
 	m_pPlayer->Render(m_hDCFrameBuffer, m_pPlayer->m_pCamera);
 
-	PresentFrameBuffer();
+	PresentFrameBuffer();				//버퍼링을 적용 시킵니다.
 
-	m_GameTimer.GetFrameRate(m_pszFrameRate + 12, 37);
-	::SetWindowText(m_hWnd, m_pszFrameRate);
+	m_GameTimer.GetFrameRate(m_pszFrameRate + 12, 37);				//프레임 레이트를 설정합니다.
+	::SetWindowText(m_hWnd, m_pszFrameRate);						//프레임 레이트를 보여줍니다.
 }
 
 

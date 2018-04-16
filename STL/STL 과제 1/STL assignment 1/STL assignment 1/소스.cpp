@@ -8,8 +8,8 @@
 #include <algorithm>
 
 #define INITPAYERNUM 100000
-#define SCHOLLMAXSCORE 37000000
-#define ESCAPEMAXSCORE 41000000
+#define MAXSCHOOLSCORE 37000000
+#define MAXESCAPESCORE 41000000
 #define PLAYPlAYERSNUM 10000
 
 using namespace std;
@@ -107,11 +107,16 @@ public:
 			auto school_distribution = getSchoolDistribution();
 			auto escape_distribution = getEscapeDistribution();
 
-			int school_score = 0;
-			int escape_score = 0;
+			int school_score = -1;
+			int escape_score = -1;
 			for (player_num; player_num < INITPAYERNUM; ++player_num) {
-				school_score = static_cast<int>(round(school_distribution(dre)));
-				escape_score = static_cast<int>(round(escape_distribution(dre)));
+				while (school_score < 0){
+					school_score = getRandSchoolScore();
+				}
+				while (escape_score < 0) {
+					escape_score = getRandEscapeScore();
+				}
+				
 				players_vec.emplace_back(new Player(string("선수 ") + to_string(player_num + 1), school_score, escape_score));
 			}
 		}
@@ -182,12 +187,36 @@ public:
 	
 	//핸들러의 정보를 가져오는 함수
 	normal_distribution<> getSchoolDistribution() const {
-		return  normal_distribution<>(SCHOLLMAXSCORE / 2, static_cast<int>(SCHOLLMAXSCORE / 20));
+		return  normal_distribution<>(MAXSCHOOLSCORE / 2, static_cast<int>(MAXSCHOOLSCORE / 20));
 	}
 
 	normal_distribution<> getEscapeDistribution() const {
-		return  normal_distribution<>(ESCAPEMAXSCORE / 2, static_cast<int>(ESCAPEMAXSCORE / 20));
+		return  normal_distribution<>(MAXESCAPESCORE / 2, static_cast<int>(MAXESCAPESCORE / 20));
 	}
+
+	int getRandSchoolScore() const {
+		random_device rd;					// dre.seed 대신 저걸로 초기화해주자.
+		default_random_engine dre(rd());
+		auto school_distribution = getSchoolDistribution();
+		int school_score = static_cast<int>(round(school_distribution(dre)));
+		if (0 < school_score && school_score < MAXESCAPESCORE)
+			return school_score;
+
+		return -1;
+	}
+
+	int getRandEscapeScore() const {
+		random_device rd;					// dre.seed 대신 저걸로 초기화해주자.
+		default_random_engine dre(rd());
+		auto escape_distribution = getEscapeDistribution();
+		int escape_score = static_cast<int>(round(escape_distribution(dre)));
+		if (0 < escape_score && escape_score < MAXESCAPESCORE)
+			return escape_score;
+
+		return -1;
+	}
+
+
 
 
 	//핸들러의 정보를 수정 하는 함수
@@ -288,7 +317,10 @@ public:
 		auto schoolDistribution = getSchoolDistribution();
 
 		//나부터 실행
-		int temp_score = static_cast<int>(schoolDistribution(dre));										//랜덤적으로 값을 추출
+		int temp_score = -1;
+		while (temp_score < 0) {
+			temp_score = getRandSchoolScore();
+		}
 
 		if (player->getSchoolScore() < temp_score)										//플레이어의 훈련소 탈출 점수가 랜덤 추출 값보다 작을 경우
 			player->setSchoolScore(temp_score);											//랜덤 추출 값으로 값을 갱신
@@ -303,10 +335,14 @@ public:
 		while (played_cnt < play_num) {													//설정한 플레이 수 만큼 반복
 			player_index = player_index_distribution(dre);								//설정할 인덱스 랜덤값으로 추출
 			if (players_vec[player_index]->getPlayed() == false) {							//추출한 값이 플레이어가 실행을 안했었을시 
-				temp_score = static_cast<int>(schoolDistribution(dre));									//랜덤 스코어값 추출
+				while (temp_score < 0) {
+					temp_score = getRandSchoolScore();
+				}							//랜덤 스코어값 추출
 				if (players_vec[player_index]->getSchoolScore() < temp_score)			//추출한 값이 이전 훈련소 탈출 점수보다 높으면
 					players_vec[player_index]->setSchoolScore(temp_score);				//추출한 값으로 훈련소 탈출 점수 갱신
-				++played_cnt;															//플레이했다를 1번 증가		
+				++played_cnt;		//플레이했다를 1번 증가		
+
+				temp_score = -1;
 			}
 		}
 

@@ -1,0 +1,44 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//4장 순차컨테이너(sequence container)
+//
+//array, vector, deque, list, forward_list
+//
+//deque 앞과 뒤에서 입력과 출력이 가능
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <deque>
+#include <random>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+int main()
+{
+	deque<int> d(10);
+	//칸이 10개 있는데, 여기에 저장된 정수가 정규 분포를 갖도록 해보자
+
+	random_device rd;
+	default_random_engine dre(rd());
+	uniform_int_distribution<> uid(0, 9);//평균값 , 시그마 값?(커질수록 분포가 퍼지게 된다)
+	
+
+	// -1부터 1까지의 값만 이용하도록 하자
+	for (int i = 0; i < 1000000; ++i) {
+		int val = uid(dre);
+		++d[(int)val];
+	}
+	
+
+	for (int i = 0; i < d.size(); ++i)
+		cout << "[" << i << "]" << d[i] << endl;
+
+	//다음 명령어는 실행시 지워야 할 것 입니다.
+	save("0416 균일 분포의 사용.txt");					//저장할 파일명을 입력 해 주세요
+
+
+}
