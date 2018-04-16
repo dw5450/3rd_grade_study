@@ -365,10 +365,11 @@ public:
 		auto escapeDistribution = getEscapeDistribution();
 
 		//나부터 실행
-		int temp_score = static_cast<int>(escapeDistribution(dre));										//랜덤적으로 값을 추출
-
-		if (player->getEscapeScore() < temp_score)										//플레이어의 훈련소 탈출 점수가 랜덤 추출 값보다 작을 경우
-			player->setEscapeScore(temp_score);											//랜덤 추출 값으로 값을 갱신
+		int temp_score = -1;
+		while (temp_score < 0) {
+			temp_score = getRandEscapeScore();
+		}
+		//랜덤 추출 값으로 값을 갱신
 
 																		
 		//나머지 플레이어 실행
@@ -381,10 +382,13 @@ public:
 		while (played_cnt < play_num) {													//설정한 플레이 수 만큼 반복
 			player_index = player_index_distribution(dre);								//설정할 인덱스 랜덤값으로 추출
 			if (players_vec[player_index]->getPlayed() == false) {							//추출한 값이 플레이어가 실행을 안했었을시 
-				temp_score = static_cast<int>(escapeDistribution(dre));									//랜덤 스코어값 추출
+				while (temp_score < 0) {
+					temp_score = getRandSchoolScore();
+				}
 				if (players_vec[player_index]->getEscapeScore() < temp_score)			//추출한 값이 이전 훈련소 탈출 점수보다 높으면
 					players_vec[player_index]->setEscapeScore(temp_score);				//추출한 값으로 훈련소 탈출 점수 갱신
 				++played_cnt;															//플레이했다를 1번 증가		
+				temp_score = -1;
 			}
 		}
 
