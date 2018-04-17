@@ -130,7 +130,7 @@ void CPlayer::Update(float fTimeElapsed)
 		for (int i = 0; i < MAXBULLETNUM; i++) {
 			if (m_pBullets[i]->bShoted == false && m_fBulletCoolTime < 0) {
 					m_pBullets[i]->bShoted = true;
-					m_pBullets[i]->SetPosition(Vector3::Add(m_xmf3Position, Vector3::ScalarProduct(m_xmf3Look, 7)));
+					m_pBullets[i]->SetPosition(m_xmf3Position);
 					m_pBullets[i]->SetMovingDirection(m_xmf3Look);
 					m_pBullets[i]->SetRotationAxis(m_xmf3Look);
 					m_fBulletCoolTime = m_fMaxBulletCoolTime;

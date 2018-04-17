@@ -147,8 +147,9 @@ void CGameFramework::BuildObjects()
 
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
 	for (int i = 0; i < MAXBULLETNUM; i++) {
+		m_pPlayer->m_pBullets[i]->m_bActive = false;
 		m_pPlayer->m_pBullets[i] = new CBullet();
-		m_pPlayer->m_pBullets[i]->SetPosition(0.0f, 0.0f, 4.0f * i);
+		m_pPlayer->m_pBullets[i]->SetPosition(-1000.0f, -1000.0f, -1000.0f);
 		m_pPlayer->m_pBullets[i]->SetMesh(pObjectCubeMesh);
 		m_pPlayer->m_pBullets[i]->SetColor(RGB(255, 0, 0));
 		m_pPlayer->m_pBullets[i]->SetMovingSpeed(BULLETSPEED);

@@ -18,7 +18,7 @@ public:
 	CMesh						*m_pMesh = NULL;
     XMFLOAT4X4					m_xmf4x4World;    
 
-	BoundingOrientedBox			m_xmOOBB;
+	BoundingBox			m_xmOOBB;
 
 	CGameObject					*m_pObjectCollided = NULL;
 
@@ -69,7 +69,6 @@ public:
 	virtual ~CExplosiveObject();
 
 	bool						m_bBlowingUp = false;
-	bool						m_bBlowed = false;  //터졌었다.
 
 	XMFLOAT4X4					m_pxmf4x4Transforms[EXPLOSION_DEBRISES];
 

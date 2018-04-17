@@ -64,7 +64,7 @@ using namespace DirectX::PackedVector;
 #define PLAYER_SPEED				30.0f
 
 #define MAXBULLETNUM				20
-#define BULLETCOOLTIME				0.07f
+#define BULLETCOOLTIME				0.3f
 #define BULLETSPEED					60.0f
 #define BULLETLIMITTIME				3.0f
 

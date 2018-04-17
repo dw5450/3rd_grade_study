@@ -46,14 +46,15 @@ void CScene::BuildObjects()
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 	pObjectCubeMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
-	m_nObjects = 10;
+	m_nObjects = 30;
 	m_ppObjects = new CGameObject*[m_nObjects];
 
 	for (int i = 0; i < m_nObjects; i++) {
 		m_ppObjects[i] = new CExplosiveObject();
+		m_ppObjects[i]->m_bActive = false;
 		m_ppObjects[i]->SetMesh(pObjectCubeMesh);
 		m_ppObjects[i]->SetColor(RGB(255, 0, 0));
-		m_ppObjects[i]->SetPosition(-1000.0f, -1000.0f, -1000.0f);
+		m_ppObjects[i]->SetPosition(1000.0f, 1000.0f, 1000.0f);
 		m_ppObjects[i]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
 		m_ppObjects[i]->SetRotationSpeed(90.0f);
 		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));
@@ -180,6 +181,7 @@ void CScene::CheckObjectByBulletCollisions()
 	{
 		if (m_ppObjects[i]->m_pObjectCollided)
 		{
+			m_ppObjects[i]->m_bActive = false;
 			CExplosiveObject *pExplosiveObject = (CExplosiveObject *)m_ppObjects[i];
 			pExplosiveObject->m_bBlowingUp = true;
 		}
@@ -210,8 +212,17 @@ void CScene::Animate(float fElapsedTime)
 	CheckObjectByBulletCollisions();
 
 	m_iObjectResponTime += fElapsedTime;
-	if (m_iObjectResponTime > OBJECTRESPONTIME)
-		m_ppObjects[0]->SetPosition(XMFLOAT3(0, 0, 0));
+	for (int i = 0; i < m_nObjects; i++) {
+		if (m_iObjectResponTime > OBJECTRESPONTIME) {
+			if (!m_ppObjects[i]->m_bActive) {
+				m_ppObjects[i]->m_bActive = true;
+				m_ppObjects[i]->SetPosition(XMFLOAT3(0.0f, -10.0f, -10 * i));
+				m_iObjectResponTime = 0;
+				break;
+			}
+			
+		}
+	}
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
