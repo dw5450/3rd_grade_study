@@ -1,0 +1,87 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//4장 순차컨테이너(sequence container)
+//
+//중각 시험. 4. 24(화 :  8주 2)
+//array, vector, deque, list, forward_list
+//
+//list의 멤버 함수 remove
+//---> 컨테이너의 원소를 삭제하는 방식
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <list>
+#include <algorithm>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+class F {
+public:
+	bool operator()(int n) { return n & 1; }
+};
+int main()
+{
+	list<int> v{ 1,2,3,4,5,6,7,8,9,10 };
+	//v 에서 홀수를 지워주세요
+	//알고리즘은 컨테이너의 원소를 직접 제거할 수 없다.
+	//알고르짐은 새로운 끝을 반환하고, 컨테이너가 필요없는 원소를 지운워야한다.
+	v.erase(remove_if(v.begin(), v.end(), F()), v.end());
+
+	for (int d : v)
+		cout << d << " ";
+	cout << endl;
+
+	//다음 명령어는 실행시 지워야 할 것 입니다.
+	save("0417 리스트를 remove_if(객체)로 지워보자.txt");					//저장할 파일명을 입력 해 주세요
+
+
+}
+
+/////////////////////////////////////////////////d위에꺼는 쓰래기다///////////////////////////////////////
+/////////////////////////////////////////////////밑에 꺼가 좋아///////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//4장 순차컨테이너(sequence container)
+//
+//중각 시험. 4. 24(화 :  8주 2)
+//array, vector, deque, list, forward_list
+//
+//list의 멤버 함수 remove
+//---> 컨테이너의 원소를 삭제하는 방식
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <list>
+#include <algorithm>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+class F {
+public:
+	bool operator()(int n) { return n & 1; }
+};
+int main()
+{
+	list<int> v{ 1,2,3,4,5,6,7,8,9,10 };
+	//v 에서 홀수를 지워주세요
+	//알고리즘은 컨테이너의 원소를 직접 제거할 수 없다.
+	//알고르짐은 새로운 끝을 반환하고, 컨테이너가 필요없는 원소를 지운워야한다.
+	v.remove_if(F());
+
+	for (int d : v)
+		cout << d << " ";
+	cout << endl;
+
+	//다음 명령어는 실행시 지워야 할 것 입니다.
+	save("0417 리스트를 remove_if(객체)로 지워보자.txt");					//저장할 파일명을 입력 해 주세요
+
+
+}
+
