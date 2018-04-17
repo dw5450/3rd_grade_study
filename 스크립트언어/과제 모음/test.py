@@ -1,6 +1,7 @@
-print("my module")
+f =  open('test.txt', 'r')
 
-if __name__ =='__main__'
-    print("모듈을 직접 실행하셨네요")
-else:
-    print("임포트 하셨네요")
+str =  f.read()
+
+print ("문자 {0}". format(len(str)))
+print ("단어 {0}". format(len(str.split())))
+print ("행 {0}". format(len(str.split('\n'))))

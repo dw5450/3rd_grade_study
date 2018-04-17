@@ -130,6 +130,8 @@ LRESULT CALLBACK CGameFramework::OnProcessingWindowMessage(HWND hWnd, UINT nMess
 	return(0);
 }
 
+
+//오브젝트들을 빌드합니다.
 void CGameFramework::BuildObjects()
 {
 	CAirplaneMesh *pAirplaneMesh = new CAirplaneMesh(6.0f, 6.0f, 1.0f);
@@ -140,7 +142,19 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetMesh(pAirplaneMesh);
 	m_pPlayer->SetColor(RGB(0, 0, 255));
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
-	m_pPlayer->SetMovingSpeed(3.0f);
+	m_pPlayer->SetMovingSpeed(PLAYER_SPEED);
+
+
+	CCubeMesh *pObjectCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		m_pPlayer->m_pBullets[i]->m_bActive = false;
+		m_pPlayer->m_pBullets[i] = new CBullet();
+		m_pPlayer->m_pBullets[i]->SetPosition(-1000.0f, -1000.0f, -1000.0f);
+		m_pPlayer->m_pBullets[i]->SetMesh(pObjectCubeMesh);
+		m_pPlayer->m_pBullets[i]->SetColor(RGB(255, 0, 0));
+		m_pPlayer->m_pBullets[i]->SetMovingSpeed(BULLETSPEED);
+		m_pPlayer->m_pBullets[i]->SetRotationSpeed(600.0f);
+	}
 
 	CCubeMesh * pCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
 
@@ -184,7 +198,7 @@ void CGameFramework::ProcessInput()
 		if (pKeyBuffer['S'] & 0xF0) dwDirection |= DIR_BACKWARD;
 		if (pKeyBuffer['A'] & 0xF0) dwDirection |= DIR_LEFT;
 		if (pKeyBuffer['D'] & 0xF0) dwDirection |= DIR_RIGHT;
-		//if (pKeyBuffer['Q'] & 0xF0) dwDirection |= DIR_UP;
+		if (pKeyBuffer[VK_CONTROL] & 0xF0) m_pPlayer->m_bShotedBullet = true;
 		//if (pKeyBuffer['E'] & 0xF0) dwDirection |= DIR_DOWN;
 	}
 	float cxDelta = 0.0f, cyDelta = 0.0f;
@@ -206,30 +220,40 @@ void CGameFramework::ProcessInput()
 			else
 				m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 		}
-		if (dwDirection) m_pPlayer->Move(dwDirection, 0.15f);				//속도가 디폴드 설정 되어 있음
+		if (dwDirection) m_pPlayer->Move(dwDirection, m_GameTimer.GetTimeElapsed());				//속도가 디폴드 설정 되어 있음
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }
 
 void CGameFramework::FrameAdvance()
 {
-	if (!m_bActive) return;
+	if (!m_bActive) return;					//만약 엑티브 상태가 아닐시 프로그램을 실행하지 않습니다.
 
-	m_GameTimer.Tick(0.0f);
+	m_GameTimer.Tick(0.0f);					//게임의 시간
 
-	ProcessInput();
+	ProcessInput();							//키보드나 마우스의 입력을 받습니다.
 
+	//오브젝트들의 좌표를 이동시킵니다.
 	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		CBullet * pBullet = m_pPlayer->m_pBullets[i];
+		if (pBullet->bShoted) {
+			pBullet->Animate(m_GameTimer.GetTimeElapsed());
+		}
+	}
+		
 
+	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));
 
+	//화면에 오브젝트들을 그립니다.
 	m_pScene->Render(m_hDCFrameBuffer, m_pPlayer->m_pCamera);
 	m_pPlayer->Render(m_hDCFrameBuffer, m_pPlayer->m_pCamera);
 
-	PresentFrameBuffer();
+	PresentFrameBuffer();				//버퍼링을 적용 시킵니다.
 
-	m_GameTimer.GetFrameRate(m_pszFrameRate + 12, 37);
-	::SetWindowText(m_hWnd, m_pszFrameRate);
+	m_GameTimer.GetFrameRate(m_pszFrameRate + 12, 37);				//프레임 레이트를 설정합니다.
+	::SetWindowText(m_hWnd, m_pszFrameRate);						//프레임 레이트를 보여줍니다.
 }
 
 

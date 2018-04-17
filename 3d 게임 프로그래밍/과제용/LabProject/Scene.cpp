@@ -23,10 +23,12 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 //오브젝트들을 생성합니다.
 void CScene::BuildObjects()
 {
+	CExplosiveObject::PrepareExplosion();
+
 	//벽설정
 	float fHalfWidth = 45.0f, fHalfHeight = 45.0f, fHalfDepth = 500.0f;									//1.0f 당 1m
 	CWallMesh *pWallCubeMesh = new CWallMesh(fHalfWidth * 2.0f, fHalfHeight * 2.0f, fHalfDepth * 2.0f, 20);
-	pWallCubeMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth * 0.3f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+	pWallCubeMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	m_pWallsObject = new CWallsObject();
 	m_pWallsObject->SetPosition(0.0f, 0.0f, 0.0f);
@@ -44,98 +46,22 @@ void CScene::BuildObjects()
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 	pObjectCubeMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(2.0f, 2.0f, 2.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
-	m_nObjects = 10;
+	m_nObjects = 30;
 	m_ppObjects = new CGameObject*[m_nObjects];
 
-	m_ppObjects[0] = new CGameObject();
-	m_ppObjects[0]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[0]->SetColor(RGB(255, 0, 0));
-	m_ppObjects[0]->SetPosition(-13.5f, 0.0f, -14.0f);
-	m_ppObjects[0]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
-	m_ppObjects[0]->SetRotationSpeed(90.0f);
-	m_ppObjects[0]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));
-	m_ppObjects[0]->SetMovingSpeed(10.5f);
+	for (int i = 0; i < m_nObjects; i++) {
+		m_ppObjects[i] = new CExplosiveObject();
+		m_ppObjects[i]->m_bActive = false;
+		m_ppObjects[i]->SetMesh(pObjectCubeMesh);
+		m_ppObjects[i]->SetColor(RGB(255, 0, 0));
+		m_ppObjects[i]->SetPosition(1000.0f, 1000.0f, 1000.0f);
+		m_ppObjects[i]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
+		m_ppObjects[i]->SetRotationSpeed(90.0f);
+		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));
+		m_ppObjects[i]->SetMovingSpeed(10.5f);
+	}
 
-	m_ppObjects[1] = new CGameObject();
-	m_ppObjects[1]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[1]->SetColor(RGB(0, 0, 255));
-	m_ppObjects[1]->SetPosition(+13.5f, 0.0f, -14.0f);
-	m_ppObjects[1]->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
-	m_ppObjects[1]->SetRotationSpeed(180.0f);
-	m_ppObjects[1]->SetMovingDirection(XMFLOAT3(-1.0f, 0.0f, 0.0f));
-	m_ppObjects[1]->SetMovingSpeed(8.8f);
-
-	m_ppObjects[2] = new CGameObject();
-	m_ppObjects[2]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[2]->SetColor(RGB(0, 255, 0));
-	m_ppObjects[2]->SetPosition(0.0f, +5.0f, 20.0f);
-	m_ppObjects[2]->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
-	m_ppObjects[2]->SetRotationSpeed(30.15f);
-	m_ppObjects[2]->SetMovingDirection(XMFLOAT3(1.0f, -1.0f, 0.0f));
-	m_ppObjects[2]->SetMovingSpeed(5.2f);
-
-	m_ppObjects[3] = new CGameObject();
-	m_ppObjects[3]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[3]->SetColor(RGB(0, 255, 255));
-	m_ppObjects[3]->SetPosition(0.0f, 0.0f, 0.0f);
-	m_ppObjects[3]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
-	m_ppObjects[3]->SetRotationSpeed(40.6f);
-	m_ppObjects[3]->SetMovingDirection(XMFLOAT3(0.0f, 0.0f, 1.0f));
-	m_ppObjects[3]->SetMovingSpeed(20.4f);
-
-	m_ppObjects[4] = new CGameObject();
-	m_ppObjects[4]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[4]->SetColor(RGB(128, 0, 255));
-	m_ppObjects[4]->SetPosition(10.0f, 0.0f, 0.0f);
-	m_ppObjects[4]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
-	m_ppObjects[4]->SetRotationSpeed(50.06f);
-	m_ppObjects[4]->SetMovingDirection(XMFLOAT3(0.0f, 1.0f, 1.0f));
-	m_ppObjects[4]->SetMovingSpeed(6.4f);
-
-	m_ppObjects[5] = new CGameObject();
-	m_ppObjects[5]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[5]->SetColor(RGB(255, 0, 255));
-	m_ppObjects[5]->SetPosition(-10.0f, 0.0f, -10.0f);
-	m_ppObjects[5]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
-	m_ppObjects[5]->SetRotationSpeed(60.06f);
-	m_ppObjects[5]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 1.0f));
-	m_ppObjects[5]->SetMovingSpeed(8.9f);
-
-	m_ppObjects[6] = new CGameObject();
-	m_ppObjects[6]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[6]->SetColor(RGB(255, 0, 255));
-	m_ppObjects[6]->SetPosition(-10.0f, 10.0f, -10.0f);
-	m_ppObjects[6]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
-	m_ppObjects[6]->SetRotationSpeed(60.06f);
-	m_ppObjects[6]->SetMovingDirection(XMFLOAT3(1.0f, 1.0f, 1.0f));
-	m_ppObjects[6]->SetMovingSpeed(9.7f);
-
-	m_ppObjects[7] = new CGameObject();
-	m_ppObjects[7]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[7]->SetColor(RGB(255, 0, 128));
-	m_ppObjects[7]->SetPosition(-10.0f, 10.0f, -20.0f);
-	m_ppObjects[7]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
-	m_ppObjects[7]->SetRotationSpeed(70.06f);
-	m_ppObjects[7]->SetMovingDirection(XMFLOAT3(-1.0f, 1.0f, 1.0f));
-	m_ppObjects[7]->SetMovingSpeed(15.6f);
-
-	m_ppObjects[8] = new CGameObject();
-	m_ppObjects[8]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[8]->SetColor(RGB(128, 0, 255));
-	m_ppObjects[8]->SetPosition(-15.0f, 10.0f, -30.0f);
-	m_ppObjects[8]->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
-	m_ppObjects[8]->SetRotationSpeed(90.06f);
-	m_ppObjects[8]->SetMovingDirection(XMFLOAT3(0.0f, 0.0f, -1.0f));
-	m_ppObjects[8]->SetMovingSpeed(15.0f);
-
-	m_ppObjects[9] = new CGameObject();
-	m_ppObjects[9]->SetMesh(pObjectCubeMesh);
-	m_ppObjects[9]->SetColor(RGB(255, 64, 64));
-	m_ppObjects[9]->SetPosition(+15.0f, 10.0f, 0.0f);
-	m_ppObjects[9]->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
-	m_ppObjects[9]->SetRotationSpeed(90.06f);
-	m_ppObjects[9]->SetMovingDirection(XMFLOAT3(-0.0f, 0.0f, -1.0f));
-	m_ppObjects[9]->SetMovingSpeed(15.0f);
+	
 }
 
 //오브젝트 들을 삭제합니다.
@@ -233,6 +159,45 @@ void CScene::CheckObjectByWallCollisions()
 	}
 }
 
+void CScene::CheckObjectByBulletCollisions()
+{
+	for (int i = 0; i < MAXBULLETNUM; i++) m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;				//기본적으로 모두 충돌하지 않았다고 가정
+	
+	for (int i = 0; i < MAXBULLETNUM; i++)														//모든 오브젝트들 충돌체크합니다. 
+	{
+		if (m_pPlayer->m_pBullets[i]->bShoted) {
+			for (int j = 0; j < m_nObjects; j++)
+			{
+				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB))
+				{
+					m_pPlayer->m_pBullets[i]->m_pObjectCollided = m_ppObjects[j];								//충돌할시 서로를 충돌한 오브젝트로 가지고 있게 된다.
+					m_ppObjects[j]->m_pObjectCollided = m_pPlayer->m_pBullets[i];
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		if (m_ppObjects[i]->m_pObjectCollided)
+		{
+			m_ppObjects[i]->m_bActive = false;
+			CExplosiveObject *pExplosiveObject = (CExplosiveObject *)m_ppObjects[i];
+			pExplosiveObject->m_bBlowingUp = true;
+		}
+	}
+
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		if (m_pPlayer->m_pBullets[i]->m_pObjectCollided)
+		{
+			m_pPlayer->m_pBullets[i]->SetPosition(XMFLOAT3(-1000, -1000, -1000));
+			m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;
+		}
+
+	}
+}
+
+
 void CScene::Animate(float fElapsedTime)
 {
 	m_pWallsObject->Animate(fElapsedTime);
@@ -243,6 +208,21 @@ void CScene::Animate(float fElapsedTime)
 	CheckObjectByWallCollisions();
 
 	CheckObjectByObjectCollisions();
+
+	CheckObjectByBulletCollisions();
+
+	m_iObjectResponTime += fElapsedTime;
+	for (int i = 0; i < m_nObjects; i++) {
+		if (m_iObjectResponTime > OBJECTRESPONTIME) {
+			if (!m_ppObjects[i]->m_bActive) {
+				m_ppObjects[i]->m_bActive = true;
+				m_ppObjects[i]->SetPosition(XMFLOAT3(0.0f, -10.0f, -10 * i));
+				m_iObjectResponTime = 0;
+				break;
+			}
+			
+		}
+	}
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)

@@ -38,7 +38,7 @@ private:
 	CPolygon					**m_ppPolygons;
 
 public:
-	BoundingOrientedBox			m_xmOOBB;
+	BoundingBox			m_xmOOBB;
 
 public:
 	void AddRef() { m_nReferences++; }
@@ -48,7 +48,7 @@ public:
 	void SetPolygon(int nIndex, CPolygon *pPolygon);
 	virtual void Render(HDC hDCFrameBuffer, XMFLOAT4X4& xmf4x4World, CCamera *pCamera);
 
-	void SetOOBB(XMFLOAT3& xmCenter, XMFLOAT3& xmExtents, XMFLOAT4& xmOrientation) { m_xmOOBB = BoundingOrientedBox(xmCenter, xmExtents, xmOrientation); }
+	void SetOOBB(XMFLOAT3& xmCenter, XMFLOAT3& xmExtents, XMFLOAT4& xmOrientation) { m_xmOOBB = BoundingBox(xmCenter, xmExtents); }
 };
 
 class CCubeMesh : public CMesh

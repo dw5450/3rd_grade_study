@@ -18,7 +18,7 @@ public:
 	CMesh						*m_pMesh = NULL;
     XMFLOAT4X4					m_xmf4x4World;    
 
-	BoundingOrientedBox			m_xmOOBB;
+	BoundingBox			m_xmOOBB;
 
 	CGameObject					*m_pObjectCollided = NULL;
 
@@ -61,6 +61,34 @@ public:
 	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };
 
+
+class CExplosiveObject : public CGameObject
+{
+public:
+	CExplosiveObject();
+	virtual ~CExplosiveObject();
+
+	bool						m_bBlowingUp = false;
+
+	XMFLOAT4X4					m_pxmf4x4Transforms[EXPLOSION_DEBRISES];
+
+	float						m_fElapsedTimes = 0.0f;
+	float						m_fDuration = 1.0f;
+	float						m_fExplosionSpeed = 10.0f;
+	float						m_fExplosionRotation = 720.0f;
+
+	virtual void Animate(float fElapsedTime);
+	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
+
+public:
+	static CMesh				*m_pExplosionMesh;
+	static XMFLOAT3				m_pxmf3SphereVectors[EXPLOSION_DEBRISES];
+
+	static void PrepareExplosion();
+};
+
+
+
 class CWallsObject : public CGameObject
 {
 public:
@@ -70,4 +98,3 @@ public:
 public:
 	XMFLOAT4					m_pxmf4WallPlanes[6];
 };
-

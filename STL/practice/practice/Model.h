@@ -72,6 +72,13 @@ public:
 	friend ostream& operator<<(ostream&, const Model&);
 
 	int getSize()const { return size; }
+
+	//find 알고리즘을 위한 == 연산자 프로그램
+	bool operator==(const Model & other) const {
+		if (size == other.size)
+			return true;
+		else return false;
+	}
 };
 int Model::gid = 0;
 ostream& operator<<(ostream& os, const Model& m) {
