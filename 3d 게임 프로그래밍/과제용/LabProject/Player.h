@@ -11,8 +11,7 @@ public:
 	virtual ~CBullet();
 
 public:
-	bool	 bShoted	=	false;
-	float	fElapseTime = 0.0f;
+	float	fElapseTime = 0.0f;								//경과 시간.
 
 
 };
@@ -41,8 +40,6 @@ public:
 	CCamera						*m_pCamera = NULL;
 
 	bool						m_bShotedBullet = false;
-	int							m_iBulletNum = 0;
-	float						m_fMaxBulletCoolTime = BULLETCOOLTIME;
 	float						m_fBulletCoolTime = -1.0f;
 	CBullet						*m_pBullets[MAXBULLETNUM];
 
@@ -52,7 +49,10 @@ public:
 	void Move(float x, float y, float z);
 	void Rotate(float fPitch = 0.0f, float fYaw = 0.0f, float fRoll = 0.0f);
 	void SetCameraOffset(XMFLOAT3& xmf3CameraOffset);
+	void Animate(float fElapsedTime);
 	void Update(float fTimeElapsed=0.016f);
+
+	void ShotBullet(float fTimeElapsed);
 
 	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };

@@ -165,7 +165,7 @@ void CScene::CheckObjectByBulletCollisions()
 	
 	for (int i = 0; i < MAXBULLETNUM; i++)														//모든 오브젝트들 충돌체크합니다. 
 	{
-		if (m_pPlayer->m_pBullets[i]->bShoted) {
+		if (m_pPlayer->m_pBullets[i]->m_bActive) {
 			for (int j = 0; j < m_nObjects; j++)
 			{
 				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB))
@@ -209,14 +209,18 @@ void CScene::Animate(float fElapsedTime)
 
 	CheckObjectByObjectCollisions();
 
-	CheckObjectByBulletCollisions();
-
+	//CheckObjectByBulletCollisions();
+	XMFLOAT3 a =  m_pWallsObject->GetPosition();
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	std::uniform_int_distribution<float> uid;
+	
 	m_iObjectResponTime += fElapsedTime;
 	for (int i = 0; i < m_nObjects; i++) {
 		if (m_iObjectResponTime > OBJECTRESPONTIME) {
 			if (!m_ppObjects[i]->m_bActive) {
 				m_ppObjects[i]->m_bActive = true;
-				m_ppObjects[i]->SetPosition(XMFLOAT3(0.0f, -10.0f, -10 * i));
+				m_ppObjects[i]->SetPosition(Vector3 ::Add(m_pPlayer->GetPosition(), XMFLOAT3(0, 0, -100)));
 				m_iObjectResponTime = 0;
 				break;
 			}

@@ -13,7 +13,7 @@ public:
 	virtual ~CGameObject();
 
 public:
-	bool						m_bActive = true;
+	bool						m_bActive = true;								//실행하는가?
 	
 	CMesh						*m_pMesh = NULL;
     XMFLOAT4X4					m_xmf4x4World;    

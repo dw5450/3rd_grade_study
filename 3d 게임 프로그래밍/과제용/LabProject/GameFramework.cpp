@@ -144,18 +144,6 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
 	m_pPlayer->SetMovingSpeed(PLAYER_SPEED);
 
-
-	CCubeMesh *pObjectCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
-	for (int i = 0; i < MAXBULLETNUM; i++) {
-		m_pPlayer->m_pBullets[i]->m_bActive = false;
-		m_pPlayer->m_pBullets[i] = new CBullet();
-		m_pPlayer->m_pBullets[i]->SetPosition(-1000.0f, -1000.0f, -1000.0f);
-		m_pPlayer->m_pBullets[i]->SetMesh(pObjectCubeMesh);
-		m_pPlayer->m_pBullets[i]->SetColor(RGB(255, 0, 0));
-		m_pPlayer->m_pBullets[i]->SetMovingSpeed(BULLETSPEED);
-		m_pPlayer->m_pBullets[i]->SetRotationSpeed(600.0f);
-	}
-
 	m_pScene = new CScene();
 	m_pScene->BuildObjects();
 
@@ -230,13 +218,7 @@ void CGameFramework::FrameAdvance()
 
 	//오브젝트들의 좌표를 이동시킵니다.
 	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
-	for (int i = 0; i < MAXBULLETNUM; i++) {
-		CBullet * pBullet = m_pPlayer->m_pBullets[i];
-		if (pBullet->bShoted) {
-			pBullet->Animate(m_GameTimer.GetTimeElapsed());
-		}
-	}
-		
+	m_pPlayer->Animate(m_GameTimer.GetTimeElapsed());
 
 	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));
