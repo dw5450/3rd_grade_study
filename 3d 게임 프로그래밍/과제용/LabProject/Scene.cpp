@@ -233,6 +233,43 @@ void CScene::CheckObjectByWallCollisions()
 	}
 }
 
+void CScene::CheckObjectByBulletCollisions()
+{
+	for (int i = 0; i < MAXBULLETNUM; i++) m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;				//기본적으로 모두 충돌하지 않았다고 가정
+	
+	for (int i = 0; i < MAXBULLETNUM; i++)														//모든 오브젝트들 충돌체크합니다. 
+	{
+		for (int j = 0 ; j < m_nObjects; j++)
+		{
+			if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB))
+			{
+				m_pPlayer->m_pBullets[i]->m_pObjectCollided = m_ppObjects[j];								//충돌할시 서로를 충돌한 오브젝트로 가지고 있게 되어지빈다.
+				m_ppObjects[j]->m_pObjectCollided = m_pPlayer->m_pBullets[i];
+			}
+		}
+	}
+
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		if (m_ppObjects[i]->m_pObjectCollided)
+		{
+			m_ppObjects[i]->SetPosition(XMFLOAT3(-1000, -1000, -1000));
+			m_ppObjects[i]->SetMovingSpeed(0.0f);
+			m_ppObjects[i]->SetRotationSpeed(0.0f);
+			m_ppObjects[i]->m_pObjectCollided = NULL;
+		}
+	}
+
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		if (false) {
+			m_pPlayer->m_pBullets[i]->SetColor(RGB(0, 0, 255));
+			m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;
+		}
+
+	}
+}
+
+
 void CScene::Animate(float fElapsedTime)
 {
 	m_pWallsObject->Animate(fElapsedTime);
@@ -243,6 +280,8 @@ void CScene::Animate(float fElapsedTime)
 	CheckObjectByWallCollisions();
 
 	CheckObjectByObjectCollisions();
+
+	CheckObjectByBulletCollisions();
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
