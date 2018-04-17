@@ -206,8 +206,10 @@ void CExplosiveObject::Animate(float fElapsedTime)
 		}
 		else
 		{
+			SetPosition(XMFLOAT3(-1000, -1000, -1000));
 			m_bBlowingUp = false;
 			m_fElapsedTimes = 0.0f;
+			m_bBlowed = true;
 		}
 	}
 	else
