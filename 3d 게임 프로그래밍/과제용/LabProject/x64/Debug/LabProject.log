@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-﻿  GameFramework.cpp
-  LabProject.vcxproj -> C:\Users\wdw\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe
-=======
-﻿  GameObject.cpp
-  LabProject.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe
->>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
+﻿  stdafx.cpp
+c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\stdafx.h(64): error C2059: 구문 오류: '<<'
+c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\stdafx.h(79): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다.
+c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\stdafx.h(79): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까?
