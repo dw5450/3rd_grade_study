@@ -2,7 +2,6 @@
 
 #include "GameObject.h"
 
-<<<<<<< HEAD
 class CBullet : public CGameObject
 {
 public:
@@ -13,28 +12,10 @@ public:
 	CBullet();
 
 	virtual ~CBullet();
-=======
-
-
-class CBullet : public CGameObject
-{
-public:
-	CBullet();
-	virtual ~CBullet();
-
-public:
-	bool	 bShoted	=	false;
-	float	fElapseTime = 0.0f;
-
->>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
 
 };
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
 class CPlayer : public CGameObject
 {
 public:
