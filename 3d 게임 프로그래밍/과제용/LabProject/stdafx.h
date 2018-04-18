@@ -58,7 +58,11 @@ using namespace DirectX::PackedVector;
 #define DIR_UP					0x10
 #define DIR_DOWN				0x20
 
+#define DEFAULT_POSITION		XMFLOAT3(0.0f, 0.0f, 0.0f)
+
 #define RANDOM_COLOR			(0xFF000000 | ((rand() * 0xFFFFFF) / RAND_MAX))
+
+#define WALL_HALF_SIZE			45.0f
 
 #define EXPLOSION_DEBRISES		120
 
@@ -70,6 +74,8 @@ using namespace DirectX::PackedVector;
 #define BULLETLIMITTIME				1.0f
 
 #define OBJECTRESPONTIME			1.0f
+
+
 
 namespace Vector3
 {

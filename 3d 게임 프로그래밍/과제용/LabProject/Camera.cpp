@@ -25,6 +25,10 @@ CCamera::~CCamera()
 {
 }
 
+
+
+
+//카메라 변환 행렬 생성
 void CCamera::GenerateViewMatrix()
 {
 	m_xmf3Look = Vector3::Normalize(m_xmf3Look);
@@ -40,6 +44,29 @@ void CCamera::GenerateViewMatrix()
 	m_xmf4x4ViewProject = Matrix4x4::Multiply(m_xmf4x4View, m_xmf4x4Projection);
 }
 
+//투영 변환 행렬 생성
+void CCamera::GenerateProjectionMatrix(float fNearPlaneDistance, float fFarPlaneDistance, float fFOVAngle)
+{
+	float fAspectRatio = (float(m_Viewport.m_nWidth) / float(m_Viewport.m_nHeight));
+	m_xmf4x4Projection = Matrix4x4::PerspectiveFovLH(fFOVAngle, fAspectRatio, fNearPlaneDistance, fFarPlaneDistance);
+}
+
+
+
+
+
+
+
+//화면크기 설정
+void CCamera::SetViewport(int xTopLeft, int yTopLeft, int nWidth, int nHeight)
+{
+	m_Viewport.m_xStart = xTopLeft;
+	m_Viewport.m_yStart = yTopLeft;
+	m_Viewport.m_nWidth = nWidth;
+	m_Viewport.m_nHeight = nHeight;
+}
+
+//바라보는 방향 설정
 void CCamera::SetLookAt(XMFLOAT3& xmf3Position, XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up)
 {
 	m_xmf3Position = xmf3Position;
@@ -57,20 +84,13 @@ void CCamera::SetLookAt(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up)
 	m_xmf3Look = Vector3::Normalize(XMFLOAT3(xmf4x4View._13, xmf4x4View._23, xmf4x4View._33));
 }
 
-void CCamera::SetViewport(int xTopLeft, int yTopLeft, int nWidth, int nHeight)
-{
-	m_Viewport.m_xStart = xTopLeft;
-	m_Viewport.m_yStart = yTopLeft;
-	m_Viewport.m_nWidth = nWidth;
-	m_Viewport.m_nHeight = nHeight;
-}
 
-void CCamera::GenerateProjectionMatrix(float fNearPlaneDistance, float fFarPlaneDistance, float fFOVAngle)
-{
-	float fAspectRatio = (float(m_Viewport.m_nWidth) / float(m_Viewport.m_nHeight));
-	m_xmf4x4Projection = Matrix4x4::PerspectiveFovLH(fFOVAngle, fAspectRatio, fNearPlaneDistance, fFarPlaneDistance);
-}
 
+
+
+
+
+//카메라의 이동
 void CCamera::Move(XMFLOAT3& xmf3Shift)
 {
 	m_xmf3Position = Vector3::Add(m_xmf3Position, xmf3Shift);
@@ -81,6 +101,7 @@ void CCamera::Move(float x, float y, float z)
 	Move(XMFLOAT3(x, y, z));
 }
 
+//카메라의 회전
 void CCamera::Rotate(float fPitch, float fYaw, float fRoll)
 {
 	if (fPitch != 0.0f)
@@ -103,6 +124,7 @@ void CCamera::Rotate(float fPitch, float fYaw, float fRoll)
 	}
 }
 
+//변경점들을 적용시킴
 void CCamera::Update(CPlayer *pPlayer, XMFLOAT3& xmf3LookAt, float fTimeElapsed)
 {
 	XMFLOAT4X4 mtxRotate = Matrix4x4::Identity();

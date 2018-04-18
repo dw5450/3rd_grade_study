@@ -13,7 +13,8 @@ class CGameFramework
 public:
 	CGameFramework();
 	~CGameFramework();
-
+	
+	//»ý¼º ¼Ò¸ê
 	bool OnCreate(HINSTANCE hInstance, HWND hMainWnd);
 	void OnDestroy();
 	void FrameAdvance();
