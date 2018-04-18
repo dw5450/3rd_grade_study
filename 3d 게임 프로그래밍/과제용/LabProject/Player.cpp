@@ -28,6 +28,7 @@ CPlayer::CPlayer()
 	m_xmf3CameraOffset = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
+<<<<<<< HEAD
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
 	for (int i = 0; i < MAXBULLETNUM; i++) {
 		m_pBullets[i] = new CBullet();
@@ -40,6 +41,8 @@ CPlayer::CPlayer()
 	}
 
 
+=======
+>>>>>>> df76119d471a4d8a8c9f13b0d518e94e68017a14
 }
 
 CPlayer::~CPlayer()
@@ -193,4 +196,18 @@ void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	for (int i = 0; i < MAXBULLETNUM; i++) {
 		m_pBullets[i]->Render(hDCFrameBuffer, pCamera);
 	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+CBullet::CBullet()
+{
+	SetPosition(0, 0, -100);
+	SetMovingDirection(XMFLOAT3(0, 0, 0));
+}
+
+CBullet::~CBullet()
+{
+
 }

@@ -2,6 +2,18 @@
 
 #include "GameObject.h"
 
+<<<<<<< HEAD
+class CBullet : public CGameObject
+{
+public:
+	XMFLOAT3 m_xmf3Limit_Position;
+	bool m_bShooted = false;
+
+public:
+	CBullet();
+
+	virtual ~CBullet();
+=======
 
 
 class CBullet : public CGameObject
@@ -13,11 +25,15 @@ public:
 public:
 	float	fElapseTime = 0.0f;								//경과 시간.
 
+>>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
 
 };
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
 class CPlayer : public CGameObject
 {
 public:
@@ -38,6 +54,8 @@ public:
 	float           			m_fRoll = 0.0f;
 
 	CCamera						*m_pCamera = NULL;
+	
+	CBullet						*m_pBullets[BULLET_NUM];
 
 	bool						m_bShotedBullet = false;
 	float						m_fBulletCoolTime = -1.0f;
