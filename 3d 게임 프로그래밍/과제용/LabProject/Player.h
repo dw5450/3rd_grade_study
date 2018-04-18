@@ -5,13 +5,16 @@
 class CBullet : public CGameObject
 {
 public:
-	XMFLOAT3 m_xmf3Limit_Position;
-	bool m_bShooted = false;
+	CBullet();
+	virtual ~CBullet();
+<<<<<<< HEAD
+=======
 
 public:
-	CBullet();
+	float	fElapseTime = 0.0f;								//경과 시간.
 
-	virtual ~CBullet();
+
+>>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
 
 };
 
@@ -36,12 +39,8 @@ public:
 	float           			m_fRoll = 0.0f;
 
 	CCamera						*m_pCamera = NULL;
-	
-	CBullet						*m_pBullets[BULLET_NUM];
 
 	bool						m_bShotedBullet = false;
-	int							m_iBulletNum = 0;
-	float						m_fMaxBulletCoolTime = BULLETCOOLTIME;
 	float						m_fBulletCoolTime = -1.0f;
 	CBullet						*m_pBullets[MAXBULLETNUM];
 
@@ -51,8 +50,12 @@ public:
 	void Move(float x, float y, float z);
 	void Rotate(float fPitch = 0.0f, float fYaw = 0.0f, float fRoll = 0.0f);
 	void SetCameraOffset(XMFLOAT3& xmf3CameraOffset);
+	
 	void Update(float fTimeElapsed=0.016f);
 
+	void ShotBullet(float fTimeElapsed);
+
+	virtual void Animate(float fElapsedTime);
 	virtual void Render(HDC hDCFrameBuffer, CCamera *pCamera);
 };
 

@@ -13,13 +13,13 @@ public:
 	virtual ~CGameObject();
 
 public:
-	bool						m_bActive = true;
+	bool						m_bActive = true;								//실행하는가?
 	
 	CMesh						*m_pMesh = NULL;
     XMFLOAT4X4					m_xmf4x4World;    
 
-	BoundingBox			m_xmOOBB;
-
+	BoundingOrientedBox			m_xmOOBB;
+	
 	CGameObject					*m_pObjectCollided = NULL;
 
 	DWORD						m_dwColor;

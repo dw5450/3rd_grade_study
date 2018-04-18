@@ -6,6 +6,7 @@
 
 CScene::CScene()
 {
+
 }
 
 CScene::~CScene()
@@ -165,7 +166,7 @@ void CScene::CheckObjectByBulletCollisions()
 	
 	for (int i = 0; i < MAXBULLETNUM; i++)														//모든 오브젝트들 충돌체크합니다. 
 	{
-		if (m_pPlayer->m_pBullets[i]->bShoted) {
+		if (m_pPlayer->m_pBullets[i]->m_bActive) {
 			for (int j = 0; j < m_nObjects; j++)
 			{
 				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB))
@@ -201,27 +202,27 @@ void CScene::CheckObjectByBulletCollisions()
 void CScene::Animate(float fElapsedTime)
 {
 	m_pWallsObject->Animate(fElapsedTime);
-	if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
+	m_pPlayer->Animate(fElapsedTime);
+
+	//벽과 충돌하시
+	//if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
 	CheckObjectByWallCollisions();
 
-	CheckObjectByObjectCollisions();
+	//오브젝트끼리 충돌할시
+	//CheckObjectByObjectCollisions();
 
-	CheckObjectByBulletCollisions();
+	//총알과 충돌할시
+	//CheckObjectByBulletCollisions();
 
-	m_iObjectResponTime += fElapsedTime;
+	ResponEnemy(fElapsedTime);
+
+	
 	for (int i = 0; i < m_nObjects; i++) {
-		if (m_iObjectResponTime > OBJECTRESPONTIME) {
-			if (!m_ppObjects[i]->m_bActive) {
-				m_ppObjects[i]->m_bActive = true;
-				m_ppObjects[i]->SetPosition(XMFLOAT3(0.0f, -10.0f, -10 * i));
-				m_iObjectResponTime = 0;
-				break;
-			}
-			
-		}
+		if (m_ppObjects[i]->m_bActive)
+			m_ppObjects[i]->SetMovingDirection(Vector3::Add(Vector3::ScalarProduct(m_ppObjects[i]->GetPosition(), -1), m_pPlayer->GetPosition()));
 	}
 }
 
@@ -230,4 +231,24 @@ void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_pWallsObject->Render(hDCFrameBuffer, pCamera);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Render(hDCFrameBuffer, pCamera);
+}
+
+void CScene::ResponEnemy(float fElapsedTime)
+{
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	std::uniform_real_distribution<float> ufr(-WALL_HALF_SIZE, WALL_HALF_SIZE);
+
+	m_iObjectResponTime += fElapsedTime;
+	for (int i = 0; i < m_nObjects; i++) {
+		if (m_iObjectResponTime > OBJECTRESPONTIME) {
+			if (!m_ppObjects[i]->m_bActive) {
+				m_ppObjects[i]->m_bActive = true;
+				m_ppObjects[i]->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), XMFLOAT3(ufr(dre), ufr(dre), 145 + ufr(dre))));
+				m_iObjectResponTime = 0;
+				break;
+			}
+
+		}
+	}
 }

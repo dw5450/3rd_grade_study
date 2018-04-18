@@ -33,6 +33,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <math.h>
+#include <random>
 
 #include <d3d12.h>
 #include <DirectXMath.h>
@@ -61,7 +62,10 @@ using namespace DirectX::PackedVector;
 
 #define EXPLOSION_DEBRISES		120
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
 
 #define BULLET_NUM				20
 
@@ -69,10 +73,15 @@ using namespace DirectX::PackedVector;
 
 #define MAXBULLETNUM				20
 #define BULLETCOOLTIME				0.3f
-#define BULLETSPEED					60.0f
-#define BULLETLIMITTIME				3.0f
+#define BULLETSPEED					120.0f
+#define BULLETLIMITTIME				1.0f
 
 #define OBJECTRESPONTIME			1.0f
+<<<<<<< HEAD
+=======
+
+#define WALL_HALF_SIZE				45.0f
+>>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
 
 namespace Vector3
 {

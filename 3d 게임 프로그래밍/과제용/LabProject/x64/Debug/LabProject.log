@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Camera.cpp
 c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(46): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
   c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
@@ -39,3 +40,7 @@ c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproj
   c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(5): note: 'CBullet' 선언을 참조하십시오.
 c:\users\wdw\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\scene.cpp(219): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
+=======
+﻿  Player.cpp
+  LabProject.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe
+>>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
