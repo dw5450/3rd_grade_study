@@ -1,24 +1,2 @@
-﻿  Camera.cpp
-  GameFramework.cpp
-  LabProject.cpp
-  Player.cpp
-  Scene.cpp
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\type_traits(1051): error C2338: make_signed<T>/make_unsigned<T> require that T shall be a (possibly cv-qualified) integral type or enumeration but not a bool type.
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\type_traits(1107): note: 컴파일 중인 클래스 템플릿 인스턴스화 'std::_Change_sign<_Ty>'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=float
-          ]
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\random(2316): note: 컴파일 중인 클래스 템플릿 인스턴스화 'std::make_unsigned<_Ty>'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=float
-          ]
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\random(2383): note: 컴파일 중인 클래스 템플릿 인스턴스화 'std::uniform_int<_Ty>'에 대한 참조를 확인하세요.
-          with
-          [
-              _Ty=float
-          ]
-  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\scene.cpp(216): note: 컴파일 중인 클래스 템플릿 인스턴스화 'std::uniform_int_distribution<float>'에 대한 참조를 확인하세요.
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\random(2385): error C2338: invalid template argument for uniform_int_distribution: N4659 29.6.1.1 [rand.req.genl]/1e requires one of short, int, long, long long, unsigned short, unsigned int, unsigned long, or unsigned long long
-  코드를 생성하고 있습니다...
+﻿  Player.cpp
+  LabProject.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe

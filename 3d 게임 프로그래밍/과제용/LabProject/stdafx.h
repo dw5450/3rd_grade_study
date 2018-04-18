@@ -74,6 +74,8 @@ using namespace DirectX::PackedVector;
 
 #define OBJECTRESPONTIME			1.0f
 
+#define WALL_HALF_SIZE				45.0f
+
 namespace Vector3
 {
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)

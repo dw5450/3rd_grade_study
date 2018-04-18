@@ -6,6 +6,7 @@
 
 CScene::CScene()
 {
+
 }
 
 CScene::~CScene()
@@ -201,31 +202,27 @@ void CScene::CheckObjectByBulletCollisions()
 void CScene::Animate(float fElapsedTime)
 {
 	m_pWallsObject->Animate(fElapsedTime);
-	if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
+	m_pPlayer->Animate(fElapsedTime);
+
+	//벽과 충돌하시
+	//if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
 	CheckObjectByWallCollisions();
 
-	CheckObjectByObjectCollisions();
+	//오브젝트끼리 충돌할시
+	//CheckObjectByObjectCollisions();
 
+	//총알과 충돌할시
 	//CheckObjectByBulletCollisions();
-	XMFLOAT3 a =  m_pWallsObject->GetPosition();
-	std::random_device rd;
-	std::default_random_engine dre(rd());
-	std::uniform_int_distribution<float> uid;
+
+	ResponEnemy(fElapsedTime);
+
 	
-	m_iObjectResponTime += fElapsedTime;
 	for (int i = 0; i < m_nObjects; i++) {
-		if (m_iObjectResponTime > OBJECTRESPONTIME) {
-			if (!m_ppObjects[i]->m_bActive) {
-				m_ppObjects[i]->m_bActive = true;
-				m_ppObjects[i]->SetPosition(Vector3 ::Add(m_pPlayer->GetPosition(), XMFLOAT3(0, 0, -100)));
-				m_iObjectResponTime = 0;
-				break;
-			}
-			
-		}
+		if (m_ppObjects[i]->m_bActive)
+			m_ppObjects[i]->SetMovingDirection(Vector3::Add(Vector3::ScalarProduct(m_ppObjects[i]->GetPosition(), -1), m_pPlayer->GetPosition()));
 	}
 }
 
@@ -234,4 +231,24 @@ void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_pWallsObject->Render(hDCFrameBuffer, pCamera);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Render(hDCFrameBuffer, pCamera);
+}
+
+void CScene::ResponEnemy(float fElapsedTime)
+{
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	std::uniform_real_distribution<float> ufr(-WALL_HALF_SIZE, WALL_HALF_SIZE);
+
+	m_iObjectResponTime += fElapsedTime;
+	for (int i = 0; i < m_nObjects; i++) {
+		if (m_iObjectResponTime > OBJECTRESPONTIME) {
+			if (!m_ppObjects[i]->m_bActive) {
+				m_ppObjects[i]->m_bActive = true;
+				m_ppObjects[i]->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), XMFLOAT3(ufr(dre), ufr(dre), 145 + ufr(dre))));
+				m_iObjectResponTime = 0;
+				break;
+			}
+
+		}
+	}
 }
