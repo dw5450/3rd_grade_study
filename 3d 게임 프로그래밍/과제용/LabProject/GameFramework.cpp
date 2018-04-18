@@ -236,6 +236,7 @@ void CGameFramework::FrameAdvance()
 
 	//오브젝트들의 좌표를 이동시킵니다.
 	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
+	m_pPlayer->Animate(m_GameTimer.GetTimeElapsed());
 
 	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));

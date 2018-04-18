@@ -12,7 +12,13 @@ CScene::~CScene()
 {
 }
 
+void CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+{
+}
 
+void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
+{
+}
 
 //오브젝트들을 생성합니다.
 void CScene::BuildObjects()
@@ -66,7 +72,6 @@ void CScene::ReleaseObjects()
 
 	if (m_pWallsObject) delete m_pWallsObject;
 }
-
 
 //충돌을 체크합니다.
 void CScene::CheckObjectByObjectCollisions()
@@ -195,10 +200,8 @@ void CScene::CheckObjectByBulletCollisions()
 
 void CScene::Animate(float fElapsedTime)
 {
-	ResponEnemy(fElapsedTime);
-		
 	m_pWallsObject->Animate(fElapsedTime);
-	m_pPlayer->Animate(fElapsedTime);
+	if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
@@ -207,7 +210,23 @@ void CScene::Animate(float fElapsedTime)
 	CheckObjectByObjectCollisions();
 
 	//CheckObjectByBulletCollisions();
+	XMFLOAT3 a =  m_pWallsObject->GetPosition();
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	std::uniform_int_distribution<float> uid;
 	
+	m_iObjectResponTime += fElapsedTime;
+	for (int i = 0; i < m_nObjects; i++) {
+		if (m_iObjectResponTime > OBJECTRESPONTIME) {
+			if (!m_ppObjects[i]->m_bActive) {
+				m_ppObjects[i]->m_bActive = true;
+				m_ppObjects[i]->SetPosition(Vector3 ::Add(m_pPlayer->GetPosition(), XMFLOAT3(0, 0, -100)));
+				m_iObjectResponTime = 0;
+				break;
+			}
+			
+		}
+	}
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
@@ -215,33 +234,4 @@ void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
 	m_pWallsObject->Render(hDCFrameBuffer, pCamera);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Render(hDCFrameBuffer, pCamera);
-}
-
-void CScene::ResponEnemy(float fElapsedTime)
-{
-	std::random_device rd;
-	std::default_random_engine dre(rd());
-	std::uniform_real_distribution<float> ufd(-WALL_HALF_SIZE, WALL_HALF_SIZE);
-
-	m_iObjectResponTime += fElapsedTime;
-	for (int i = 0; i < m_nObjects; i++) {
-		if (m_iObjectResponTime > OBJECTRESPONTIME) {
-			if (!m_ppObjects[i]->m_bActive) {
-				m_ppObjects[i]->m_bActive = true;
-				m_ppObjects[i]->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), XMFLOAT3(ufd(dre), ufd(dre), 100.0f)));
-				m_iObjectResponTime = 0;
-				break;
-			}
-		}
-	}
-
-}
-
-
-void CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-{
-}
-
-void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
-{
 }

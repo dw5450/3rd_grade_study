@@ -58,11 +58,7 @@ using namespace DirectX::PackedVector;
 #define DIR_UP					0x10
 #define DIR_DOWN				0x20
 
-#define DEFAULT_POSITION		XMFLOAT3(0.0f, 0.0f, 0.0f)
-
 #define RANDOM_COLOR			(0xFF000000 | ((rand() * 0xFFFFFF) / RAND_MAX))
-
-#define WALL_HALF_SIZE			45.0f
 
 #define EXPLOSION_DEBRISES		120
 
@@ -78,9 +74,12 @@ using namespace DirectX::PackedVector;
 
 #define OBJECTRESPONTIME			1.0f
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> parent of 52a1b07... 0418 3d 과제, 랜덤 적 생성 구현
 namespace Vector3
 {
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)
