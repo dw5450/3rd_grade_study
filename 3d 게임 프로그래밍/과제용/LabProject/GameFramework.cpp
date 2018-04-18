@@ -144,8 +144,7 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
 	m_pPlayer->SetMovingSpeed(PLAYER_SPEED);
 
-<<<<<<< HEAD
-=======
+
 
 	CCubeMesh *pObjectCubeMesh = new CCubeMesh(1.0f, 1.0f, 1.0f);
 	for (int i = 0; i < MAXBULLETNUM; i++) {
@@ -163,7 +162,6 @@ void CGameFramework::BuildObjects()
 	//m_pPlayer->m_pBullets[0]->SetPosition(0.0f, 0.0f, -100.0f);
 
 	
->>>>>>> df76119d471a4d8a8c9f13b0d518e94e68017a14
 	m_pScene = new CScene();
 	m_pScene->BuildObjects();
 

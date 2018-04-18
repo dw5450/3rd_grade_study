@@ -66,10 +66,9 @@ using namespace DirectX::PackedVector;
 
 #define EXPLOSION_DEBRISES		120
 
-<<<<<<< HEAD
 
 #define BULLET_NUM				20
-=======
+
 #define PLAYER_SPEED				30.0f
 
 #define MAXBULLETNUM				20
@@ -78,7 +77,7 @@ using namespace DirectX::PackedVector;
 #define BULLETLIMITTIME				1.0f
 
 #define OBJECTRESPONTIME			1.0f
->>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
+
 
 
 

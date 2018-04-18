@@ -1,20 +1,23 @@
-<<<<<<< HEAD
-﻿  stdafx.cpp
-  Camera.cpp
+﻿  Camera.cpp
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(44): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
   GameFramework.cpp
-  GameObject.cpp
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(44): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
   LabProject.cpp
-  Mesh.cpp
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(44): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
   Player.cpp
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(44): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(31): error C2059: 구문 오류: '<<'
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(37): error C2065: 'pObjectCubeMesh': 선언되지 않은 식별자입니다.
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(44): error C2059: 구문 오류: '=='
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(205): error C2084: 'CBullet::CBullet(void)' 함수에 이미 본문이 있습니다.
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(5): note: '{ctor}'의 이전 정의를 참조하십시오.
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(211): error C2084: 'CBullet::~CBullet(void)' 함수에 이미 본문이 있습니다.
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.cpp(10): note: '{dtor}'의 이전 정의를 참조하십시오.
   Scene.cpp
-  Timer.cpp
+c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(44): error C2086: 'CBullet *CPlayer::m_pBullets[20]': 재정의
+  c:\users\원동욱\desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\labproject\player.h(40): note: 'CPlayer::m_pBullets' 선언을 참조하십시오.
   코드를 생성하고 있습니다...
-=======
-<<<<<<< HEAD
-﻿  GameFramework.cpp
-  LabProject.vcxproj -> C:\Users\wdw\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe
-=======
-﻿  GameObject.cpp
->>>>>>> df76119d471a4d8a8c9f13b0d518e94e68017a14
-  LabProject.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\3d 게임 프로그래밍\과제용\x64\Debug\LabProject.exe
->>>>>>> d7f5a46b8f3d79eec25788325bf73d9c6c402e6e
