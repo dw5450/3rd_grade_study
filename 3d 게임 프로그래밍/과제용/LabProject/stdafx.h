@@ -74,12 +74,6 @@ using namespace DirectX::PackedVector;
 
 #define OBJECTRESPONTIME			1.0f
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> parent of 52a1b07... 0418 3d 과제, 랜덤 적 생성 구현
 namespace Vector3
 {
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)

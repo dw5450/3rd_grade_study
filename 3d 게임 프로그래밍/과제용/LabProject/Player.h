@@ -36,8 +36,6 @@ public:
 	float           			m_fRoll = 0.0f;
 
 	CCamera						*m_pCamera = NULL;
-	
-	CBullet						*m_pBullets[BULLET_NUM];
 
 	bool						m_bShotedBullet = false;
 	float						m_fBulletCoolTime = -1.0f;
