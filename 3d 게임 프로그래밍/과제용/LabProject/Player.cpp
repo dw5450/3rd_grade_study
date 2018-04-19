@@ -62,17 +62,6 @@ void CPlayer::SetCameraOffset(XMFLOAT3& xmf3CameraOffset)
 	m_pCamera->GenerateViewMatrix();
 }
 
-//void CPlayer::Animate(float fElapsedTime)
-//{
-//	CGameObject::Animate(fElapsedTime);
-//	ShotBullet(fElapsedTime);
-//
-//	for (int i = 0; i < MAXBULLETNUM; i++) {
-//		m_pBullets[i]->Animate(fElapsedTime);
-//	}
-//
-//
-//}
 
 void CPlayer::Move(DWORD dwDirection, float elapse_time)
 {
@@ -101,7 +90,8 @@ void CPlayer::Move(XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 	else
 	{
 		m_xmf3Position = Vector3::Add(xmf3Shift, m_xmf3Position);
-		m_xmf3MovingDirection = Vector3::Normalize(xmf3Shift);
+		CGameObject::SetPosition(m_xmf3Position);
+		m_xmf3MovingDirection = Vector3::Normalize(XMFLOAT3(0,0,0));
 		m_pCamera->Move(xmf3Shift);
 	}
 }
@@ -185,10 +175,16 @@ void CPlayer::ShotBullet(float fTimeElapsed)
 }
 
 
-
 void CPlayer::Animate(float fElapsedTime)
 {
 	CGameObject::Animate(fElapsedTime);
+	ShotBullet(fElapsedTime);
+
+	for (int i = 0; i < MAXBULLETNUM; i++) {
+		m_pBullets[i]->Animate(fElapsedTime);
+	}
+
+
 }
 
 void CPlayer::Render(HDC hDCFrameBuffer, CCamera *pCamera)

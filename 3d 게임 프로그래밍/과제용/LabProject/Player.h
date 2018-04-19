@@ -7,14 +7,10 @@ class CBullet : public CGameObject
 public:
 	CBullet();
 	virtual ~CBullet();
-<<<<<<< HEAD
-=======
 
 public:
 	float	fElapseTime = 0.0f;								//경과 시간.
 
-
->>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
 
 };
 

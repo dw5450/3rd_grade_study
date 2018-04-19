@@ -62,11 +62,6 @@ using namespace DirectX::PackedVector;
 
 #define EXPLOSION_DEBRISES		120
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
-
 #define BULLET_NUM				20
 
 #define PLAYER_SPEED				30.0f
@@ -77,11 +72,10 @@ using namespace DirectX::PackedVector;
 #define BULLETLIMITTIME				1.0f
 
 #define OBJECTRESPONTIME			1.0f
-<<<<<<< HEAD
-=======
+
 
 #define WALL_HALF_SIZE				45.0f
->>>>>>> 1caa81f33235b9c50439216e279c6b11c6b7c4ad
+
 
 namespace Vector3
 {

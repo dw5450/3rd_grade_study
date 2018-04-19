@@ -11,12 +11,16 @@
 class CGameFramework
 {
 public:
+	//»ý¼º ¼Ò¸ê
 	CGameFramework();
 	~CGameFramework();
 
 	bool OnCreate(HINSTANCE hInstance, HWND hMainWnd);
 	void OnDestroy();
-	void FrameAdvance();
+
+	void BuildObjects();
+	void ReleaseObjects();
+	
 
 	void SetActive(bool bActive) { m_bActive = bActive; }
 
@@ -40,9 +44,9 @@ public:
 	void ClearFrameBuffer(DWORD dwColor);
 	void PresentFrameBuffer();
 
-	void BuildObjects();
-	void ReleaseObjects();
 	void ProcessInput();
+
+	void FrameAdvance();
 
 	void OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
