@@ -221,8 +221,9 @@ void CScene::Animate(float fElapsedTime)
 
 	
 	for (int i = 0; i < m_nObjects; i++) {
+		
 		if (m_ppObjects[i]->m_bActive)
-			m_ppObjects[i]->SetMovingDirection(Vector3::Add(Vector3::ScalarProduct(m_ppObjects[i]->GetPosition(), -1), m_pPlayer->GetPosition()));
+			m_ppObjects[i]->SetMovingDirection(Vector3::Subtract(m_pPlayer->GetPosition(), m_ppObjects[i]->GetPosition()));
 	}
 }
 

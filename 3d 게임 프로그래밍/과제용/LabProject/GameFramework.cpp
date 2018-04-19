@@ -138,10 +138,11 @@ void CGameFramework::BuildObjects()
 	pAirplaneMesh->SetOOBB(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(3.0f, 3.0f, 0.5f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	m_pPlayer = new CPlayer();
-	m_pPlayer->SetPosition(0.0f, 0.0f, -30.0f);
+	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pPlayer->SetMesh(pAirplaneMesh);
 	m_pPlayer->SetColor(RGB(0, 0, 255));
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
+	m_pPlayer->SetMovingDirection(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	m_pPlayer->SetMovingSpeed(PLAYER_SPEED);
 
 
@@ -200,7 +201,7 @@ void CGameFramework::ProcessInput()
 		if (pKeyBuffer['A'] & 0xF0) dwDirection |= DIR_LEFT;
 		if (pKeyBuffer['D'] & 0xF0) dwDirection |= DIR_RIGHT;
 		if (pKeyBuffer[VK_CONTROL] & 0xF0) m_pPlayer->m_bShotedBullet = true;
-		//if (pKeyBuffer['E'] & 0xF0) dwDirection |= DIR_DOWN;
+	
 	}
 	float cxDelta = 0.0f, cyDelta = 0.0f;
 	POINT ptCursorPos;
@@ -236,7 +237,7 @@ void CGameFramework::FrameAdvance()
 
 	//오브젝트들의 좌표를 이동시킵니다.
 	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
-//	m_pPlayer->Animate(m_GameTimer.GetTimeElapsed());
+	m_pPlayer->Animate(m_GameTimer.GetTimeElapsed());
 
 	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));

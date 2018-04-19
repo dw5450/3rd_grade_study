@@ -12,7 +12,6 @@ public:
 	float	fElapseTime = 0.0f;								//경과 시간.
 
 
-
 };
 
 
