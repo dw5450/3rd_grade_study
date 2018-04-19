@@ -160,16 +160,63 @@ void CScene::CheckObjectByWallCollisions()
 	}
 }
 
+void CScene::CheckPlayerByWallCollisions()
+{
+	ContainmentType containType = m_pWallsObject->m_xmOOBB.Contains(m_pPlayer->m_xmOOBB);					//벽으로 충돌을 체크
+	switch (containType)
+	{
+	case DISJOINT:			//만나지 않을 경우
+	{
+		int nPlaneIndex = -1;
+		for (int j = 0; j < 6; j++)
+		{
+			PlaneIntersectionType intersectType = m_pPlayer->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmf4WallPlanes[j]));
+			if (intersectType == BACK)
+			{
+				nPlaneIndex = j;
+				break;
+			}
+		}
+		if (nPlaneIndex != -1)					//충돌할시
+		{
+			m_pWallsObject->SetPosition(0.0f, 0.0f, m_pPlayer->GetPosition().z);
+		}
+		break;
+	}
+	case INTERSECTS:						//만날경우?
+	{
+		int nPlaneIndex = -1;
+		for (int j = 0; j < 6; j++)
+		{
+			PlaneIntersectionType intersectType = m_pPlayer->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmf4WallPlanes[j]));
+			if (intersectType == INTERSECTING)
+			{
+				nPlaneIndex = j;
+				break;
+			}
+		}
+		if (nPlaneIndex != -1)					//충돌할시
+		{
+			m_pWallsObject->SetPosition(0.0f, 0.0f, m_pPlayer->GetPosition().z);
+		}
+		break;
+	}
+	case CONTAINS:					//포함될 경우
+		break;
+	}
+}
+
 void CScene::CheckObjectByBulletCollisions()
 {
-	for (int i = 0; i < MAXBULLETNUM; i++) m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;				//기본적으로 모두 충돌하지 않았다고 가정
-	
+	for (int i = 0; i < MAXBULLETNUM; i++) m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;	//기본적으로 모두 충돌하지 않았다고 가정
+	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->m_pObjectCollided = NULL;
+
 	for (int i = 0; i < MAXBULLETNUM; i++)														//모든 오브젝트들 충돌체크합니다. 
 	{
 		if (m_pPlayer->m_pBullets[i]->m_bActive) {
 			for (int j = 0; j < m_nObjects; j++)
 			{
-				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB))
+				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB) && m_ppObjects[j]->m_bActive)
 				{
 					m_pPlayer->m_pBullets[i]->m_pObjectCollided = m_ppObjects[j];								//충돌할시 서로를 충돌한 오브젝트로 가지고 있게 된다.
 					m_ppObjects[j]->m_pObjectCollided = m_pPlayer->m_pBullets[i];
@@ -182,19 +229,9 @@ void CScene::CheckObjectByBulletCollisions()
 	{
 		if (m_ppObjects[i]->m_pObjectCollided)
 		{
-			m_ppObjects[i]->m_bActive = false;
 			CExplosiveObject *pExplosiveObject = (CExplosiveObject *)m_ppObjects[i];
 			pExplosiveObject->m_bBlowingUp = true;
 		}
-	}
-
-	for (int i = 0; i < MAXBULLETNUM; i++) {
-		if (m_pPlayer->m_pBullets[i]->m_pObjectCollided)
-		{
-			m_pPlayer->m_pBullets[i]->SetPosition(XMFLOAT3(-1000, -1000, -1000));
-			m_pPlayer->m_pBullets[i]->m_pObjectCollided = NULL;
-		}
-
 	}
 }
 
@@ -205,26 +242,19 @@ void CScene::Animate(float fElapsedTime)
 	m_pPlayer->Animate(fElapsedTime);
 
 	//벽과 충돌하시
-	//if (m_pWallsObject->m_xmOOBB.Contains(XMLoadFloat3(&m_pPlayer->m_xmf3Position)) == DISJOINT) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
 	CheckObjectByWallCollisions();
+	CheckPlayerByWallCollisions();
 
 	//오브젝트끼리 충돌할시
 	//CheckObjectByObjectCollisions();
 
 	//총알과 충돌할시
-	//CheckObjectByBulletCollisions();
+	CheckObjectByBulletCollisions();
 
 	ResponEnemy(fElapsedTime);
-
-	
-	for (int i = 0; i < m_nObjects; i++) {
-		
-		if (m_ppObjects[i]->m_bActive)
-			m_ppObjects[i]->SetMovingDirection(Vector3::Subtract(m_pPlayer->GetPosition(), m_ppObjects[i]->GetPosition()));
-	}
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera *pCamera)
@@ -239,17 +269,29 @@ void CScene::ResponEnemy(float fElapsedTime)
 	std::random_device rd;
 	std::default_random_engine dre(rd());
 	std::uniform_real_distribution<float> ufr(-WALL_HALF_SIZE, WALL_HALF_SIZE);
+	std::uniform_real_distribution<float> ufrRotaionAngle(0.0f, 360.0f);
 
 	m_iObjectResponTime += fElapsedTime;
 	for (int i = 0; i < m_nObjects; i++) {
 		if (m_iObjectResponTime > OBJECTRESPONTIME) {
 			if (!m_ppObjects[i]->m_bActive) {
 				m_ppObjects[i]->m_bActive = true;
-				m_ppObjects[i]->SetPosition(Vector3::Add(m_pPlayer->GetPosition(), XMFLOAT3(ufr(dre), ufr(dre), 145 + ufr(dre))));
+				m_ppObjects[i]->SetPosition(XMFLOAT3(ufr(dre), ufr(dre), m_pPlayer->GetPosition().z +145 + ufr(dre)));
+				m_ppObjects[i]->SetPosition(XMFLOAT3(ufr(dre), ufr(dre), m_pPlayer->GetPosition().z + 145 + ufr(dre)));
+				m_ppObjects[i]->SetRotationAxis(XMFLOAT3(ufrRotaionAngle(dre), ufrRotaionAngle(dre), ufrRotaionAngle(dre)));
 				m_iObjectResponTime = 0;
 				break;
 			}
 
 		}
+	}
+}
+
+void CScene::TracingPlayer(float fElapsedTime)
+{
+	for (int i = 0; i < m_nObjects; i++)
+	{
+		if (m_ppObjects[i]->m_bActive)
+			m_ppObjects[i]->SetMovingDirection(Vector3::Subtract(m_pPlayer->GetPosition(), m_ppObjects[i]->GetPosition()));
 	}
 }

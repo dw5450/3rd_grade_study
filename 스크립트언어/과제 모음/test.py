@@ -1,7 +1,12 @@
-f =  open('test.txt', 'r')
 
-str =  f.read()
+def f(num):
+    result = 0
+    for i in range(num):
+        result += num * i + i
 
-print ("문자 {0}". format(len(str)))
-print ("단어 {0}". format(len(str.split())))
-print ("행 {0}". format(len(str.split('\n'))))
+    return result
+
+
+n = eval(input())
+
+print(f(n))

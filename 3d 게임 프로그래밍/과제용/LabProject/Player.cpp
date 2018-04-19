@@ -78,6 +78,7 @@ void CPlayer::Move(DWORD dwDirection, float elapse_time)
 		if (dwDirection & DIR_DOWN) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Up, -fDistance);
 
 		Move(xmf3Shift, true);
+
 	}
 }
 
