@@ -39,8 +39,8 @@ void CScene::BuildObjects()
 	m_pWallsObject->m_pxmf4WallPlanes[1] = XMFLOAT4(-1.0f, 0.0f, 0.0f, fHalfWidth);
 	m_pWallsObject->m_pxmf4WallPlanes[2] = XMFLOAT4(0.0f, +1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmf4WallPlanes[3] = XMFLOAT4(0.0f, -1.0f, 0.0f, fHalfHeight);
-	m_pWallsObject->m_pxmf4WallPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, fHalfDepth);
-	m_pWallsObject->m_pxmf4WallPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
+	m_pWallsObject->m_pxmf4WallPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, 10);
+	m_pWallsObject->m_pxmf4WallPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, 10);
 
 
 	//큐브 설정
@@ -54,11 +54,11 @@ void CScene::BuildObjects()
 		m_ppObjects[i] = new CExplosiveObject();
 		m_ppObjects[i]->m_bActive = false;
 		m_ppObjects[i]->SetMesh(pObjectCubeMesh);
-		m_ppObjects[i]->SetColor(RGB(255, 0, 0));
+		m_ppObjects[i]->SetColor(RGB(35, 120, 35));
 		m_ppObjects[i]->SetPosition(1000.0f, 1000.0f, 1000.0f);
-		m_ppObjects[i]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
+		//m_ppObjects[i]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
 		m_ppObjects[i]->SetRotationSpeed(90.0f);
-		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));
+		//m_ppObjects[i]->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));*/
 		m_ppObjects[i]->SetMovingSpeed(10.5f);
 	}
 
@@ -68,8 +68,10 @@ void CScene::BuildObjects()
 //오브젝트 들을 삭제합니다.
 void CScene::ReleaseObjects()
 {
-	for (int i = 0; i < m_nObjects; i++) if (m_ppObjects[i]) delete m_ppObjects[i];
-	if (m_ppObjects) delete[] m_ppObjects;
+
+	if (m_ppObjects)
+		for (int i = 0; i < m_nObjects; i++)
+			delete m_ppObjects[i];
 
 	if (m_pWallsObject) delete m_pWallsObject;
 }
@@ -177,10 +179,23 @@ void CScene::CheckPlayerByWallCollisions()
 				break;
 			}
 		}
-		if (nPlaneIndex != -1)					//충돌할시
+		if (nPlaneIndex < 0 )
+			break;
+
+		else if (nPlaneIndex < 4) {
+			m_pPlayer->m_xmf3Position = XMFLOAT3(0, 0, m_pPlayer->GetPosition().z);
+			XMVECTOR look = XMLoadFloat3(&m_pPlayer->m_xmf3Look);
+			XMVECTOR up = XMLoadFloat3(&m_pPlayer->m_xmf3Up);
+			XMVECTOR position = XMLoadFloat3(&m_pPlayer->m_xmf3Position);
+			XMStoreFloat3(&m_pPlayer->m_pCamera->m_xmf3Position, position + (-15 * look) + ( 5 * up));
+		}
+
+		else if (nPlaneIndex < 6)					//충돌할시
 		{
 			m_pWallsObject->SetPosition(0.0f, 0.0f, m_pPlayer->GetPosition().z);
+			break;
 		}
+		
 		break;
 	}
 	case INTERSECTS:						//만날경우?
@@ -195,11 +210,31 @@ void CScene::CheckPlayerByWallCollisions()
 				break;
 			}
 		}
-		if (nPlaneIndex != -1)					//충돌할시
+		for (int j = 0; j < 6; j++)
 		{
-			m_pWallsObject->SetPosition(0.0f, 0.0f, m_pPlayer->GetPosition().z);
+			PlaneIntersectionType intersectType = m_pPlayer->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmf4WallPlanes[j]));
+			if (intersectType == BACK)
+			{
+				nPlaneIndex = j;
+				break;
+			}
+			if (nPlaneIndex < 0)
+				break;
+
+			else if (nPlaneIndex < 4) {
+				m_pPlayer->m_xmf3Position = XMFLOAT3(0, 0, m_pPlayer->GetPosition().z);
+				XMVECTOR look = XMLoadFloat3(&m_pPlayer->m_xmf3Look);
+				XMVECTOR up = XMLoadFloat3(&m_pPlayer->m_xmf3Up);
+				XMVECTOR position = XMLoadFloat3(&m_pPlayer->m_xmf3Position);
+				XMStoreFloat3(&m_pPlayer->m_pCamera->m_xmf3Position, position + (-15 * look) + (5 * up));
+			}
+
+			else if (nPlaneIndex < 6)					//충돌할시
+			{
+				m_pWallsObject->SetPosition(0.0f, 0.0f, m_pPlayer->GetPosition().z);
+				break;
+			}
 		}
-		break;
 	}
 	case CONTAINS:					//포함될 경우
 		break;
@@ -216,9 +251,11 @@ void CScene::CheckObjectByBulletCollisions()
 		if (m_pPlayer->m_pBullets[i]->m_bActive) {
 			for (int j = 0; j < m_nObjects; j++)
 			{
-				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB) && m_ppObjects[j]->m_bActive)
+				CExplosiveObject * eo = (CExplosiveObject *)m_ppObjects[j];
+				if (m_pPlayer->m_pBullets[i]->m_xmOOBB.Intersects(m_ppObjects[j]->m_xmOOBB) && m_ppObjects[j]->m_bActive && !eo->m_bBlowingUp)
 				{
 					m_pPlayer->m_pBullets[i]->m_pObjectCollided = m_ppObjects[j];								//충돌할시 서로를 충돌한 오브젝트로 가지고 있게 된다.
+					m_pPlayer->m_pBullets[i]->m_bActive = false;
 					m_ppObjects[j]->m_pObjectCollided = m_pPlayer->m_pBullets[i];
 				}
 			}
@@ -238,18 +275,20 @@ void CScene::CheckObjectByBulletCollisions()
 
 void CScene::Animate(float fElapsedTime)
 {
+
+	TracingPlayer(fElapsedTime);
+
 	m_pWallsObject->Animate(fElapsedTime);
 	m_pPlayer->Animate(fElapsedTime);
-
-	//벽과 충돌하시
-
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
+
+	//벽과 충돌하시
 	CheckObjectByWallCollisions();
 	CheckPlayerByWallCollisions();
 
 	//오브젝트끼리 충돌할시
-	//CheckObjectByObjectCollisions();
+	CheckObjectByObjectCollisions();
 
 	//총알과 충돌할시
 	CheckObjectByBulletCollisions();

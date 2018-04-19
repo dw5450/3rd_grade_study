@@ -88,6 +88,22 @@ public:
 };
 
 
+class CEnermy : public CExplosiveObject
+{
+public:
+	CEnermy() {};
+	virtual ~CEnermy() {};
+
+};
+
+class CBonusObject : public CExplosiveObject
+{
+public:
+	CBonusObject() {};
+	virtual ~CBonusObject() {};
+
+};
+
 
 class CWallsObject : public CGameObject
 {

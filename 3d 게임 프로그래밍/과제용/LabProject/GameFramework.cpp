@@ -222,7 +222,6 @@ void CGameFramework::ProcessInput()
 		}
 		if (dwDirection){
 			m_pPlayer->Move(dwDirection, m_GameTimer.GetTimeElapsed());
-			m_pScene->TracingPlayer(m_GameTimer.GetTimeElapsed());
 			}//속도가 디폴드 설정 되어 있음
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
@@ -237,8 +236,9 @@ void CGameFramework::FrameAdvance()
 	ProcessInput();							//키보드나 마우스의 입력을 받습니다.
 
 	//오브젝트들의 좌표를 이동시킵니다.
-	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
 	m_pPlayer->Animate(m_GameTimer.GetTimeElapsed());
+	m_pScene->Animate(m_GameTimer.GetTimeElapsed());
+	
 
 	//화면을 초기화 시킵니다.
 	ClearFrameBuffer(RGB(255, 255, 255));

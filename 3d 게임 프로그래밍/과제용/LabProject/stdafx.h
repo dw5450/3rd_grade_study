@@ -33,6 +33,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <math.h>
+#include <vector>
 #include <random>
 
 #include <d3d12.h>
