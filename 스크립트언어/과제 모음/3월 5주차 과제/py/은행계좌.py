@@ -42,7 +42,7 @@ class CheckAccount(BankAccount):
             print("잔액이 부족합니다.")
 
     def __str__(self):
-        return super().__str__() + "\n출금 수수료 : " + str(self.withdraw_charge))
+        return super().__str__() + "\n출금 수수료 : " + str(self.withdraw_charge)
 
 acc =CheckAccount (10000,"원동욱","0184-19821", 500)
 #예제를 어케 넣어야 할지 여쭈어 보자
