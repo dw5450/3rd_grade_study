@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>		//이 헤더를 추가해야함
+
+int main()
+{
+//std를 더해야 출력됩니다.
+	std::string name = "비구름마녀";
+	std::string career = "지니위즈";
+	std::string rank = "랭킹 : " + std::to_string(1) + "위";			//인트형을 스트링으로 바꿔서 더해줌!
+
+	std::cout << name << std::endl;										//출력 연산자 지원
+
+	std::string nameCard = "이름 : " + name + "\n";						//더하기 연산자 지원 , const char * 형도 포함됨
+	nameCard = nameCard + "직업 : " + career + "\n";
+	nameCard = nameCard + rank + "\n";
+	
+	std::cout << nameCard;
+
+	nameCard.clear();
+
+	std::cout << "네임카드를 지우고 출력해 보자!" << std::endl;
+
+	std::cout << nameCard;
+}

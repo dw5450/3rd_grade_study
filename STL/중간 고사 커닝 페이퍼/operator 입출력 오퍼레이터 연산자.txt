@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+
+class Player {
+	std::string id;
+	int score;
+public:
+	Player() {};
+	Player(std::string s, int n) : id(s), score(n) {};
+	void show() const { std::cout << id << ", " << score << std::endl; }
+
+	friend std::ostream & operator<< (std::ostream & os, const Player & p);		//외부에서 값을 수정하기 위하여 friend 연산자
+	friend std::istream & operator>> (std::istream & in,  Player & p);
+
+};
+
+//출력을 위한 연산자 오퍼레이팅
+std::ostream & operator<< (std::ostream & os, const Player & p)
+{
+	os << p.id << p.score;
+	return os;
+}
+
+//입력을 위한 연산자 오퍼레이팅
+std::istream & operator>> (std::istream & in,  Player & p)
+{
+	in >> p.id >> p.score;
+	return in;
+}
+
+
+int main()
+{
+	Player p;
+
+	std::cin >> p;
+
+	std::cout << p;
+
+}

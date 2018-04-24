@@ -1,0 +1,107 @@
+
+////////////////////////////////////////////////////////////////
+// 복사 : 주소값만 가져오는거 말고 깊은 복사를 하기 위해서
+// 복사 생성자
+// 복사 할당자
+//이동 : 복사는 비싸니까 싸게 주소만 바꿔치고 바꾼건 왤 노운 상태롯
+// 이동 생성자
+// 이동 할당자
+//move : 이동 시켜버롯
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+using namespace std;
+
+class Model {
+private:
+	static unsigned int gid;
+	int id;
+	char* data = nullptr;
+	size_t size = 0;									//unsigned int;
+public:
+	// 디폴트 생성자
+	Model() :id(++gid) { cout << id << " - 디폴트 생성자" << endl; }
+	
+	//생성자 
+	explicit Model(size_t s) :size(s), id(++gid) {								//명시적 설정
+		data = new char[size];
+		cout << id << " - 생성자	크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+	}
+
+	//복사 생성자
+	Model(const Model& m) :id(++gid) {
+		size = m.size;
+		data = new char[size];
+		// 깊은 복사
+		memcpy(data, m.data, size);					//맴카피를 안하면 같은 곳을 가르키게 됨
+
+		cout << id << " - 복사 생성자	크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+	}
+
+	//복사 할당자
+	Model& operator=(const Model& m) {	// 복사할당자
+		if (this == &m)								//나면 바로 리턴
+			return *this;
+
+		size = m.size;						
+		if (data != nullptr) {						//현제 데이터가 있으면 지워줌
+			delete[] data;
+		}
+		data = new char[size];						//데이터 재설정
+		memcpy(data, m.data, size);					//맴카피를 안하면 같은 곳을 가르키게 됨
+
+		cout << id << " - 복사할당자	크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+		return *this;
+	}
+
+	// 이동 생성자, 이동 할당 연산자
+	Model(Model&& other) :id(++gid) {
+		size = other.size;
+		data = other.data;
+		// 원본은 well-known 상태로 만들어주자(defaul값)
+		other.size = 0;
+		other.data = NULL;
+
+		cout << id << " - 이동생성자	크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+	}
+
+	Model& operator=(Model&& other) {
+		if (this == &other)
+			return *this;
+
+		size = other.size;
+		if (data != nullptr) {
+			delete[] data;
+		}
+		data = other.data;
+
+		// 원본은 well-known 상태로 만들어주자(defaul값)
+		other.size = 0;
+		other.data = NULL;
+
+		cout << id << " - 이동할당 연산자		크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+		return *this;
+	}
+
+	~Model() {
+		cout << id << " - 소멸자	크기 : " << size << "		주소 : " << static_cast<void*>(data) << endl;
+		if (data != nullptr)
+			delete[] data;
+	}
+
+	int getSize()const { return size; }
+
+
+};
+unsigned int Model::gid = 0;
+
+int main()
+{
+	Model a{ 1111 };
+
+	Model b = move(a);
+
+	cout << "메인이 끝남" << endl;
+
+};
+

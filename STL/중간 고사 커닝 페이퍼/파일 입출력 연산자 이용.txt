@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+// 두 리스트를 하나로 합친다.
+class Player {
+	std::string id;
+	int score;
+public:
+	Player() {};
+	Player(std::string s, int n) : id(s), score(n) {};
+	void show() const { std::cout << id << ", " << score << std::endl; }
+
+	friend std::ostream & operator << (std::ostream & os, const Player & p);
+	friend std::istream & operator >> (std::istream & is, Player & p);
+};
+
+std::ostream & operator << (std::ostream & os, const Player & p)
+{
+	os << p.id << " " << p.score << " ";
+	return os;
+}
+
+std::istream & operator >>(std::istream & is, Player & p)
+{
+	is >> p.id  >> p.score;
+	return is;
+}
+
+int main()
+{
+	std::vector<Player> v;
+	v.reserve(1000);
+	for (int i = 0; i < 1000; i++)
+		v.emplace_back("player" + std::to_string(i),i );
+
+	//파일 쓰기
+	std::ofstream out("test", std::ios::binary);
+	for (const Player & p : v)
+		out << p;
+
+	out.close();
+
+	v.~vector();
+
+
+
+	//파일 읽기
+	v.reserve(1000);
+
+	std::ifstream in("test", std::ios::binary);
+	Player p;
+	while (in >> p) {
+		v.push_back(p);
+	}
+
+	in.close();
+
+	for (const Player & p : v)
+		p.show();
+
+}

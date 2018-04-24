@@ -1,0 +1,43 @@
+#includeiostream
+#includearray
+배열인데 예외처리를 할수 있음
+int main() {
+
+	stdarrayint, 5num_arr{ 1, 2, 3, 4, 5 };
+
+	기본은 무조건 빠른코드 오류 체크는 다른 언어에서 
+	stdcout  num_arr[-1]     num_arr[-1]  stdendl;
+	기본적으로 오류를 '무시'하고 진행함 - 이상한 값이 나올수 있음
+
+	while (true) {
+		stdcout  몇번째 값을 출력할까여  ;
+		int n;
+		stdcin  n;
+
+		try check를 통한 오류 체크를 할경우
+		try {
+			num_arr.at(n)  at을 써서 접근을 해야 오류를 체크할 수 있다 
+			stdcout  원하시는 값입니다  num_arr.at(n)  stdendl;
+
+		}
+		catch (stdexception & e)
+		{
+			stdcout  e.what()  stdendl;
+			stdcout  잘못된 값입니다.  stdendl;
+			break;
+		}
+		if 문을 통한 오류 체크
+		if (0 = n && n  num_arr.size())
+		cout  원하시는 값입니다  num_arr.at(n)  endl;
+
+
+	}
+
+	배열 길이가 다르면 다른 자료형
+	stdarrayint, 5 x;
+	stdarrayint, 6 y;
+
+	 모델을 배열 선언 해보자
+
+	stdcout  ------------------------------실행이 종료 되었습니다 ---------------------------------------  stdendl;
+}

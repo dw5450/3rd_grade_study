@@ -1,0 +1,63 @@
+#include <iostream>
+#include <random>
+				
+int main()
+{
+	//랜덤을 위한 기본설정
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	int arr[10];
+
+
+	std::cout << "균일 분포를 출력해 보자 " << std::endl;
+	std::uniform_int_distribution<> uid(0, 9);			//균일 분포 ㅡ형 분포, int형이 디폴트 형
+
+	for (int & num : arr)
+		num = 0;
+	
+	for (int i = 0; i < 1000000; ++i)
+		++arr[uid(dre)];
+
+	for (const int num : arr)
+		std::cout << num << std::endl;
+
+	std::cout << "정규 분포를 출력해보자" << std::endl;
+
+	
+	for (int & num : arr)
+		num = 0;
+
+	std::normal_distribution<> nd(0, 0.1);					//정규 분포 보아뱀형 붙포 , double형이 디폴트 형
+	//교수님 방식
+	for (int i = 0; i < 1000000; ++i) {
+		double index = nd(dre);
+		if (-1 < index || index < 1) {				//일단 원하는 값에서 벗어날 경우는 값을 받지 않도록 한다.
+			index += 1;									//-1 ~ 1 -> 0 ~ 2
+			index *= 5;									// 0 ~ 2 -> 0 ~ 10
+			if (index != 10) {							//10이 혹시 나오면 저장하지 않도록
+				++arr[(int)index];					//강제로 형변환후 저장
+			}
+		}
+	}
+
+	for (const int num : arr)
+		std::cout << num << std::endl;
+
+	std::cout << "----------------------------------------------------------------" << std::endl;
+
+	//책방식?
+	std::normal_distribution <> my_nd(5, 0.5);
+
+	for (int & num : arr)
+		num = 0;
+
+	for (int i = 0; i < 1000000; ++i) {
+		double index = my_nd(dre);
+		if ( 0 <= index || index < 10) {				//일단 원하는 값에서 벗어날 경우는 값을 받지 않도록 한다.
+			++arr[(int)index];					//강제로 형변환후 저장
+		}
+	}
+
+	for (const int num : arr)
+		std::cout << num << std::endl;
+	

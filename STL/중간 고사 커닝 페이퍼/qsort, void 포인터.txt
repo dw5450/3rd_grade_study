@@ -1,0 +1,25 @@
+#include <iostream>
+#include <random>
+				
+int main()
+{
+	std::random_device rd;
+	std::default_random_engine dre(rd());
+	std::uniform_int_distribution<> uid(0, 1000);
+	int arr[1000];
+
+	for (int & num : arr)
+		num = uid(rd);
+
+	//컨테이너, 컨테이너 안의 자료의 수, 컨테이너의 자료의 자료형, 비교 함수 (람다)
+	//void * 하면 모든 자료형을 받아올수 이씀
+	qsort(arr, 1000, sizeof(int), [](const void * num1, const void * num2) {
+		return *static_cast<const int *>(num1) - *static_cast<const int *>(num2);
+	});
+
+	//람다 함수의 리턴 값이 -1 , 0, 1 경우로 나뉜다고 보면 편하다
+
+	for (int num : arr)
+		std::cout << num << " ";
+
+}

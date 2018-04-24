@@ -187,11 +187,11 @@ public:
 	
 	//핸들러의 정보를 가져오는 함수
 	normal_distribution<> getSchoolDistribution() const {
-		return  normal_distribution<>(MAXSCHOOLSCORE / 2, static_cast<int>(MAXSCHOOLSCORE / 20));
+		return  normal_distribution<>(MAXSCHOOLSCORE / 2, MAXSCHOOLSCORE / 10);
 	}
 
 	normal_distribution<> getEscapeDistribution() const {
-		return  normal_distribution<>(MAXESCAPESCORE / 2, static_cast<int>(MAXESCAPESCORE / 20));
+		return  normal_distribution<>(MAXESCAPESCORE / 2, MAXESCAPESCORE / 10);
 	}
 
 	int getRandSchoolScore() const {
@@ -286,8 +286,8 @@ public:
 		}
 		else if (school_rank == 1) {
 			shared_ptr<Player> nextPlayer = players_sorted_escape[escape_rank];
-			cout << "이후 등수 ID  : " << nextPlayer->getId() << "	점수 : " << nextPlayer->getEscapeScore() << "	  순위 : " << nextPlayer->getEscapeRank() << endl;
 			cout << "당신보다 빠른 쿠키는 없습니다." << endl;
+			cout << "이후 등수 ID  : " << nextPlayer->getId() << "	점수 : " << nextPlayer->getEscapeScore() << "	  순위 : " << nextPlayer->getEscapeRank() << endl;
 		}
 		else if (school_rank == player_num) {
 			shared_ptr<Player> prevPlayer = players_sorted_escape[escape_rank - 2];
@@ -302,19 +302,18 @@ public:
 	void playSchool()
 	{
 		//게임 실행을 위한 변수
+		random_device rd;
+		default_random_engine dre(rd());
 		int play_num = PLAYPlAYERSNUM;																				//한번에 플레이 되는 인원
 		uniform_int_distribution<int> player_index_distribution(0, player_num - 1);								//랜덤한 학교 플레이어를 뽑기 위한 분포	//-1은 한 이유는 인덱스 값으로 플레이어를 찾기 때문
 
 																												//플레이 이전의 플레이어의 랭킹 설정
 		int prev_school_rank = player->getSchoolRank();
-		int prev_escape_rank = player->getEscapeRank();
 
 		//////////////////////////////////////////////////////////쿠키 훈련소 탈출 플레이/////////////////////////////////////////////////////
 
 		//쿠키 훈련소 탈출 점수 분포 설정
-		random_device rd;
-		default_random_engine dre(rd());
-		auto schoolDistribution = getSchoolDistribution();
+	
 
 		//나부터 실행
 		int temp_score = -1;
@@ -325,51 +324,55 @@ public:
 		if (player->getSchoolScore() < temp_score)										//플레이어의 훈련소 탈출 점수가 랜덤 추출 값보다 작을 경우
 			player->setSchoolScore(temp_score);											//랜덤 추출 값으로 값을 갱신
 
+		player->setPlayed(true);
+
 																						//나머지 플레이어 실행
 		vector<int>played_indexs;				//플레이한 플레이어들의 인덱스들 저장
-		played_indexs.reserve(player_num);
+		played_indexs.reserve(play_num);
 		int played_cnt = 1;						//실행된 플레이어 수 저장				//'나'를 실행 했으므로 1부터 
 		int player_index = 0;					//플레이할 플레이어 인덱스
-
+		
 												//설정한 플레이 수 만큼의 플레이어 실행 (중복 x)
 		while (played_cnt < play_num) {													//설정한 플레이 수 만큼 반복
+			temp_score = -1;
 			player_index = player_index_distribution(dre);								//설정할 인덱스 랜덤값으로 추출
-			if (players_vec[player_index]->getPlayed() == false) {							//추출한 값이 플레이어가 실행을 안했었을시 
+			if (players_vec[player_index]->getPlayed() == false) {							//추출한 값이 플레이어가 실행을 안했었을시만 플레이수 증가
 				while (temp_score < 0) {
 					temp_score = getRandSchoolScore();
 				}							//랜덤 스코어값 추출
 				if (players_vec[player_index]->getSchoolScore() < temp_score)			//추출한 값이 이전 훈련소 탈출 점수보다 높으면
 					players_vec[player_index]->setSchoolScore(temp_score);				//추출한 값으로 훈련소 탈출 점수 갱신
 				++played_cnt;		//플레이했다를 1번 증가		
-
-				temp_score = -1;
 			}
 		}
-
 		setSchoolRank();
+
+		for (int i : played_indexs)
+			players_vec[i]->setPlayed(false);
 	}
 
 	void playEscape() {
 		//게임 실행을 위한 변수
+		random_device rd;
+		default_random_engine dre(rd());
 		int play_num = PLAYPlAYERSNUM;																				//한번에 플레이 되는 인원
 		uniform_int_distribution<int> player_index_distribution(0, player_num - 1);								//랜덤한 학교 플레이어를 뽑기 위한 분포	//-1은 한 이유는 인덱스 값으로 플레이어를 찾기 때문
 
-																												//플레이 이전의 플레이어의 랭킹 설정
-		int prev_school_rank = player->getSchoolRank();
+																												//플레이 이전의 플레이어의 랭킹 
 		int prev_escape_rank = player->getEscapeRank();
 
-
-		//떼탈출 분포 설정
-		random_device rd;
-		default_random_engine dre(rd());
-		auto escapeDistribution = getEscapeDistribution();
 
 		//나부터 실행
 		int temp_score = -1;
 		while (temp_score < 0) {
 			temp_score = getRandEscapeScore();
 		}
+		
 		//랜덤 추출 값으로 값을 갱신
+		if (player->getEscapeScore() < temp_score)			//추출한 값이 이전 훈련소 탈출 점수보다 높으면
+			player->setEscapeScore(temp_score);				//추출한 값으로 훈련소 탈출 점수 갱신
+
+		player->setPlayed(true);
 
 																		
 		//나머지 플레이어 실행
@@ -380,6 +383,7 @@ public:
 
 											//설정한 플레이 수 만큼의 플레이어 실행 (중복 x)
 		while (played_cnt < play_num) {													//설정한 플레이 수 만큼 반복
+			temp_score = -1;
 			player_index = player_index_distribution(dre);								//설정할 인덱스 랜덤값으로 추출
 			if (players_vec[player_index]->getPlayed() == false) {							//추출한 값이 플레이어가 실행을 안했었을시 
 				while (temp_score < 0) {
@@ -388,11 +392,13 @@ public:
 				if (players_vec[player_index]->getEscapeScore() < temp_score)			//추출한 값이 이전 훈련소 탈출 점수보다 높으면
 					players_vec[player_index]->setEscapeScore(temp_score);				//추출한 값으로 훈련소 탈출 점수 갱신
 				++played_cnt;															//플레이했다를 1번 증가		
-				temp_score = -1;
 			}
 		}
 
 		setEscapeRank();
+
+		for (int i : played_indexs)
+			players_vec[i]->setPlayed(false);
 	}
 	//게임 프레임 워크의 정보를 출력하는 함수
 
@@ -418,7 +424,7 @@ public:
 		vector<Player> v;
 		v.reserve(player_num);
 		for (const shared_ptr<Player> & p : players_vec) {
-			v.emplace_back(*p);
+			v.emplace_back(*p);								//여기서 값이 증가했군
 		}
 		
 		ofstream out("과제1.dat", ios::binary); //binary와 txt차이는?

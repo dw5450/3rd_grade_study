@@ -1,0 +1,45 @@
+//컨테이너의 요소 접근
+//벡터의 값에 access해 보자
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include<string>
+#include<vector>
+#include<random>
+#include<fstream>
+#include<algorithm>
+using namespace std;
+// 호출가능타입(Callable Type)   #97쪽
+// - 함수, 멘버함수, 함수포인터, 람다, 함수객체, bind로 생성한 객체, function으로 만든객체
+// - 템플릿 때문에 호풀가능타입이란 것이 만들어짐
+
+
+template<class T>
+void f(T t) {
+	t();
+}
+
+int X()
+{
+	cout << "나는 함수 X야" << endl;
+	return 0;
+}
+
+class Test {
+public:
+	void operator()() {
+		cout << "나는 클래스의 멤버 함수야 " << endl;
+	}
+
+};
+
+int main() {
+	f([]() {cout << " 나는 람다야 " << endl;});
+
+	Test t;
+	f(t);
+
+	cout << "------------------------- 프로그램 종료 ---------------------------" << endl;
+
+}

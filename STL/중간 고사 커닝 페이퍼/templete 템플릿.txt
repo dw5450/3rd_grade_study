@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+//기준을 내가 만들어서 사용한다고 보면 된다!
+template<class Iter, class T>
+void BiggerThenNum(Iter begin, Iter end, T num)
+{
+	for (begin; begin != end; ++begin) {
+		if (*begin > num)
+			std::cout << *begin << std::endl;
+	}
+}
+
+
+int main()
+{
+	std::cout << "--------------------------정수형----------------------------" << std::endl;
+	std::vector<int> int_vector{1, 3, 4, 2, 1, 5, 2, 3};
+	
+	BiggerThenNum(int_vector.begin(), int_vector.end(), 2);
+
+	std::cout << "------------------------부동 소수점 -------------------------" << std::endl;
+
+	std::vector<float> float_vector{ 1.2f, 3.2f, 4.1f, 2.2f, 1.1f, 5.4f, 2.1f, 3.3f };
+
+	BiggerThenNum(float_vector.begin(), float_vector.end(), 2.2f);
+
+
+}

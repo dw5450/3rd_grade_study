@@ -1,0 +1,28 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+
+int main()
+{
+	std::vector<int> v(100);
+	for (int i = 0; i < 100; i++)
+		v[i] = i;
+
+	std::ofstream out ("test", std::ios::binary);
+	out.write(reinterpret_cast<const char *>(v.data()), sizeof(int) * 100);
+
+
+	out.close();
+
+	v.~vector();
+	std::vector<int> v2(100);
+
+	std::ifstream in("test", std::ios::binary);
+	in.read(reinterpret_cast<char *> (v2.data()), sizeof(int) * 100);
+
+	for (int n : v2)
+		std::cout << n << std::endl;
+
+
+}

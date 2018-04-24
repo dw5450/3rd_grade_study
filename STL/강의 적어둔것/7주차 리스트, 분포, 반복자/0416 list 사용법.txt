@@ -6,20 +6,19 @@
 //array, vector, deque, list, forward_list
 //
 //deque 앞과 뒤에서 입력과 출력이 가능
+//리스트는 크기가 변경되도 헤더가 변하지 않음
+//리스트에 삽입 삭제는 O(1)
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <list>
-//다음 헤더는 실행시 지워야 할것입니다
-#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
-#include "save.h"
-#include "funcSpeedCheck.h"
+
 using namespace std;
 
 int main()
 {
 	list<int> v;
-	
+
 	v.push_back(1);
 
 	auto p = v.begin();
@@ -29,7 +28,6 @@ int main()
 	cout << *p << endl;
 	p++;
 	//다음 명령어는 실행시 지워야 할 것 입니다.
-	save("0416 list 사용법.txt");					//저장할 파일명을 입력 해 주세요
 
 
 }
