@@ -1,0 +1,55 @@
+
+#역방향 str 반환
+def reverse_str(s):
+    l=list(s)
+    rs =""
+    for i in range(len(l)):
+        rs += l.pop()
+
+    return rs
+
+#역방향 정수 반환
+def reverse_n(n):
+    result = 0
+    while (n > 0):
+        result = result * 10 + n %10
+        n = n//10
+
+    return result
+
+#로또, 중복 없는 랜덤 수
+import random
+def lotto():
+    l = []
+
+    for i in range(6):
+        overlap = True
+        while(overlap):
+            num = random.randint(1, 50)
+            overlap = False
+            for data in l:
+                if data == num:
+                    overlap = True
+
+        l.append(num)
+
+    return l
+
+#리버스 구구단
+def reverse_99dan(n1, n2):
+    result = 0
+    for j in range (n2 + 1):
+        if result < reverse_n(n1 * j):
+            result = reverse_n(n1 * j)
+
+    return result
+
+#하노이의 탑
+move_num = 0
+def hanoi(ndisks, startPeg=1, endPeg=3):
+    global move_num
+    move_num +=1
+    if ndisks:
+		hanoi(ndisks-1, startPeg, 6-startPeg-endPeg)
+		print(startPeg, "번 기둥의",  ndisks, "번 원반을", endPeg, "번 기둥에 옮깁니다.")
+		hanoi(ndisks-1, 6-startPeg-endPeg, endPeg)

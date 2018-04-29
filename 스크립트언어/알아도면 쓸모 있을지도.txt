@@ -1,0 +1,115 @@
+ord('s')	문자 -> 유니코드
+
+chr(115)	유니코드 -> 문자
+
+string.upper() -> 대문자로
+
+list
+	append
+	expend(동시에)
+	insert 
+	index(' ' , begin, end) (찾고자 하는 값 인덱스 출력)
+	count 찾고자 하는 값의 갯수 반환
+	pop
+	remove
+	sort(key = lamda x : x[-1])
+	reverse 역방향 정렬
+	clear
+
+	str을 넣으면 쪼개서 들어감
+
+dict 	-> key, value
+
+copy, deepcopy (a = b[:]
+	
+
+함수 def name : ~~~
+	 global을 써야 전역 변수 접근 가능
+
+	*args 	가변 인자 리스트
+	**args 	가변 인자 딕션
+
+펙토리얼 재귀함수
+def factorial(x):
+	if x == 1:
+		return 1
+	return x * factorial(x - 1)
+
+
+제어문 
+	[ data **2   for data in list] 가능
+
+
+
+class
+class BankAccount:
+    def __init__(self, balance, name, number):
+   
+    def __str__(self):					(print로 써지게)
+        return "잔액" + str(self.balance)
+
+class SavingsAccount(BankAccount):
+    def __init__(self, balance, name, number, interest_rate):
+        super().__init__(balance, name, number)		(부모 클레스 접근)
+       
+
+pow(n1, n2)	n1의 n2 승
+
+
+import random
+
+random.randint(begin, end)
+
+
+입출력
+
++ <  이어서 가능
+
+print("welcom to", "python", sep="~", end="!")
+
+string 객체 rjust() 오른쪽 정렬, ljust() 왼쪽 정렬, center() 가운데 정렬
+
+
+
+* 입력 함수 * 
+
+l =  eval(input())			,로 끝어서
+
+sl = input().split()	
+nl = [eval(data) for data in sl ]       공백 단위로
+
+
+파일 입출력
+f = open('test.txt', 'w') 	#쓰기 모드 파일 오픈
+f.write('plow deep\nwhile sluggards sleep') #write() 쓴 바이트 수 반환 
+f.close() 			 #파일 닫기
+f = open('test.txt') 		#디폴트 읽기모드 파일 오픈
+f.read()			#파일 읽기
+f.close() 
+
+
+pickle을 이용한 파일 입출력
+
+
+
+colors = ['red', 'green', 'black']
+colors
+['red', 'green', 'black']
+import pickle
+f = open('file_colors', 'wb') 	#pickle 을 위해 바이너리 쓰기 파일 오픈
+pickle.dump(colors, f) 		#colors 리스트를 file_colors로 dump
+f.close()
+del colors 			#colors 리스트 삭제
+colors
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'colors' is not defined
+f = open('file_colors', 'rb') 	#pickle을 위해 바이너리 읽기 파일 오픈
+colors = pickle.load(f) 		#파일에서 리스트 load
+f.close()
+colors
+['red', 'green', 'black']
+
+
+
+

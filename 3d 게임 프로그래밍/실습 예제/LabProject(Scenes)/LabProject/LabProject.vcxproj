@@ -172,6 +172,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LabProject.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ObjectManeger.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -188,6 +189,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LabProject.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ObjectManeger.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />

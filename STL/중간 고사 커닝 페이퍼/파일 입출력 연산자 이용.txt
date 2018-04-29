@@ -47,11 +47,13 @@ int main()
 
 	//파일 읽기
 	v.reserve(1000);
-
-	std::ifstream in("test", std::ios::binary);
-	Player p;
+	
+	std::ifstream in("test");
+	string s; 
+	int n;
+	while(in >> s >> n)
 	while (in >> p) {
-		v.push_back(p);
+		v.push_back(Player(s, n));
 	}
 
 	in.close();

@@ -33,6 +33,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <math.h>
+#include <list>
 
 #include <d3d12.h>
 #include <DirectXMath.h>
