@@ -9,7 +9,7 @@ public:
 
 private:
 	CWallsObject * m_pWallObject;
-	li
+	
 
 };
 

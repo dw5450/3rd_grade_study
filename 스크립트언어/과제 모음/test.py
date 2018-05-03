@@ -1,12 +1,17 @@
-class car:
-    __num = 0
-    def __init__(self):
-        car.__num += 1
-
-    def printNum():
-        print("지금까지 생성된 차 대수 : ", car.__num)
+import http.client
+import json
 
 
-a,b,c = car(), car(), car()
+server = "api.neople.co.kr"
 
-car.printNum()
+conn = http.client.HTTPSConnection(server)
+
+conn.request("GET", "/df/servers?apikey=9BdgXATgR7uy3XIzIaJPBHfECPoJGKlq") #서버에 GET 요청
+req = conn.getresponse() 			#openAPI 서버에서 보내온 요청을 받아옴
+print(req.status, req.reason)
+cLen = req.getheader("Content-Length") 	#가져온 데이터 길이
+data = req.read(int(cLen))
+dict = json.loads(data)
+
+for d in dict['rows']:
+    print (d)

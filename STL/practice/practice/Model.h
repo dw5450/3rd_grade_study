@@ -11,7 +11,7 @@ private:
 	size_t size = 0;
 public:
 	Model() :id(++gid) { cout << id << " - 叼弃飘 积己磊" << endl; }
-	explicit Model(size_t s) :size(s), id(++gid) {
+	Model(size_t s) :size(s), id(++gid) {
 		data = new char[size];
 		cout << id << " - 积己磊	农扁 : " << size << "	林家 : " << static_cast<void*>(data) << endl;
 	}
@@ -78,6 +78,10 @@ public:
 		if (size == other.size)
 			return true;
 		else return false;
+	}
+
+	bool operator<(const Model & rhs) const {
+		return size < rhs.size;
 	}
 };
 int Model::gid = 0;

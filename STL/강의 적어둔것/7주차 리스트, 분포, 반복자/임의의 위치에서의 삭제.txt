@@ -1,0 +1,9 @@
+auto m_plBullets_itor = m_plBullets.begin();
+		for (;m_plBullets_itor != m_plBullets.end();) {
+			std::shared_ptr<CGameObject> bullet = *m_plBullets_itor;
+			if (bullet->m_xmOOBB.Intersects(Enermy->m_xmOOBB)){
+				Enermy->m_bBlowingUp = true;
+				m_plBullets_itor = m_plBullets.erase(m_plBullets_itor);
+			}
+			else ++m_plBullets_itor;
+		}

@@ -1,0 +1,54 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 5장. 연관 컨테이너												정렬하는 이유, 빨리 찾기 위해서, 정렬의 기준이 되는 것이 키
+//		정렬의 기준은 <(less 연산자)
+//	set				- 키 값에 따라 정렬								기본 오름 차순을 한다/ 처음 값을 넣기는 힘들지만 찾기는 좋다. 겹치지 않아!
+//	map				- 키와 밸류로 구성, 키가 정렬의 기준			가수 이름 : 노래 등
+//	unordered_set	- 키값을 해싱하여 저장
+//	unordered_map	- 키와 밸류로 구성 , 키값을 해싱하여 밸류를 저장할 곳을 지정
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>					
+#include <set>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+//프로그램을 하나 짠다고 생각하면 편함
+
+int main()
+{
+	//zmffotm ahepfdl size 순으로 정렬되도록 프로그램하라
+	//int, *, char, []--> POD(Plain Old Data) type 
+	//POD는 연산자 < 가 정의 되어 있어 언제나 비교할 수 있다.
+	// 사용자가 정의한 자료를 set에넣으려면 비교하는 방법을 알려줘야한다.
+	// --> 연산자 <를 정의하면 된다는 말이다.
+	set<Model> s;
+	s.emplace(1);
+	s.emplace(3);
+	s.emplace(5);
+	s.emplace(2);
+	s.emplace(4);
+	s.emplace(6);
+
+	//operator< 추가해야함
+	//비교를 할 수 있어야함.(이항 연산자 : >, < 
+	/*bool operator<(const Model & rhs) const {
+	if (size < rhs.size)
+	return true;
+	else return false;
+	}*/
+
+	cout << "--------------------------------------------------------" << endl;
+
+	for (const Model & d : s)
+		cout << d << endl;
+
+	cout << "--------------------------------------------------------" << endl;
+		
+	save("set을 empalce로 생성해보자.txt");
+}

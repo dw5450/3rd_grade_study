@@ -1,0 +1,36 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 5장. 연관 컨테이너												정렬하는 이유, 빨리 찾기 위해서, 정렬의 기준이 되는 것이 키
+//		정렬의 기준은 <(less 연산자)
+//	set				- 키 값에 따라 정렬								기본 오름 차순을 한다/ 처음 값을 넣기는 힘들지만 찾기는 좋다. 겹치지 않아!
+//	map				- 키와 밸류로 구성, 키가 정렬의 기준			가수 이름 : 노래 등
+//	unordered_set	- 키값을 해싱하여 저장
+//	unordered_map	- 키와 밸류로 구성 , 키값을 해싱하여 밸류를 저장할 곳을 지정
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>					
+#include <set>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+// 키보드에서 단어를 입력받아 정렬한 후 출력하라.
+
+int main()
+{
+	multiset<string> v({ istream_iterator<string>(cin), istream_iterator<string>() });
+
+	for (const string &d : v)
+		cout << d << '\t';
+	cout << endl;
+
+		
+	save("키보드에서 단어를 입력받아 정렬한 후 출력, multiset을 사용.txt");
+}
