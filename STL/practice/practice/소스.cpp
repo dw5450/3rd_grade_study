@@ -27,16 +27,16 @@ int main()
 {
 	ifstream alice_file("이상한 나라의 앨리스.txt");
 
-	map<char, int> m1;
+	//map<char, int> m1;
 
-	char c;
-	while (alice_file >> c) {
-		m1[c]++;
-	}
+	//char c;
+	//while (alice_file >> c) {
+	//	m1[c]++;
+	//}
 
-	for (const auto& data : m1) {
-		cout << data.first << "\t" << data.second << endl;
-	}
+	//for (const auto& data : m1) {
+	//	cout << data.first << "\t" << data.second << endl;
+	//}
 
 
 	alice_file.close();
@@ -55,21 +55,20 @@ int main()
 	
 	for (auto& data : m2) {
 		m3.emplace(data.second, data.first);
-		//m3[data.second] = data.first;
 	}
 
 	for (const auto& data : m3) {
 		cout << data.first << "\t" << data.second << endl;
 	}
 
-	multimap<int, string > m4;
-	for (const auto& data : m2) {
-		m4.emplace(data.first.length(), data.first);
-	}
+	//multimap<int, string > m4;
+	//for (const auto& data : m2) {
+	//	m4.emplace(data.first.length(), data.first);
+	//}
 
-	for (const auto& data : m4) {
-		cout << data.first << "\t" << data.second << endl;
-	}
+	//for (const auto& data : m4) {
+	//	cout << data.first << "\t" << data.second << endl;
+	//}
 
 
 	//각 알파벳이 몇개씩 있는지 화면에 출력하라

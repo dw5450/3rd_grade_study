@@ -1,7 +1,7 @@
 ﻿  소스.cpp
   코드를 생성하고 있습니다.
-  48 of 548 functions ( 8.8%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    74 functions had inline decision re-evaluated but remain unchanged
+  146 of 410 functions (35.6%) were compiled, the rest were copied from previous compilation.
+    117 functions were new in current compilation
+    41 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   practice.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\STL\practice\Release\practice.exe
