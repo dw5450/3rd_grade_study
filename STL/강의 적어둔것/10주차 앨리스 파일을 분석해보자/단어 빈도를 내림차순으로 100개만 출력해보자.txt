@@ -1,0 +1,71 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 5장. 연관 컨테이너												정렬하는 이유, 빨리 찾기 위해서, 정렬의 기준이 되는 것이 키
+//		정렬의 기준은 <(less 연산자)
+//	set				- 키 값에 따라 정렬								기본 오름 차순을 한다/ 처음 값을 넣기는 힘들지만 찾기는 좋다. 겹치지 않아!
+//	map				- 키와 밸류로 구성, 키가 정렬의 기준			가수 이름 : 노래 등
+//	unordered_set	- 키값을 해싱하여 저장
+//	unordered_map	- 키와 밸류로 구성 , 키값을 해싱하여 밸류를 저장할 곳을 지정
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>					
+#include <map>
+#include <functional>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+#include <fstream>
+using namespace std;
+
+//히어로와 전투력수치를 맵으로 만들어 보자
+
+int main()
+{
+	string filename = "이상한 나라의 앨리스.txt";
+	//이 파일은 UTF-8 형식의 파일로 BOM(Byte order makr)바이트가 기록되어 있다.
+	// 3바이트를 무시해야 진짜 텍스트를 읽을 수 있다.
+	ifstream in(filename);
+
+	if (!in) {
+		cout << filename << "을 열 수 없습니다." << endl;
+		return 0;
+	}
+
+	char c;
+	in >> c >> c >> c;		// BOM을 무시한다.
+
+	map<string, int> simap;
+
+	string s;
+	while ( in  >> s){
+		simap[s]++;
+		//cimap.operater[](c)++;
+	}
+
+	//철자의 출현 빈도기준으로 정렬
+	multimap<int, string, greater<int>> ismultimap;
+
+	for (auto & d : simap)
+	{
+		//icmultimap.insert(make_pair(d.second, d.first));
+		ismultimap.emplace(d.second, d.first);				//<- 객체를 컨테이너가 만들어라 12에서는 가장 좋은 방식
+	}
+
+
+	//앞에서 100개만 출력해보자
+
+	auto p = ismultimap.cbegin();
+
+	for (int i = 0; i < 100; ++i)					//오름 차순 upscending order
+	{
+		cout << "[" << p->second << "] - " << p->first << endl;
+		++p;
+	}
+	//객체의 삶과 죽음
+
+	save("앨리스 파일에서 단어 빈도를 내림차순으로 출력 해보자.txt");
+
+}

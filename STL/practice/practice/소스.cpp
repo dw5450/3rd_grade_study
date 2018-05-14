@@ -7,13 +7,15 @@
 //	map				- 키와 밸류로 구성, 키가 정렬의 기준			가수 이름 : 노래 등
 //	unordered_set	- 키값을 해싱하여 저장
 //	unordered_map	- 키와 밸류로 구성 , 키값을 해싱하여 밸류를 저장할 곳을 지정
+////내일 여기에서 시작합니다. Model 클레스를  mapㅇ에 넣어보자
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <string>					
 #include <map>
+#include <functional>
+#include <algorithm>
 #include <vector>
-#include <random>
 //다음 헤더는 실행시 지워야 할것입니다
 #include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
 #include "save.h"
@@ -25,55 +27,34 @@ using namespace std;
 
 int main()
 {
-	ifstream alice_file("이상한 나라의 앨리스.txt");
+	string filename = "이상한 나라의 앨리스.txt";
+	//이 파일은 UTF-8 형식의 파일로 BOM(Byte order makr)바이트가 기록되어 있다.
+	// 3바이트를 무시해야 진짜 텍스트를 읽을 수 있다.
+	ifstream in(filename);
 
-	//map<char, int> m1;
+	if (!in) {
+		cout << filename << "을 열 수 없습니다." << endl;
+		return 0;
+	}
 
-	//char c;
-	//while (alice_file >> c) {
-	//	m1[c]++;
-	//}
+	char c;
+	in >> c >> c >> c;		// BOM을 무시한다.
 
-	//for (const auto& data : m1) {
-	//	cout << data.first << "\t" << data.second << endl;
-	//}
+	map<string, int> simap;
 
-
-	alice_file.close();
-
-	alice_file.open("이상한 나라의 앨리스.txt");
-
-	map<string, int>m2;
 	string s;
-	while (alice_file >> s)
-	{
-		m2[s]++;
+	while ( in  >> s){
+		simap[s]++;
+		//cimap.operater[](c)++;
 	}
-	alice_file.close();
 
-	multimap<int, string > m3;
+	// 가장 일이가 긴 단어는? (단어는 공백으로 분리됨)
+	// STL에서 가능하면 for loop를 사용하지 않는다.(대신할 알고리즘이 있는 경우)
+	auto p = max_element(simap.begin(), simap.end(), [](const auto & p1, const auto & p2) { return p1.first.length() < p2.first.length();});
 	
-	for (auto& data : m2) {
-		m3.emplace(data.second, data.first);
-	}
-
-	for (const auto& data : m3) {
-		cout << data.first << "\t" << data.second << endl;
-	}
-
-	//multimap<int, string > m4;
-	//for (const auto& data : m2) {
-	//	m4.emplace(data.first.length(), data.first);
-	//}
-
-	//for (const auto& data : m4) {
-	//	cout << data.first << "\t" << data.second << endl;
-	//}
-
-
-	//각 알파벳이 몇개씩 있는지 화면에 출력하라
-
-
-	//save("map에 값을 찾아보자아.txt");
+	if (p != simap.end())
+		cout << p->first << endl;
+	
+	//save("앨리스 파일에서 단어가 몇번 나오는지 찾아보자.txt");
 
 }
