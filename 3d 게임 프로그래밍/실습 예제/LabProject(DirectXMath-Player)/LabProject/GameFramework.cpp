@@ -173,40 +173,42 @@ void CGameFramework::ProcessInput()						//키입력
 	//키보드 입력 , 방향 설정
 	if (GetKeyboardState(pKeyBuffer))
 	{
-		//키보드의 입력에 따른 변경
-		if (pKeyBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
-		if (pKeyBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
-		if (pKeyBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
-		if (pKeyBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
-		if (pKeyBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
-		if (pKeyBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
+		if (pKeyBuffer['W'] & 0xF0) dwDirection |= DIR_FORWARD;
+		if (pKeyBuffer['S'] & 0xF0) dwDirection |= DIR_BACKWARD;
+		if (pKeyBuffer['A'] & 0xF0) dwDirection |= DIR_LEFT;
+		if (pKeyBuffer['D'] & 0xF0) dwDirection |= DIR_RIGHT;
+		//if (pKeyBuffer[VK_CONTROL] & 0xF0) m_pPlayer->m_bShotBullet = true;
+		//if (pKeyBuffer['R'] & 0xF0) m_pPlayer->m_bReload = true;
+		//if (pKeyBuffer['Q'] & 0xF0) m_pPlayer->m_bShotBomb = true;
+
 	}
 
-	//마우스 입력으로 방향설정/
 	float cxDelta = 0.0f, cyDelta = 0.0f;
 	POINT ptCursorPos;
+
 	if (GetCapture() == m_hWnd)
 	{
 		SetCursor(NULL);
-
-		//마우스의 움직임에 따른 변경
 		GetCursorPos(&ptCursorPos);
 		cxDelta = (float)(ptCursorPos.x - m_ptOldCursorPos.x) / 3.0f;
 		cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
 		SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
 	}
 
-	//여기서 회전/이동 / 플레이어
 	if ((dwDirection != 0) || (cxDelta != 0.0f) || (cyDelta != 0.0f))
 	{
 		if (cxDelta || cyDelta)
 		{
-			if (pKeyBuffer[VK_RBUTTON] & 0xF0)
-				m_pPlayer->Rotate(cyDelta, 0.0f, -cxDelta);
-			else
+			if (pKeyBuffer[VK_RBUTTON] & 0xF0) {
 				m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
+
+			}
+			//else 
+			//m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
 		}
-		if (dwDirection) m_pPlayer->Move(dwDirection, 0.03f);								//여기서 이동하네
+		if (dwDirection) {
+			m_pPlayer->Move(dwDirection, m_GameTimer.GetTimeElapsed());
+		}//속도가 디폴드 설정 되어 있음
 	}
 	m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }

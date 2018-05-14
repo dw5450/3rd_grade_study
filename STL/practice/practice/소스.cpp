@@ -18,28 +18,63 @@
 #include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
 #include "save.h"
 #include "funcSpeedCheck.h"
+#include <fstream>
 using namespace std;
 
 //히어로와 전투력수치를 맵으로 만들어 보자
 
 int main()
 {
-	default_random_engine dre;
-	uniform_int_distribution <>uid('a', 'z');
-	vector<char> v(100000);
+	ifstream alice_file("이상한 나라의 앨리스.txt");
 
-	for (int i = 0; i < 100000; i++)
-		v[i] = uid(dre);
+	map<char, int> m1;
+
+	char c;
+	while (alice_file >> c) {
+		m1[c]++;
+	}
+
+	for (const auto& data : m1) {
+		cout << data.first << "\t" << data.second << endl;
+	}
+
+
+	alice_file.close();
+
+	alice_file.open("이상한 나라의 앨리스.txt");
+
+	map<string, int>m2;
+	string s;
+	while (alice_file >> s)
+	{
+		m2[s]++;
+	}
+	alice_file.close();
+
+	multimap<int, string > m3;
+	
+	for (auto& data : m2) {
+		m3.emplace(data.second, data.first);
+		//m3[data.second] = data.first;
+	}
+
+	for (const auto& data : m3) {
+		cout << data.first << "\t" << data.second << endl;
+	}
+
+	multimap<int, string > m4;
+	for (const auto& data : m2) {
+		m4.emplace(data.first.length(), data.first);
+	}
+
+	for (const auto& data : m4) {
+		cout << data.first << "\t" << data.second << endl;
+	}
+
 
 	//각 알파벳이 몇개씩 있는지 화면에 출력하라
 
-	map<char, int> m;
 
-	for (char d : v)
-		m[d]++;
-
-	for (auto& d : m)
-		cout << "[" << d.first << "] : " << d.second << endl;
 	//save("map에 값을 찾아보자아.txt");
 
 }
