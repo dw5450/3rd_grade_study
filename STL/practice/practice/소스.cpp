@@ -1,54 +1,49 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //2018.04.16		STL (월 23 , 화 56)					 7주 1
 //
-// 7장 반복자
-
-//
+// 7장. 반복자
+//		반복자의 종류에 따라 다른 점
+//		반복자의 종류를 판단하고 효율적인 알고리즘을 작성하는 법
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <iterator>
-#include <stack>
-#include <fstream>
+#include <set>
+#include <list>
+#include <vector>
 //다음 헤더는 실행시 지워야 할것입니다
 #include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
 #include "save.h"
-#include "funcSpeedCheck.h"
 using namespace std;
 
-//반복자(모든 종류의 반복자가 지원)라면 지원해야 하는 연산
-// *	: 역참조(dereferencing)
-//==	: 비교 (comaprision)
-//=		: 할당 (assignment)
-
-//반복자의 종류 (Catergory)
-//입출력반복자
-//전진반복자++;
-//전후진반복자(양방향 반복자) ++, --;
-//랜덤반복자 +=, -=;
-class MyHash {
-	public:
-		size_t operator()(const Model & a) const {
-			hash<int> hashVal;
-			
-			return hashVal(a.getSize());
-
+template <class Iter>
+int my_distance(Iter beg, Iter end)
+{
+	typename iterator_traits<Iter>::iterator_category c;
+	if (strcmp(typeid(c).name(), "struct std::random_access_iterator_tag")) {
+		cout << "연속적인 자료형" << endl;
+		return end - beg;
+	}
+	else {
+		int cnt{ 0 };
+		while (beg != end) {
+			cnt++;
+			++beg;
 		}
 
-};
+		return cnt;
+	}
+
+	return 0;
+}
+
 int main()
 {
-	//	소스.cpp를 읽고 출력
-	//	입출력자 반복자를 사용해서 작성해 봅니다.
-	//  copy 알고리즘과 삽입반복자를 사용해서 
-	// 다음시간에
+	list <int>list  {1, 2, 3, 4};
 
-	ifstream in("소스.cpp");
-	istream_iterator<char> p(in);
-
-	char c;
-	c = *p;
-
-	//save("반복자로 cout 을 해보자.");
+	cout << my_distance(list.begin(), list.end()) << endl;
+	
+	//f( vector<int>::iterator());		//이 함수는 반복자의 종류르를 화면에 출력한다.
+//	save("반복자의 자료형의 이름을 적어보자.txt");
 
 }
