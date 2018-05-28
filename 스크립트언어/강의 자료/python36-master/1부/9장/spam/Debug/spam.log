@@ -1,0 +1,2 @@
+﻿  spammodule.c
+c:\users\원동욱\desktop\3rd_grade_study\스크립트언어\강의 자료\python36-master\1부\9장\spam\spammodule.c(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'python.h': No such file or directory
