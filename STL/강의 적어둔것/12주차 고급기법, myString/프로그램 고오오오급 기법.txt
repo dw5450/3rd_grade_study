@@ -1,0 +1,66 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 7장. 반복자
+//		반복자의 종류에 따라 다른 점
+//		반복자의 종류를 판단하고 효율적인 알고리즘을 작성하는 법
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <iterator>
+#include <set>
+#include <list>
+#include <vector>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+template <class Iter>
+int my_distance(Iter beg, Iter end, random_access_iterator_tag);
+
+template <class Iter>
+int my_distance(Iter beg, Iter end, forward_iterator_tag);
+
+template <class Iter>
+int my_distance(Iter beg, Iter end)
+{
+	return my_distance(beg, end, iterator_traits<Iter>::iterator_category());
+}
+
+
+template <class Iter>
+int my_distance(Iter beg, Iter end, random_access_iterator_tag)
+{
+	cout << "랜덤반복자니까 빼기로 계산" << endl;
+	return end - beg;
+}
+
+
+template <class Iter>
+int my_distance(Iter beg, Iter end, forward_iterator_tag)
+{
+	int cnt{ 0 };
+	while (beg != end) {
+		cnt++;
+		++beg;
+	}
+
+	return cnt;
+}
+
+int main()
+{
+	set<string> s{ "Hello, STL!" };
+	
+	cout << my_distance(s.begin(), s.end()) << endl;
+
+
+	//cout << my_distance(list.begin(), list.end()) << endl;
+	
+	//f( vector<int>::iterator());		//이 함수는 반복자의 종류르를 화면에 출력한다.
+	save("프로그램 고오오오급 기법.txt");
+
+}

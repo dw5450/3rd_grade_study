@@ -1,0 +1,67 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 7장 반복자
+
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <iterator>
+#include <stack>
+#include <fstream>
+#include <algorithm>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+#include "funcSpeedCheck.h"
+using namespace std;
+
+//반복자(모든 종류의 반복자가 지원)라면 지원해야 하는 연산
+// *	: 역참조(dereferencing)
+//==	: 비교 (comaprision)
+//=		: 할당 (assignment)
+
+//반복자의 종류 (Catergory)
+//입출력반복자
+//전진반복자++;
+//전후진반복자(양방향 반복자) ++, --;
+//랜덤반복자 +=, -=;
+class MyHash {
+	public:
+		size_t operator()(const Model & a) const {
+			hash<int> hashVal;
+			
+			return hashVal(a.getSize());
+
+		}
+
+};
+int main()
+{
+	//	소스.cpp를 읽고 출력
+	//	입출력자 반복자를 사용해서 작성해 봅니다.
+	//  copy 알고리즘과 삽입반복자를 사용해서 
+	// 다음시간에
+
+	ifstream in("소스.cpp");
+
+	//흥미용
+
+	//copy(어디부터, 이디까지를, 어디로);
+	//copy(파일 시작부터, 파일 끝까지, 화면으로);
+	//인자가 없으면 파일의 끝을 나타내는 특수 입력
+	copy(istream_iterator<char>(in), istream_iterator<char>(), ostream_iterator<char>(cout));
+
+	// ? 만 뜨는 이유
+	//	cpp 커서에 파일 -> 다른이름으로 소스.cpp 저장 인코딩하여 저장. 소스를 저장한 인코딩 방식이 다르면 출력이 안될 수 있음.
+	// 디폴트 인코딩값이 다를 수 있음.
+	//os 환경이 다르면 바뀔 수 있음
+	//bom 마커가 있을 수 있음
+	//인코딩 코드 페이지 확인/os 환경 확인/bom 마커 확인
+
+
+
+	save("반복자로 cout 을 해보자.2");
+
+}

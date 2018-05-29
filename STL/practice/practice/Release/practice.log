@@ -1,24 +1,7 @@
 ﻿  소스.cpp
-c:\users\원동욱\desktop\3rd_grade_study\stl\practice\practice\소스.cpp(24): error C2784: 'unknown-type std::operator -(const std::move_iterator<_RanIt> &,const std::move_iterator<_RanIt2> &)': 'const std::move_iterator<_RanIt> &'의 템플릿 인수를 'std::_List_iterator<std::_List_val<std::_List_simple_types<_Ty>>>'에서 추론할 수 없습니다.
-          with
-          [
-              _Ty=int
-          ]
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\xutility(2288): note: 'std::operator -' 선언을 참조하십시오.
-  c:\users\원동욱\desktop\3rd_grade_study\stl\practice\practice\소스.cpp(43): note: 컴파일 중인 함수 템플릿 인스턴스화 'int my_distance<std::_List_iterator<std::_List_val<std::_List_simple_types<_Ty>>>>(Iter,Iter)'에 대한 참조를 확인하십시오.
-          with
-          [
-              _Ty=int,
-              Iter=std::_List_iterator<std::_List_val<std::_List_simple_types<int>>>
-          ]
-c:\users\원동욱\desktop\3rd_grade_study\stl\practice\practice\소스.cpp(24): error C2784: 'unknown-type std::operator -(const std::reverse_iterator<_RanIt> &,const std::reverse_iterator<_RanIt2> &)': 'const std::reverse_iterator<_RanIt> &'의 템플릿 인수를 'std::_List_iterator<std::_List_val<std::_List_simple_types<_Ty>>>'에서 추론할 수 없습니다.
-          with
-          [
-              _Ty=int
-          ]
-  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.13.26128\include\xutility(1423): note: 'std::operator -' 선언을 참조하십시오.
-c:\users\원동욱\desktop\3rd_grade_study\stl\practice\practice\소스.cpp(24): error C2676: 이항 '-': 'std::_List_iterator<std::_List_val<std::_List_simple_types<_Ty>>>'이(가) 이 연산자를 정의하지 않거나 미리 정의된 연산자에 허용되는 형식으로의 변환을 정의하지 않습니다.
-          with
-          [
-              _Ty=int
-          ]
+  코드를 생성하고 있습니다.
+  49 of 182 functions (26.9%) were compiled, the rest were copied from previous compilation.
+    7 functions were new in current compilation
+    32 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  practice.vcxproj -> C:\Users\원동욱\Desktop\3rd_grade_study\STL\practice\Release\practice.exe

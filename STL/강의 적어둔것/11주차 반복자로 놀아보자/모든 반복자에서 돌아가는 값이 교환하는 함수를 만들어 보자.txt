@@ -1,0 +1,41 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+// 7장. 반복자
+//		반복자의 종류에 따라 다른 점
+//		반복자의 종류를 판단하고 효율적인 알고리즘을 작성하는 법
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <iterator>
+#include <set>
+#include <vector>
+//다음 헤더는 실행시 지워야 할것입니다
+#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+template<class Iter>
+void f(Iter a, Iter b);
+
+template<class Iter>
+void f(Iter a, Iter b)
+{
+	auto temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+int main()
+{
+	//메모리가 붙어 있는 경우 less, 산술 연산을 할 수 있음
+	//
+	vector<int> a{ 1, 2, 3 };//메모리가 붙은것
+
+	f(begin(a), begin(a)+1);		//f는 어떤 반복자라도 반복자를 받아 값을 교환한다.
+	for (int d : a)
+		cout << d << ' ';
+	cout << endl;
+	save("모든 반복자에서 돌아가는 값이 교환하는 함수를 만들어 보자");
+
+}
