@@ -1,0 +1,168 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <iterator>
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+
+// 표준 반복자라면 다섯가지 타입을 정의해야하 한다.
+// 사용자가 iterator_traits<내반복자> ::다섯가지타입을 이용하여 변수를 선언 할 수 있다.
+class myIter : public iterator<random_access_iterator_tag, char> {
+	char * p{ nullptr };
+public:
+	myIter(char * p) : p{ p } {}
+
+//반복자가 해야 할 기본 동작을 프로그램해야함.
+// *, ==, =, ++
+	char & operator*() { return *p; }
+	bool operator==(const myIter & rhs) const {return p == rhs.p;}
+	bool operator!=(const myIter & rhs) const { return p != rhs.p; }
+	myIter& operator=( myIter & rhs) { p = rhs.p; return *this; }
+	
+	myIter & operator++() { ++p;return *this;}
+	myIter operator++(int) {myIter temp = *this;++p;return temp;}
+	myIter & operator--() {--p;return *this;}
+	myIter operator--(int) {myIter temp = *this;--p;return temp;	}
+
+
+	//랜덤 반복자가 제공하는 연산들
+	int operator-(const myIter & rhs) const {
+		return p - rhs.p;
+	}
+	
+	bool operator<(const myIter & rhs)const {
+		return p < rhs.p;
+
+	}
+
+	myIter operator-(int n) const {
+		myIter t(p);
+		t.p -= n;
+		return t;
+	}
+
+	myIter operator+(int n) const {
+		myIter t(p);
+		t.p += n;
+		return t;
+
+	}
+
+};
+
+//namespace std {
+//	template<>
+//	struct iterator_traits<myIter>
+//	{
+//		using iterator_traits = random_access_iterator_tag;
+//		using value_type = char;
+//		using p
+//	};
+//}
+
+class myString {
+	int len{ 0 };
+	char * p{ nullptr };
+public:
+	myString() {};
+	~myString() {
+		if (p) delete [] p;
+	}
+	myString(const char *);
+	myString(const myString &);
+
+	myString & operator=(const myString &);
+
+	void operator+=(const char * );
+
+	friend ostream & operator<< (ostream & os, const myString &);
+
+	//컨테이너가 제공하는 함수
+	int length() const { return len; }
+	int size() const { return len; }
+	char * c_str() const { return p; }
+	myIter begin() {
+		return myIter(p);
+	};
+	myIter end() {
+		return myIter(p + len);
+	};
+	
+};
+
+myString::myString(const char * str)
+{
+	len = strlen(str);
+	p = new char[strlen(str) + 1];
+	strcpy_s(p, strlen(str) + 1, str);
+}
+
+myString::myString(const myString & other)
+{
+	*this = other;
+}
+
+myString & myString::operator=(const myString & other)
+{
+	delete[] p;
+	len = other.len;
+	p = new char[len + 1];
+	strcpy_s(p, len + 1, other.p);
+
+	return *this;
+}
+
+void myString::operator+=(const char * s)
+{
+	len += strlen(s);
+	strcat_s(p, len + 1, s);
+}
+
+ostream & operator<< (ostream & os, const myString & p)
+{
+	os << p.p;
+	return os;
+}
+
+
+
+
+
+
+template <class Iter, class Value>
+Iter myFind(Iter beg, Iter end, Value val)
+{
+	while (beg != end) {
+		if (*beg == val)
+			return beg;
+		++beg;
+	}
+	return beg;
+}
+
+//반복자 - 반복자 -> 계수
+
+int main()
+{
+	myString s{ "Hellow, world!" };			//char*, char[]를 대치하는 class
+	//myString s1 = s;
+
+	sort(s.begin(), s.end());
+
+	/*for (auto p = s1.rbegin(); p < s1.rend(); ++p)
+		cout << *p << ' ';
+	cout << endl;*/
+
+	//save("타입을 알 수 있게 해주자..txt");
+
+}

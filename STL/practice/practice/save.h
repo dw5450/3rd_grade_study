@@ -13,5 +13,5 @@ void save(string s) {
 	// main()이 있는 소스파일의 내용을 덧붙이기로 기록하자 
 
 
-	out << endl;
+	//out << endl;
 }
