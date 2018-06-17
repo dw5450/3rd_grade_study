@@ -12,10 +12,10 @@ import re
 from datetime import date, datetime, timedelta
 import traceback
 
-key = '여기에 API KEY를 입력하세요'
-TOKEN = '여기에 텔레그램 토큰을 입력하세요'
+#key = 'sea100UMmw23Xycs33F1EQnumONR%2F9ElxBLzkilU9Yr1oT4TrCot8Y2p0jyuJP72x9rG9D8CN5yuEs6AS2sAiw%3D%3D'
+TOKEN = '613271837:AAGN98NiY1prYwrywBlsbo09-ncjdeYm57c'
 MAX_MSG_LENGTH = 300
-baseurl = 'http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?ServiceKey='+key
+baseurl = 'http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade?serviceKey=sea100UMmw23Xycs33F1EQnumONR%2F9ElxBLzkilU9Yr1oT4TrCot8Y2p0jyuJP72x9rG9D8CN5yuEs6AS2sAiw%3D%3D&LAWD_CD=11110&DEAL_YMD=201712'
 bot = telepot.Bot(TOKEN)
 
 def getData(loc_param, date_param):

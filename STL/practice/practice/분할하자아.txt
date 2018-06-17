@@ -1,0 +1,170 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> a(100);
+	vector<int> odd, even;
+	iota(begin(a), end(a), 1);
+
+	//분할 : 홀수와 짝수로 나누어서 벡터 odd, even에 넣어라
+
+	auto p = partition_copy(begin(a), end(a), 
+		back_inserter(odd), back_inserter(even), [](int num) {return num & 1;});
+
+	cout << "홀수들" << endl;
+	for (int n : odd)
+		cout << n << " ";
+
+	cout << endl << endl;
+
+	cout << "짝수들" << endl;
+	for (int n : even)
+		cout << n << " ";
+	
+	cout << endl << endl;
+
+	cout << endl;
+	save("분할하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(100);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+
+	//정렬 전 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+
+	//v를 오름차순으로 정렬하고 출력하라
+	sort(begin(v), end(v));
+
+
+	//정렬 후 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+	
+
+	save("분할하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <functional>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(100);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+
+	//정렬 전 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+
+	//v를 오름차순으로 정렬하고 출력하라
+	sort(begin(v), end(v), greater<int>());
+
+
+	//정렬 후 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+	
+
+	save("분할하자아.txt");
+}

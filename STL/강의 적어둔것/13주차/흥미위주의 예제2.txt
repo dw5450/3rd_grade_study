@@ -1,0 +1,57 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <fstream>
+#include <string>
+#include <iterator>
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+template <class InIt, class UnPr>
+InIt my_find_if(InIt b, InIt e, UnPr f);
+
+
+
+template <class InIt, class UnPr>
+InIt my_find_if(InIt b, InIt e, UnPr f)
+{
+	while (b != e) {
+		if (f(*b))
+			return b;
+		 ++b;
+	}
+
+	return b;
+}
+
+
+int main()
+{
+	// 소스.cpp 파일에처 서층ㅁ 나오는 숫자를 찾아보세요
+
+	ifstream in("소스.cpp");
+
+	auto p = find_if(istream_iterator<char>(in), istream_iterator<char>(), [] (char c){
+		return isdigit(c);
+	});
+
+	if (p != istream_iterator<char>()) {
+		cout << "숫자를 찾음" << *(p)<<endl;
+	}
+	else {
+		cout << "못 찾음" << endl;
+	}
+
+	save("흥미위주의 예제2.txt");
+
+	
+}

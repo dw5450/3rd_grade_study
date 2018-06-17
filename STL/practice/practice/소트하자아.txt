@@ -1,0 +1,541 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <functional>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(100);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+
+	//정렬 전 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+
+	//1등 부터 10등까지만 정렬해 줘
+	partial_sort(begin(v), v.begin() +10, end(v));
+
+
+	//정렬 후 v의 값
+	for (int n : v)
+		cout << n << " ";
+	cout << endl;
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <functional>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+	sort(begin(v), end(v));
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+
+	auto p = find(begin(v), end(v), 7777);
+
+	cout << distance(begin(v), p) << endl;
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <functional>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+	sort(begin(v), end(v));
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+
+	auto p = find(begin(v), end(v), 7777);
+
+	cout << distance(begin(v), p) + 1 << endl;
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 특정 위치까지만 정렬한다.
+//		nth_element - 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <functional>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+	sort(begin(v), end(v));
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+
+	auto p = binary_search(begin(v), end(v), 7777);
+
+	cout << p << endl;
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 몇 등까지만 정렬한다.
+//		nth_element - 등수안에 드는 것과 아닌 것을 분리한다.
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+	sort(begin(v), end(v));
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+	v[0] = 9777;
+	v[1] = 9777;
+
+	for (int n : v)
+		cout << n << " ";
+
+	cout << endl;
+
+	cout << boolalpha<< binary_search(begin(v), end(v), 7777) << endl;
+	auto p = equal_range(begin(v), end(v), 9777); 
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 몇 등까지만 정렬한다.
+//		nth_element - 등수안에 드는 것과 아닌 것을 분리한다.
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+	sort(begin(v), end(v));
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+	v[0] = 9777;
+	v[1] = 9777;
+
+	for (int n : v)
+		cout << n << " ";
+
+	cout << endl;
+
+	cout << boolalpha<< binary_search(begin(v), end(v), 7777) << endl;
+	auto p = equal_range(begin(v), end(v), 9777); 
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 몇 등까지만 정렬한다.
+//		nth_element - 등수안에 드는 것과 아닌 것을 분리한다.
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+	v[0] = 9777;
+	v[1] = 9777;
+
+	sort(begin(v), end(v));
+	for (int n : v)
+		cout << n << " ";
+
+	cout << endl;
+
+	cout << boolalpha<< binary_search(begin(v), end(v), 7777) << endl;
+	auto p = equal_range(begin(v), end(v), 9777); 
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 몇 등까지만 정렬한다.
+//		nth_element - 등수안에 드는 것과 아닌 것을 분리한다.
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+	v[0] = 9777;
+	v[1] = 9777;
+
+	sort(begin(v), end(v));
+	for (int n : v)
+		cout << n << " ";
+
+	cout << endl;
+
+	cout << boolalpha<< binary_search(begin(v), end(v), 7777) << endl;
+
+	//정렬이 깨지지 않고 값을 넣을수 있는 범위를 열려줌
+	auto p = equal_range(begin(v), end(v), 9777); 
+
+	cout << p.second - p.first << "개가 있습니다." << endl;
+
+	
+
+	save("소트하자아.txt");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+//2018.04.16		STL (월 23 , 화 56)					 7주 1
+//
+//
+// 표준에 맞는 컨테이너와 반복자를 만들어보자
+
+//9장 알고리즘
+// 1. 원소를 수정하지 않는 알고리즘
+
+//2. 원소를 수정하는 알고리즘
+
+//3. 정렬과 관련 알고리즘
+//		partition -  조건에 맞는 것과 아닌것을 분리한다.
+//		sort - 전체를 기준(기본<)에 따라 정렬한다
+//		partial_sort - 몇 등까지만 정렬한다.
+//		nth_element - 등수안에 드는 것과 아닌 것을 분리한다.
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+#include <string>
+#include <vector>
+
+
+//다음 헤더는 실행시 지워야 할것입니다
+//#include "Model.h"							//모델을 사용할시 추가후 사용해 주세요
+#include "save.h"
+using namespace std;
+
+//원소를 수정하는 알고리즘
+
+int main()
+{
+	vector<int> v(10000);
+	iota(begin(v), end(v), 1);
+	random_shuffle(begin(v), end(v));
+
+	//v를 오름차순로 정렬하라
+
+	//v에서 7777이라는 갑싱 있는 찾아보고 
+	//어디에 있는지(몇등인지)출력해보라.
+	v[0] = 9777;
+	v[1] = 9777;
+
+	sort(begin(v), end(v));
+	for (int n : v)
+		cout << n << " ";
+
+	cout << endl;
+
+	cout << boolalpha<< binary_search(begin(v), end(v), 7777) << endl;
+
+	//정렬이 깨지지 않고 값을 넣을수 있는 범위를 열려줌
+	//auto p = equal_range(begin(v), end(v), 9777); 
+
+	auto p = lower_bound(begin(v), end(v), 9777);
+	if (p != end(v))
+		cout << p - v.begin() + 1 << "등 입니다." << endl;
+
+	
+
+	save("소트하자아.txt");
+}
